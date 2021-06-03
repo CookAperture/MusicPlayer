@@ -1,0 +1,21 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="AvaloniaTesty.MainWindow"
+        Title="AvaloniaTesty">
+  <DockPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch" LastChildFill="True">
+    <RelativePanel DockPanel.Dock="Bottom" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="10">
+      <Button HorizontalAlignment="Center" VerticalAlignment="Bottom" Click="OnPlay">Play</Button>
+    </RelativePanel>
+    <Panel DockPanel.Dock="Top" Background="Gray" HorizontalAlignment="Stretch" 
+           VerticalAlignment="Stretch" ToolTip.Tip="rightclick for more options">
+      <Panel.ContextMenu> 
+        <ContextMenu>
+          <MenuItem Click="OnAddSong">Add a Song</MenuItem>
+        </ContextMenu>
+      </Panel.ContextMenu>
+    </Panel>
+  </DockPanel>
+</Window>
