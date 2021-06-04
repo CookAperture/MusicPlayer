@@ -4,10 +4,11 @@ using TagLib;
 
 namespace ClassLibraryTesty
 {
-    struct FileMetaData
+    public struct SongMetaData
     {
         //titel
         //icon
+        string Title { get; set; }
         TimeSpan Duration { get; set; }
     }
 }

@@ -6,6 +6,8 @@ namespace AvaloniaTesty
 {
     public class App : Application
     {
+        public Avalonia.Controls.Window MainUI { get; set; }
+
         public override void Initialize()
         {
             AvaloniaXamlLoader.Load(this);
@@ -15,7 +17,8 @@ namespace AvaloniaTesty
         {
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
-                desktop.MainWindow = new MainWindow();
+                MainUI = new MainWindow();
+                desktop.MainWindow = MainUI;
             }
 
             base.OnFrameworkInitializationCompleted();

@@ -8,8 +8,18 @@ using TagLib.Audible;
 
 namespace ClassLibraryTesty
 {
-    class MusicPlayerInteractor : IMusicPlayerInteractor
+    public class MusicPlayerInteractor : IMusicPlayerInteractor
     {
+        public event IMusicPlayerInteractor.OnSongAdded onSongAdded;
 
+        public void AddSong(string path)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void PlaySong()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

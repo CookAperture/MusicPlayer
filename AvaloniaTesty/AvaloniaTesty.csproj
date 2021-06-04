@@ -15,4 +15,7 @@
   <ItemGroup>
     <ProjectReference Include="..\ClassLibraryTesty\ClassLibraryTesty.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Dlgs\" />
+  </ItemGroup>
 </Project>

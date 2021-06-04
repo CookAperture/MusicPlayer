@@ -12,15 +12,17 @@ namespace ClassLibraryTesty
         #region LogicContracts
         public interface IMainController
         {
-            public delegate void OnInit();
+
         }
 
         public interface IMusicPlayerInteractor //may use sound api here
         {
-            //Play
-            //LoadFile
+            public void PlaySong();
+            public void AddSong(string path);
 
-            //event file loaded -> metadata 
+            public delegate void OnSongAdded(SongMetaData meta);
+
+            public event OnSongAdded onSongAdded;
         }
         #endregion
 
@@ -28,6 +30,8 @@ namespace ClassLibraryTesty
         //UI Contracts
         public interface IMainUI
         {
+            public void OnSongAdded(SongMetaData meta);
+
             public delegate void OnPlay();
             public delegate void OnAddSong(string path);
 

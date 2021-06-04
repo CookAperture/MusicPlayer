@@ -2,6 +2,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
+using ClassLibraryTesty;
 using ClassLibraryTesty.Contracts;
 
 namespace AvaloniaTesty
@@ -31,6 +32,11 @@ namespace AvaloniaTesty
         private void OnPlay(object sender, RoutedEventArgs args)
         {
             //TODO
+        }
+
+        public void OnSongAdded(SongMetaData meta)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
