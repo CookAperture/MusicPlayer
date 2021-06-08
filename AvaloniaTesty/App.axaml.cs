@@ -6,8 +6,6 @@ namespace AvaloniaTesty
 {
     public class App : Application
     {
-        public Avalonia.Controls.Window MainUI { get; set; }
-
         public override void Initialize()
         {
             AvaloniaXamlLoader.Load(this);
@@ -15,11 +13,13 @@ namespace AvaloniaTesty
 
         public override void OnFrameworkInitializationCompleted()
         {
-            if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
-            {
-                MainUI = new MainWindow();
-                desktop.MainWindow = MainUI;
-            }
+            //if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+            //{
+            //    MainUI = new MainWindow();
+            //    desktop.MainWindow = MainUI;
+            //}
+
+            //DoSomethingAppSpecific -> e.g. setup lifetime for various platforms eventually
 
             base.OnFrameworkInitializationCompleted();
         }

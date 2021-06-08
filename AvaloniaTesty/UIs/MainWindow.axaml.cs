@@ -7,16 +7,21 @@ using ClassLibraryTesty.Contracts;
 
 namespace AvaloniaTesty
 {
-    public partial class MainWindow : Window, IMainUI
+    public class MainWindow : Window, IMainUI
     {
         public event IMainUI.OnPlay onPlay;
         public event IMainUI.OnAddSong onAddSong;
         public MainWindow()
         {
             InitializeComponent();
-#if DEBUG
             this.AttachDevTools();
-#endif
+            onPlay = () => { };
+            onAddSong = (string path) => { };
+        }
+
+        public override void Show()
+        {
+            base.Show();
         }
 
         private void InitializeComponent()

@@ -31,6 +31,7 @@ namespace ClassLibraryTesty
         public interface IMainUI
         {
             public void OnSongAdded(SongMetaData meta);
+            public void Show();
 
             public delegate void OnPlay();
             public delegate void OnAddSong(string path);
