@@ -4,6 +4,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="AvaloniaTesty.MainWindow"
+        WindowState="{Binding WindowState, Mode=TwoWay}"
         Title="MusicPlayer"
         ExtendClientAreaToDecorationsHint="{Binding ExtendClientAreaEnabled}"
         ExtendClientAreaChromeHints="{Binding ChromeHints}"
@@ -11,6 +12,8 @@
         TransparencyLevelHint="{Binding TransparencyLevel}"  
         HasSystemDecorations="False"
         Name="Window">
+  
+  <!--- This is the CustomTitleBar -->
   <Grid RowDefinitions="5,*,5" ColumnDefinitions="5,*,5">
     <DockPanel  Grid.Column="1"  Grid.Row="1" >
       <Grid Name="TitleBar" Background="Black" DockPanel.Dock="Top" ColumnDefinitions="Auto,*,Auto">
@@ -26,6 +29,7 @@
           <Button Name="CloseButton">X</Button>
         </StackPanel>
       </Grid>
+      <!--- This is the actual Content -->
       <DockPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch" LastChildFill="True">
         <RelativePanel DockPanel.Dock="Bottom" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="10">
           <Button HorizontalAlignment="Center" VerticalAlignment="Bottom" Click="OnPlay">Play</Button>
@@ -39,6 +43,7 @@
           </Panel.ContextMenu>
         </Panel>
       </DockPanel>
+    <!--- This is the replacement for AeroDesktopFeatures -->
     </DockPanel>
     <Border Name="TopLeft" Background="Transparent"/>
     <Border Name="TopRight" Background="Transparent" Grid.Column="2" />
