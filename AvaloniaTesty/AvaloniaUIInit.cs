@@ -20,16 +20,13 @@ namespace AvaloniaTesty
 
         static void AppMain(Application app, string[] args)
         {
-            // A cancellation token source that will be used to stop the main loop
-            var cts = new CancellationTokenSource();
-
             // Do you startup code here
             MainUI = onReady?.Invoke(); 
             MainUI.Show();
             Application = app;
 
             // Start the main loop
-            app.Run(cts.Token);
+            app.Run(MainUI);
 
         }
 
