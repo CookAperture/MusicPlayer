@@ -16,7 +16,7 @@
   <!--- This is the CustomTitleBar -->
   <Grid RowDefinitions="5,*,5" ColumnDefinitions="5,*,5">
     <DockPanel  Grid.Column="1"  Grid.Row="1" >
-      <Grid Name="TitleBar" Background="Black" DockPanel.Dock="Top" ColumnDefinitions="Auto,*,Auto">
+      <Grid Name="TitleBar" DockPanel.Dock="Top" ColumnDefinitions="Auto,*,Auto"> <!-- Check in Here -> Themes reduce availability of move area -->
         <TextBlock VerticalAlignment="Center" Margin="5,0,0,0">Title</TextBlock>
         <StackPanel Grid.Column="2" Orientation="Horizontal">
           <StackPanel.Styles>
@@ -34,11 +34,11 @@
         <RelativePanel DockPanel.Dock="Bottom" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="10">
           <Button HorizontalAlignment="Center" VerticalAlignment="Bottom" Click="OnPlay">Play</Button>
         </RelativePanel>
-        <Panel DockPanel.Dock="Top" Background="Gray" HorizontalAlignment="Stretch"
+        <Panel DockPanel.Dock="Top" HorizontalAlignment="Stretch"
                VerticalAlignment="Stretch" ToolTip.Tip="rightclick for more options">
           <Panel.ContextMenu>
             <ContextMenu>
-              <MenuItem Click="OnAddSong">Add a Song</MenuItem>
+              <MenuItem Click="OnAddSong">AddaSong</MenuItem>
             </ContextMenu>
           </Panel.ContextMenu>
         </Panel>
