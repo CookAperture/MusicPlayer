@@ -19,66 +19,6 @@ namespace AvaloniaTesty
         public event IMainUI.OnPlay onPlay;
         public event IMainUI.OnAddSong onAddSong;
 
-        //StylingInfo
-        private WindowState _windowState;
-        private WindowState[] _windowStates;
-        private int _transparencyLevel;
-        private ExtendClientAreaChromeHints _chromeHints;
-        private bool _extendClientAreaEnabled;
-        private bool _systemTitleBarEnabled;
-        private bool _preferSystemChromeEnabled;
-        private double _titleBarHeight;
-
-        #region GETTERSETTER
-        public int TransparencyLevel
-        {
-            get { return _transparencyLevel; }
-            set { this.RaiseAndSetIfChanged(ref _transparencyLevel, value); }
-        }
-
-        public ExtendClientAreaChromeHints ChromeHints
-        {
-            get { return _chromeHints; }
-            set { this.RaiseAndSetIfChanged(ref _chromeHints, value); }
-        }
-
-        public bool ExtendClientAreaEnabled
-        {
-            get { return _extendClientAreaEnabled; }
-            set { this.RaiseAndSetIfChanged(ref _extendClientAreaEnabled, value); }
-        }
-
-        public bool SystemTitleBarEnabled
-        {
-            get { return _systemTitleBarEnabled; }
-            set { this.RaiseAndSetIfChanged(ref _systemTitleBarEnabled, value); }
-        }
-
-        public bool PreferSystemChromeEnabled
-        {
-            get { return _preferSystemChromeEnabled; }
-            set { this.RaiseAndSetIfChanged(ref _preferSystemChromeEnabled, value); }
-        }
-
-        public double TitleBarHeight
-        {
-            get { return _titleBarHeight; }
-            set { this.RaiseAndSetIfChanged(ref _titleBarHeight, value); }
-        }
-
-        //public new WindowState WindowState
-        //{
-        //    get { return _windowState; }
-        //    set { this.RaiseAndSetIfChanged(ref _windowState, value); }
-        //}
-
-        public WindowState[] WindowStates
-        {
-            get { return _windowStates; }
-            set { this.RaiseAndSetIfChanged(ref _windowStates, value); }
-        }
-        #endregion
-
         public MainWindow()
         {
             InitializeComponent();
@@ -152,40 +92,6 @@ namespace AvaloniaTesty
             {
                 Close();
             };
-
-            WindowStates = new WindowState[]
-            {
-                WindowState.Minimized,
-                WindowState.Normal,
-                WindowState.Maximized,
-                WindowState.FullScreen,
-            };
-
-            this.WhenAnyValue(x => x.SystemTitleBarEnabled, x => x.PreferSystemChromeEnabled)
-                .Subscribe(x =>
-                {
-                    var hints = ExtendClientAreaChromeHints.NoChrome | ExtendClientAreaChromeHints.OSXThickTitleBar;
-
-                    if (x.Item1)
-                    {
-                        hints |= ExtendClientAreaChromeHints.SystemChrome;
-                    }
-
-                    if (x.Item2)
-                    {
-                        hints |= ExtendClientAreaChromeHints.PreferSystemChrome;
-                    }
-
-                    ChromeHints = hints;
-                });
-
-            ExtendClientAreaEnabled = true;
-            PreferSystemChromeEnabled = true;
-            TransparencyLevel = (int)WindowTransparencyLevel.AcrylicBlur;
-            ChromeHints = ExtendClientAreaChromeHints.PreferSystemChrome;
-            WindowState = WindowState.Normal;
-            SystemTitleBarEnabled = false;
-            TitleBarHeight = 30;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
