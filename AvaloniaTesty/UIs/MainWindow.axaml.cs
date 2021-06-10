@@ -1,5 +1,6 @@
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Controls.Chrome;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
@@ -71,19 +72,15 @@ namespace AvaloniaTesty
                 theme.TryGetResource("Button", out _);
             }
             AvaloniaXamlLoader.Load(this);
+
             this.FindControl<Control>("TitleBar").PointerPressed += (i, e) =>
             {
                 PlatformImpl?.BeginMoveDrag(e);
             };
-            SetupSide("Left", StandardCursorType.LeftSide, WindowEdge.West);
-            SetupSide("Right", StandardCursorType.RightSide, WindowEdge.East);
-            SetupSide("Top", StandardCursorType.TopSide, WindowEdge.North);
-            SetupSide("Bottom", StandardCursorType.BottomSide, WindowEdge.South);
-            SetupSide("TopLeft", StandardCursorType.TopLeftCorner, WindowEdge.NorthWest);
-            SetupSide("TopRight", StandardCursorType.TopRightCorner, WindowEdge.NorthEast);
-            SetupSide("BottomLeft", StandardCursorType.BottomLeftCorner, WindowEdge.SouthWest);
-            SetupSide("BottomRight", StandardCursorType.BottomRightCorner, WindowEdge.SouthEast);
-            this.FindControl<Button>("MinimizeButton").Click += delegate { this.WindowState = WindowState.Minimized; };
+            this.FindControl<Button>("MinimizeButton").Click += delegate
+            {
+                this.WindowState = WindowState.Minimized;
+            };
             this.FindControl<Button>("MaximizeButton").Click += delegate
             {
                 WindowState = WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
@@ -92,6 +89,14 @@ namespace AvaloniaTesty
             {
                 Close();
             };
+            //SetupSide("Left", StandardCursorType.LeftSide, WindowEdge.West);
+            //SetupSide("Right", StandardCursorType.RightSide, WindowEdge.East);
+            //SetupSide("Top", StandardCursorType.TopSide, WindowEdge.North);
+            //SetupSide("Bottom", StandardCursorType.BottomSide, WindowEdge.South);
+            //SetupSide("TopLeft", StandardCursorType.TopLeftCorner, WindowEdge.NorthWest);
+            //SetupSide("TopRight", StandardCursorType.TopRightCorner, WindowEdge.NorthEast);
+            //SetupSide("BottomLeft", StandardCursorType.BottomLeftCorner, WindowEdge.SouthWest);
+            //SetupSide("BottomRight", StandardCursorType.BottomRightCorner, WindowEdge.SouthEast);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -13,19 +13,18 @@
     </AvaloniaResource>
   </ItemGroup>
   <ItemGroup>
+    <AvaloniaResource Remove="Dlgs\**" />
+    <AvaloniaXaml Remove="Dlgs\**" />
+    <Compile Remove="Dlgs\**" />
+    <EmbeddedResource Remove="Dlgs\**" />
+    <None Remove="Dlgs\**" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Avalonia" Version="0.10.5" />
     <PackageReference Include="Avalonia.Desktop" Version="0.10.5" />
     <PackageReference Include="Avalonia.Diagnostics" Version="0.10.5" />
    </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ClassLibraryTesty\ClassLibraryTesty.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Dlgs\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Update="SideBar.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </None>
   </ItemGroup>
 </Project>

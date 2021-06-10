@@ -5,32 +5,116 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="AvaloniaTesty.MainWindow"
         Title="MusicPlayer"
+        ExtendClientAreaToDecorationsHint="True"
+        ExtendClientAreaChromeHints="NoChrome"
         TransparencyLevelHint="AcrylicBlur"
-        HasSystemDecorations="False"
+        Background="Transparent"
         Name="Window">
-        <!-- WindowState="{Binding WindowState, Mode=TwoWay}" -->
-        <!-- ExtendClientAreaTitleBarHeightHint="{Binding TitleBarHeight}" -->
-        <!-- ExtendClientAreaChromeHints="{Binding ChromeHints}" -->
-        <!-- ExtendClientAreaToDecorationsHint="{Binding ExtendClientAreaEnabled}" -->
   
-  <!--- This is the correct way for a Acrylic Blurry Background -> pls make it work for the window background 
-  <Panel>
-     <ExperimentalAcrylicBorder IsHitTestVisible="False">
-      <ExperimentalAcrylicBorder.Material>
-        <ExperimentalAcrylicMaterial 
+<DockPanel Name="ContentWrapper"
+           HorizontalAlignment="Stretch"
+	         VerticalAlignment="Stretch">
+  <ExperimentalAcrylicBorder>
+    <ExperimentalAcrylicBorder.Material>
+      <ExperimentalAcrylicMaterial
           BackgroundSource="Digger"
           TintColor="Black"
           TintOpacity="1"
-          MaterialOpacity="0.65"/>
-      </ExperimentalAcrylicBorder.Material>
-    </ExperimentalAcrylicBorder>
+          MaterialOpacity="0.90" />
+    </ExperimentalAcrylicBorder.Material>
+  </ExperimentalAcrylicBorder>
+  <Grid DockPanel.Dock="Top" HorizontalAlignment="Stretch" VerticalAlignment="Top" Name="TitleBar" ColumnDefinitions="Auto,*,Auto" Height="30">
+    <TextBlock Grid.Column="0" VerticalAlignment="Center" Margin="5,0,0,0">Title</TextBlock>
+    <StackPanel Grid.Column="1" HorizontalAlignment="Right" Orientation="Horizontal">
+      <Button Width="46"
+                        Height="30"
+                        HorizontalContentAlignment="Center"
+                        BorderThickness="0"
+                        Name="MinimizeButton"
+                        ToolTip.Tip="Minimize">
+        <Button.Resources>
+          <CornerRadius x:Key="ControlCornerRadius">0</CornerRadius>
+        </Button.Resources>
+        <Button.Styles>
+          <Style Selector="Button:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="#44AAAAAA"/>
+          </Style>
+          <Style Selector="Button:not(:pointerover) /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="Transparent"/>
+          </Style>
+        </Button.Styles>
+        <Path Margin="10,0,10,0"
+              Stretch="Uniform"
+              Fill="{DynamicResource SystemControlForegroundBaseHighBrush}"
+              Data="M2048 1229v-205h-2048v205h2048z"></Path>
+      </Button>
+      <Button Width="46"
+        VerticalAlignment="Stretch"
+        BorderThickness="0"
+        Name="MaximizeButton"
+        ToolTip.Tip="Maximize">
+        <Button.Resources>
+          <CornerRadius x:Key="ControlCornerRadius">0</CornerRadius>
+        </Button.Resources>
+        <Button.Styles>
+          <Style Selector="Button:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="#44AAAAAA"/>
+          </Style>
+          <Style Selector="Button:not(:pointerover) /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="Transparent"/>
+          </Style>
+        </Button.Styles>
+        <Path Margin="10,0,10,0"
+              Stretch="Uniform"
+              Fill="{DynamicResource SystemControlForegroundBaseHighBrush}"
+              Name="MaximizeIcon"
+              Data="M2048 2048v-2048h-2048v2048h2048zM1843 1843h-1638v-1638h1638v1638z"></Path>
+      </Button>
+      <Button Width="46"
+                  VerticalAlignment="Stretch"
+                  BorderThickness="0"
+                  Name="CloseButton"
+                  ToolTip.Tip="Close">
+        <Button.Resources>
+          <CornerRadius x:Key="ControlCornerRadius">0</CornerRadius>
+        </Button.Resources>
+        <Button.Styles>
+          <Style Selector="Button:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="Red"/>
+          </Style>
+          <Style Selector="Button:not(:pointerover) /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="Transparent"/>
+          </Style>
+          <Style Selector="Button:pointerover > Path">
+            <Setter Property="Fill" Value="White"/>
+          </Style>
+          <Style Selector="Button:not(:pointerover)> Path">
+            <Setter Property="Fill" Value="{DynamicResource SystemControlForegroundBaseHighBrush}"/>
+          </Style>
+        </Button.Styles>
+        <Path Margin="10,0,10,0"
+              Stretch="Uniform"
+              Data="M1169 1024l879 -879l-145 -145l-879 879l-879 -879l-145 145l879 879l-879 879l145 145l879 -879l879 879l145 -145z"></Path>
+      </Button>
+    </StackPanel>
+  </Grid>
+  <Panel VerticalAlignment="Center" HorizontalAlignment="Center" Background="Gray">
+    <TextBlock>SongImage</TextBlock>
   </Panel>
-  -->
-  
-  <!--- This is the CustomTitleBar -->
+  <Button Margin="5" 
+          DockPanel.Dock="Bottom" 
+          HorizontalAlignment="Center" 
+          VerticalAlignment="Bottom" 
+          Click="OnPlay"
+          BorderThickness="0"
+          Content="Play"/>
+</DockPanel>
+</Window>
+
+  <!--
   <Grid RowDefinitions="5,*,5" ColumnDefinitions="5,*,5">
     <DockPanel  Grid.Column="1"  Grid.Row="1" >
-      <Grid Name="TitleBar" DockPanel.Dock="Top" ColumnDefinitions="Auto,*,Auto"> <!-- Check in Here -> Themes reduce availability of move area -->
+      <Grid Name="TitleBar" DockPanel.Dock="Top" ColumnDefinitions="Auto,*,Auto">
         <TextBlock VerticalAlignment="Center" Margin="5,0,0,0">Title</TextBlock>
         <StackPanel Grid.Column="2" Orientation="Horizontal">
           <StackPanel.Styles>
@@ -45,21 +129,6 @@
           <Button Name="CloseButton">X</Button>
         </StackPanel>
       </Grid>
-      <!--- This is the actual Content -->
-      <DockPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch" LastChildFill="True">
-        <RelativePanel DockPanel.Dock="Bottom" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="10">
-          <Button HorizontalAlignment="Center" VerticalAlignment="Bottom" Click="OnPlay" Background="Transparent">Play</Button>
-        </RelativePanel>
-        <Panel DockPanel.Dock="Top" HorizontalAlignment="Stretch"
-               VerticalAlignment="Stretch" ToolTip.Tip="rightclick for more options">
-          <Panel.ContextMenu>
-            <ContextMenu>
-              <MenuItem Click="OnAddSong">AddaSong</MenuItem>
-            </ContextMenu>
-          </Panel.ContextMenu>
-        </Panel>
-      </DockPanel>
-    <!--- This is the replacement for AeroDesktopFeatures -->
     </DockPanel>
     <Border Name="TopLeft" Background="Transparent"/>
     <Border Name="TopRight" Background="Transparent" Grid.Column="2" />
@@ -70,20 +139,4 @@
     <Border Name="Bottom" Background="Transparent" Grid.Row="2" Grid.Column="1"  />
     <Border Name="Left" Background="Transparent"  Grid.Row="1" />
   </Grid>
-
-  <!--
-  <DockPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch" LastChildFill="True">
-    <RelativePanel DockPanel.Dock="Bottom" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="10">
-      <Button HorizontalAlignment="Center" VerticalAlignment="Bottom" Click="OnPlay">Play</Button>
-    </RelativePanel>
-    <Panel DockPanel.Dock="Top" Background="Gray" HorizontalAlignment="Stretch" 
-  >         VerticalAlignment="Stretch" ToolTip.Tip="rightclick for more options">
-      <Panel.ContextMenu> 
-        <ContextMenu>
-          <MenuItem Click="OnAddSong">Add a Song</MenuItem>
-        </ContextMenu>
-      </Panel.ContextMenu>
-    </Panel>
-  </DockPanel>
   -->
-</Window>

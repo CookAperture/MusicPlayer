@@ -90,7 +90,7 @@ namespace AvaloniaTesty
 
         public override void Initialize()
         {
-            Styles.Insert(0, DefaultLight);
+            Styles.Insert(0, DefaultDark);
             AvaloniaXamlLoader.Load(this);
         }
 
