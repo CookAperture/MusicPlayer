@@ -1,20 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
-
   <ItemGroup>
-    <PackageReference Include="Avalonia" Version="0.10.5" />
-    <PackageReference Include="Avalonia.Desktop" Version="0.10.5" />
-    <PackageReference Include="Avalonia.Diagnostics" Version="0.10.5" />
-    <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.5" />
-    <PackageReference Include="NAudio" Version="2.0.0" />
-    <PackageReference Include="TagLibSharp" Version="2.2.0" />
+    <Folder Include="Interactors\"/>
   </ItemGroup>
-
   <ItemGroup>
-    <Folder Include="Interactors\" />
+    <PackageReference Include="TagLibSharp" Version="2.2.0"/>
+    <PackageReference Include="BASS" Version="2.4.12.1"/>
   </ItemGroup>
-
 </Project>

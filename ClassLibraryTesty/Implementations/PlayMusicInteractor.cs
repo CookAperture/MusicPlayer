@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 using ClassLibraryTesty.Contracts;
-using TagLib;
-using TagLib.Id3v2;
-using TagLib.Audible;
+//using TagLib;
+//using TagLib.Id3v2;
+//using TagLib.Audible;
 
 namespace ClassLibraryTesty
 {
