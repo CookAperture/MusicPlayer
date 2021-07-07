@@ -4,6 +4,7 @@ using Avalonia.Controls.Chrome;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
+using Avalonia.Media;
 using Avalonia.Platform;
 using ClassLibraryTesty;
 using ClassLibraryTesty.Contracts;
@@ -20,12 +21,17 @@ namespace AvaloniaTesty
         public event IMainUI.OnPlay onPlay;
         public event IMainUI.OnAddSong onAddSong;
 
+        public IBrush _Background { get => _background; set { _background = value; RaisePropertyChanged(); } }
+
+        private IBrush _background = new SolidColorBrush(new Color(120, 40, 40, 40), 0.1);
+
         public MainWindow()
         {
             InitializeComponent();
             this.AttachDevTools();
             onPlay = () => { };
             onAddSong = (string path) => { };
+            //_Background = new SolidColorBrush(new Color(255, 40, 40, 40), 0.1);
         }
 
         public override void Show()
@@ -114,5 +120,6 @@ namespace AvaloniaTesty
 
         protected void RaisePropertyChanged([CallerMemberName] string propertyName = null)
             => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+
     }
 }

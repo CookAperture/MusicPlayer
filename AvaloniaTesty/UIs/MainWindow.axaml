@@ -7,22 +7,14 @@
         Title="MusicPlayer"
         ExtendClientAreaToDecorationsHint="True"
         ExtendClientAreaChromeHints="NoChrome"
-        TransparencyLevelHint="AcrylicBlur"
-        Background="Transparent"
+        TransparencyLevelHint="Blur"
+        Background="{Binding _Background}"
         Name="Window">
-  
-<DockPanel Name="ContentWrapper"
+  <Border BorderBrush="#333333" BorderThickness="1"> 
+    <DockPanel Name="ContentWrapper"
+           LastChildFill="True"
            HorizontalAlignment="Stretch"
 	         VerticalAlignment="Stretch">
-  <ExperimentalAcrylicBorder>
-    <ExperimentalAcrylicBorder.Material>
-      <ExperimentalAcrylicMaterial
-          BackgroundSource="Digger"
-          TintColor="Black"
-          TintOpacity="1"
-          MaterialOpacity="0.90" />
-    </ExperimentalAcrylicBorder.Material>
-  </ExperimentalAcrylicBorder>
   <Grid DockPanel.Dock="Top" HorizontalAlignment="Stretch" VerticalAlignment="Top" Name="TitleBar" ColumnDefinitions="Auto,*,Auto" Height="30">
     <TextBlock Grid.Column="0" VerticalAlignment="Center" Margin="5,0,0,0">Title</TextBlock>
     <StackPanel Grid.Column="1" HorizontalAlignment="Right" Orientation="Horizontal">
@@ -98,17 +90,20 @@
       </Button>
     </StackPanel>
   </Grid>
-  <Panel VerticalAlignment="Center" HorizontalAlignment="Center" Background="Gray">
+  <Panel DockPanel.Dock="Bottom" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Height="75">
+    <Button Margin="5" 
+            DockPanel.Dock="Bottom" 
+            HorizontalAlignment="Center" 
+            VerticalAlignment="Bottom" 
+            Click="OnPlay"
+            BorderThickness="0"
+            Content="Play"/>
+  </Panel>
+  <Panel VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="Gray">
     <TextBlock>SongImage</TextBlock>
   </Panel>
-  <Button Margin="5" 
-          DockPanel.Dock="Bottom" 
-          HorizontalAlignment="Center" 
-          VerticalAlignment="Bottom" 
-          Click="OnPlay"
-          BorderThickness="0"
-          Content="Play"/>
 </DockPanel>
+  </Border>
 </Window>
 
   <!--
