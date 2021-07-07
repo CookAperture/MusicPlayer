@@ -9,6 +9,7 @@
         ExtendClientAreaChromeHints="NoChrome"
         TransparencyLevelHint="AcrylicBlur"
         Name="Window">
+  
   <Border BorderBrush="#333333" BorderThickness="1"> 
   <DockPanel Name="ContentWrapper"
            LastChildFill="True"
@@ -27,10 +28,10 @@
           <CornerRadius x:Key="ControlCornerRadius">0</CornerRadius>
         </Button.Resources>
         <Button.Styles>
-          <Style Selector="Button:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+          <Style Selector="Button:pointerover ContentPresenter">
             <Setter Property="Background" Value="#44AAAAAA"/>
           </Style>
-          <Style Selector="Button:not(:pointerover) /template/ ContentPresenter#PART_ContentPresenter">
+          <Style Selector="Button:not(:pointerover) ContentPresenter">
             <Setter Property="Background" Value="Transparent"/>
           </Style>
         </Button.Styles>
@@ -48,10 +49,10 @@
           <CornerRadius x:Key="ControlCornerRadius">0</CornerRadius>
         </Button.Resources>
         <Button.Styles>
-          <Style Selector="Button:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+          <Style Selector="Button:pointerover ContentPresenter">
             <Setter Property="Background" Value="#44AAAAAA"/>
           </Style>
-          <Style Selector="Button:not(:pointerover) /template/ ContentPresenter#PART_ContentPresenter">
+          <Style Selector="Button:not(:pointerover) ContentPresenter">
             <Setter Property="Background" Value="Transparent"/>
           </Style>
         </Button.Styles>
@@ -70,10 +71,10 @@
           <CornerRadius x:Key="ControlCornerRadius">0</CornerRadius>
         </Button.Resources>
         <Button.Styles>
-          <Style Selector="Button:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+          <Style Selector="Button:pointerover ContentPresenter">
             <Setter Property="Background" Value="Red"/>
           </Style>
-          <Style Selector="Button:not(:pointerover) /template/ ContentPresenter#PART_ContentPresenter">
+          <Style Selector="Button:not(:pointerover) ContentPresenter">
             <Setter Property="Background" Value="Transparent"/>
           </Style>
           <Style Selector="Button:pointerover > Path">
@@ -90,13 +91,48 @@
     </StackPanel>
   </Grid>
   <Panel DockPanel.Dock="Bottom" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Height="75">
-    <Button Margin="5" 
-            DockPanel.Dock="Bottom" 
-            HorizontalAlignment="Center" 
-            VerticalAlignment="Bottom" 
-            Click="OnPlay"
-            BorderThickness="0"
-            Content="Play"/>
+    <ToggleButton DockPanel.Dock="Bottom"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center"
+                  Width="46"
+                  Height="46"
+                  Click="OnPlay"
+                  BorderThickness="0"
+                  Background="Transparent">
+      <ToggleButton.Resources>
+        <CornerRadius x:Key="ControlCornerRadius">0</CornerRadius>
+      </ToggleButton.Resources>
+      <ToggleButton.Styles>
+        <Style Selector="ToggleButton:checked > Path">
+          <Setter Property="Data" Value="M6.04995 2.74998C6.04995 2.44623 5.80371 2.19998 5.49995 2.19998C5.19619 2.19998 4.94995 2.44623 4.94995 2.74998V12.25C4.94995 12.5537 5.19619 12.8 5.49995 12.8C5.80371 12.8 6.04995 12.5537 6.04995 12.25V2.74998ZM10.05 2.74998C10.05 2.44623 9.80371 2.19998 9.49995 2.19998C9.19619 2.19998 8.94995 2.44623 8.94995 2.74998V12.25C8.94995 12.5537 9.19619 12.8 9.49995 12.8C9.80371 12.8 10.05 12.5537 10.05 12.25V2.74998Z"/>
+          <Setter Property="Margin" Value="0, 0, 0, 0"/>
+          <Setter Property="Fill" Value="{DynamicResource SystemControlForegroundBaseHighBrush}"/>
+          <Setter Property="Stretch" Value="Fill"/>
+        </Style>
+        <Style Selector="ToggleButton:unchecked > Path">
+          <Setter Property="Data" Value="M3.24182 2.32181C3.3919 2.23132 3.5784 2.22601 3.73338 2.30781L12.7334 7.05781C12.8974 7.14436 13 7.31457 13 7.5C13 7.68543 12.8974 7.85564 12.7334 7.94219L3.73338 12.6922C3.5784 12.774 3.3919 12.7687 3.24182 12.6782C3.09175 12.5877 3 12.4252 3 12.25V2.75C3 2.57476 3.09175 2.4123 3.24182 2.32181ZM4 3.57925V11.4207L11.4288 7.5L4 3.57925Z"/>
+          <Setter Property="Margin" Value="0, 0, 0, 0"/>
+          <Setter Property="Fill" Value="{DynamicResource SystemControlForegroundBaseHighBrush}"/>
+          <Setter Property="Stretch" Value="Fill"/>
+        </Style>
+        <Style Selector="ToggleButton:checked ContentPresenter">
+          <Setter Property="DockPanel.Dock" Value="Bottom"/>
+          <Setter Property="HorizontalAlignment" Value="Center"/>
+          <Setter Property="VerticalAlignment" Value="Center"/>
+          <Setter Property="BorderThickness" Value="0"/>
+          <Setter Property="Background" Value="Transparent"/>
+        </Style>
+        <Style Selector="ToggleButton:unchecked ContentPresenter">
+          <Setter Property="DockPanel.Dock" Value="Bottom"/>
+          <Setter Property="HorizontalAlignment" Value="Center"/>
+          <Setter Property="VerticalAlignment" Value="Center"/>
+          <Setter Property="BorderThickness" Value="0"/>
+          <Setter Property="Background" Value="Transparent"/>
+        </Style>
+      </ToggleButton.Styles>
+      <Path Name ="PlayPause"></Path>
+    
+    </ToggleButton>
   </Panel>
   <Panel VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="Gray">
     <TextBlock>SongImage</TextBlock>
@@ -104,33 +140,3 @@
 </DockPanel>
   </Border>
 </Window>
-
-  <!--
-  <Grid RowDefinitions="5,*,5" ColumnDefinitions="5,*,5">
-    <DockPanel  Grid.Column="1"  Grid.Row="1" >
-      <Grid Name="TitleBar" DockPanel.Dock="Top" ColumnDefinitions="Auto,*,Auto">
-        <TextBlock VerticalAlignment="Center" Margin="5,0,0,0">Title</TextBlock>
-        <StackPanel Grid.Column="2" Orientation="Horizontal">
-          <StackPanel.Styles>
-            <Style Selector="Button">
-              <Setter Property="Margin" Value="4"/>
-              <Setter Property="VerticalAlignment" Value="Center"/>
-              <Setter Property="Background" Value="Transparent"/>
-            </Style>
-          </StackPanel.Styles>
-          <Button Name="MinimizeButton">_</Button>
-          <Button Name="MaximizeButton">[ ]</Button>
-          <Button Name="CloseButton">X</Button>
-        </StackPanel>
-      </Grid>
-    </DockPanel>
-    <Border Name="TopLeft" Background="Transparent"/>
-    <Border Name="TopRight" Background="Transparent" Grid.Column="2" />
-    <Border Name="BottomLeft" Background="Transparent" Grid.Row="2" />
-    <Border Name="BottomRight" Background="Transparent"  Grid.Row="2" Grid.Column="2"/>
-    <Border Name="Top" Background="Transparent" Grid.Column="1" />
-    <Border Name="Right" Background="Transparent" Grid.Row="1"  Grid.Column="2" />
-    <Border Name="Bottom" Background="Transparent" Grid.Row="2" Grid.Column="1"  />
-    <Border Name="Left" Background="Transparent"  Grid.Row="1" />
-  </Grid>
-  -->

@@ -91,16 +91,9 @@ namespace AvaloniaTesty
             {
                 Close();
             };
-            //SetupSide("Left", StandardCursorType.LeftSide, WindowEdge.West);
-            //SetupSide("Right", StandardCursorType.RightSide, WindowEdge.East);
-            //SetupSide("Top", StandardCursorType.TopSide, WindowEdge.North);
-            //SetupSide("Bottom", StandardCursorType.BottomSide, WindowEdge.South);
-            //SetupSide("TopLeft", StandardCursorType.TopLeftCorner, WindowEdge.NorthWest);
-            //SetupSide("TopRight", StandardCursorType.TopRightCorner, WindowEdge.NorthEast);
-            //SetupSide("BottomLeft", StandardCursorType.BottomLeftCorner, WindowEdge.SouthWest);
-            //SetupSide("BottomRight", StandardCursorType.BottomRightCorner, WindowEdge.SouthEast);
 
             this.Background = new SolidColorBrush(new Color(90, 124, 124, 124), 1);
+            this.Title = "MusicPlayer";
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
