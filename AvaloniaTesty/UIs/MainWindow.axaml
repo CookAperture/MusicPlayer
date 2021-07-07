@@ -7,11 +7,10 @@
         Title="MusicPlayer"
         ExtendClientAreaToDecorationsHint="True"
         ExtendClientAreaChromeHints="NoChrome"
-        TransparencyLevelHint="Blur"
-        Background="{Binding _Background}"
+        TransparencyLevelHint="AcrylicBlur"
         Name="Window">
   <Border BorderBrush="#333333" BorderThickness="1"> 
-    <DockPanel Name="ContentWrapper"
+  <DockPanel Name="ContentWrapper"
            LastChildFill="True"
            HorizontalAlignment="Stretch"
 	         VerticalAlignment="Stretch">

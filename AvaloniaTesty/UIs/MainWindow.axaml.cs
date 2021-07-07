@@ -21,17 +21,12 @@ namespace AvaloniaTesty
         public event IMainUI.OnPlay onPlay;
         public event IMainUI.OnAddSong onAddSong;
 
-        public IBrush _Background { get => _background; set { _background = value; RaisePropertyChanged(); } }
-
-        private IBrush _background = new SolidColorBrush(new Color(120, 40, 40, 40), 0.1);
-
         public MainWindow()
         {
             InitializeComponent();
             this.AttachDevTools();
             onPlay = () => { };
             onAddSong = (string path) => { };
-            //_Background = new SolidColorBrush(new Color(255, 40, 40, 40), 0.1);
         }
 
         public override void Show()
@@ -47,6 +42,7 @@ namespace AvaloniaTesty
         private void OnPlay(object sender, RoutedEventArgs args)
         {
             //TODO
+            //this.Background = new SolidColorBrush(new Color(20, 66, 66, 66), 1);
         }
 
         public void OnSongAdded(SongMetaData meta)
@@ -103,6 +99,8 @@ namespace AvaloniaTesty
             //SetupSide("TopRight", StandardCursorType.TopRightCorner, WindowEdge.NorthEast);
             //SetupSide("BottomLeft", StandardCursorType.BottomLeftCorner, WindowEdge.SouthWest);
             //SetupSide("BottomRight", StandardCursorType.BottomRightCorner, WindowEdge.SouthEast);
+
+            this.Background = new SolidColorBrush(new Color(90, 124, 124, 124), 1);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
