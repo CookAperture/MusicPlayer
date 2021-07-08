@@ -10,19 +10,19 @@
     </AvaloniaResource>
   </ItemGroup>
   <ItemGroup>
-    <AvaloniaResource Remove="Dlgs\**"/>
-    <AvaloniaXaml Remove="Dlgs\**"/>
-    <Compile Remove="Dlgs\**"/>
-    <EmbeddedResource Remove="Dlgs\**"/>
-    <None Remove="Dlgs\**"/>
+    <AvaloniaResource Remove="Dlgs\**" />
+    <AvaloniaXaml Remove="Dlgs\**" />
+    <Compile Remove="Dlgs\**" />
+    <EmbeddedResource Remove="Dlgs\**" />
+    <None Remove="Dlgs\**" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Avalonia" Version="0.10.6"/>
-    <PackageReference Include="Avalonia.Desktop" Version="0.10.6"/>
-    <PackageReference Include="Avalonia.Diagnostics" Version="0.10.6"/>
-    <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.6"/>
+    <PackageReference Include="Avalonia" Version="0.10.6" />
+    <PackageReference Include="Avalonia.Desktop" Version="0.10.6" />
+    <PackageReference Include="Avalonia.Diagnostics" Version="0.10.6" />
+    <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.6" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ClassLibraryTesty\ClassLibraryTesty.csproj"/>
+    <ProjectReference Include="..\ClassLibraryTesty\ClassLibraryTesty.csproj" />
   </ItemGroup>
 </Project>

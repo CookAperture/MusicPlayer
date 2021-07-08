@@ -50,16 +50,6 @@ namespace AvaloniaTesty
             throw new System.NotImplementedException();
         }
 
-        void SetupSide(string name, StandardCursorType cursor, WindowEdge edge)
-        {
-            var ctl = this.FindControl<Control>(name);
-            ctl.Cursor = new Cursor(cursor);
-            ctl.PointerPressed += (i, e) =>
-            {
-                PlatformImpl?.BeginResizeDrag(edge, e);
-            };
-        }
-
         private void InitializeComponent()
         {
             if (Application.Current.Styles.Contains(App.FluentDark)
@@ -75,19 +65,21 @@ namespace AvaloniaTesty
             }
             AvaloniaXamlLoader.Load(this);
 
-            this.FindControl<Control>("TitleBar").PointerPressed += (i, e) =>
+            var ctr = this.FindControl<CustomDecoration>("CustomDecoration");
+
+            ctr.FindControl<Control>("TitleBar").PointerPressed += (i, e) =>
             {
                 PlatformImpl?.BeginMoveDrag(e);
             };
-            this.FindControl<Button>("MinimizeButton").Click += delegate
+            ctr.FindControl<Button>("MinimizeButton").Click += delegate
             {
                 this.WindowState = WindowState.Minimized;
             };
-            this.FindControl<Button>("MaximizeButton").Click += delegate
+            ctr.FindControl<Button>("MaximizeButton").Click += delegate
             {
                 WindowState = WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
             };
-            this.FindControl<Button>("CloseButton").Click += delegate
+            ctr.FindControl<Button>("CloseButton").Click += delegate
             {
                 Close();
             };
@@ -97,6 +89,7 @@ namespace AvaloniaTesty
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
         protected bool RaiseAndSetIfChanged<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
         {
             if (!EqualityComparer<T>.Default.Equals(field, value))
@@ -107,7 +100,6 @@ namespace AvaloniaTesty
             }
             return false;
         }
-
 
         protected void RaisePropertyChanged([CallerMemberName] string propertyName = null)
             => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
