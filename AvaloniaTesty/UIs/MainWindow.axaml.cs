@@ -39,12 +39,6 @@ namespace AvaloniaTesty
             onAddSong?.Invoke("");
         }
 
-        private void OnPlay(object sender, RoutedEventArgs args)
-        {
-            //TODO
-            //this.Background = new SolidColorBrush(new Color(20, 66, 66, 66), 1);
-        }
-
         public void OnSongAdded(SongMetaData meta)
         {
             throw new System.NotImplementedException();
@@ -65,24 +59,7 @@ namespace AvaloniaTesty
             }
             AvaloniaXamlLoader.Load(this);
 
-            var ctr = this.FindControl<CustomDecoration>("CustomDecoration");
-
-            ctr.FindControl<Control>("TitleBar").PointerPressed += (i, e) =>
-            {
-                PlatformImpl?.BeginMoveDrag(e);
-            };
-            ctr.FindControl<Button>("MinimizeButton").Click += delegate
-            {
-                this.WindowState = WindowState.Minimized;
-            };
-            ctr.FindControl<Button>("MaximizeButton").Click += delegate
-            {
-                WindowState = WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
-            };
-            ctr.FindControl<Button>("CloseButton").Click += delegate
-            {
-                Close();
-            };
+            this.AddMinimizeMaximizeCloseDragToCustomDecoration("TitleBar", "MinimizeButton", "MaximizeButton", "CloseButton", "CustomDecoration", this.LogicalChildren);
 
             this.Background = new SolidColorBrush(new Color(90, 124, 124, 124), 1);
             this.Title = "MusicPlayer";

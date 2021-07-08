@@ -25,4 +25,9 @@
   <ItemGroup>
     <ProjectReference Include="..\ClassLibraryTesty\ClassLibraryTesty.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Update="UIs\ReusableControlls\ControlBar.axaml.cs">
+      <DependentUpon>ControlBar.axaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
 </Project>
