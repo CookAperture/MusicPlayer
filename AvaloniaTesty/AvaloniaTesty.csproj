@@ -34,6 +34,14 @@
     <None Remove="Dlgs\**" />
   </ItemGroup>
   <ItemGroup>
+    <AvaloniaXaml Remove="Resources\Icons.axaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AvaloniaResource Include="Resources\Icons.axaml">
+      <Generator>MSBuild:Compile</Generator>
+    </AvaloniaResource>
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Avalonia" Version="0.10.6" />
     <PackageReference Include="Avalonia.Desktop" Version="0.10.6" />
     <PackageReference Include="Avalonia.Diagnostics" Version="0.10.6" />
