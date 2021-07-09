@@ -1,11 +1,13 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
+using ClassLibraryTesty.Contracts;
 
 namespace AvaloniaTesty
 {
-    public class SoundControlBar : UserControl
+    public class SoundControlBar : UserControl, ISoundControlBar
     {
+        public event ISoundControlBar.OnPlay onPlay;
         public SoundControlBar()
         {
             InitializeComponent();
@@ -18,8 +20,7 @@ namespace AvaloniaTesty
 
         private void OnPlay(object sender, RoutedEventArgs args)
         {
-            //TODO
-            //this.Background = new SolidColorBrush(new Color(20, 66, 66, 66), 1);
+            onPlay?.Invoke();
         }
     }
 }

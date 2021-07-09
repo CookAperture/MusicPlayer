@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "AvaloniaTesty": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}

@@ -19,7 +19,7 @@ namespace AvaloniaTesty
         {
             Source = new Uri("avares://Avalonia.Controls.DataGrid/Themes/Default.xaml")
         };
-        private static readonly Styles styles = new Styles
+        private static readonly Styles styles = new()
         {
             new StyleInclude(new Uri("avares://ControlCatalog/Styles"))
             {
@@ -29,7 +29,7 @@ namespace AvaloniaTesty
         };
         public static Styles FluentDark = styles;
 
-        public static Styles FluentLight = new Styles
+        public static Styles FluentLight = new()
         {
             new StyleInclude(new Uri("avares://ControlCatalog/Styles"))
             {
@@ -38,7 +38,7 @@ namespace AvaloniaTesty
             DataGridFluent
         };
 
-        public static Styles DefaultLight = new Styles
+        public static Styles DefaultLight = new()
         {
             new StyleInclude(new Uri("resm:Styles?assembly=AvaloniaTesty"))
             {
@@ -63,7 +63,7 @@ namespace AvaloniaTesty
             DataGridDefault
         };
 
-        public static Styles DefaultDark = new Styles
+        public static Styles DefaultDark = new()
         {
             new StyleInclude(new Uri("resm:Styles?assembly=AvaloniaTesty"))
             {

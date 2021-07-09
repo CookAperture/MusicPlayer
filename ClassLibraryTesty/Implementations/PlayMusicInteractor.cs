@@ -19,7 +19,7 @@ namespace ClassLibraryTesty
 
         public void PlaySong()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
     }
 }

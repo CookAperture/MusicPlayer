@@ -7,9 +7,9 @@ namespace AvaloniaTesty
 {
     class Program
     {
-        public static IMusicPlayerInteractor? musicPlayerInteractor;
-        public static IMainUI? mainUI;
-        public static IMainController? mainController;
+        public static IMusicPlayerInteractor musicPlayerInteractor;
+        public static IMainUI mainUI;
+        public static IMainController mainController;
         public static void Main(string[] args)
         {
                 AvaloniaInit.Init(args, AvaloniaInit_onReady);

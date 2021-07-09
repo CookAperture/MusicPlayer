@@ -31,7 +31,7 @@ namespace AvaloniaTesty
         }
 
         public static Window MainUI { get; set; }
-        public static AppBuilder? AppBuilder { get; set; }
+        public static AppBuilder AppBuilder { get; set; }
         public static Application Application { get; set; }
 
         public delegate Window OnReady();

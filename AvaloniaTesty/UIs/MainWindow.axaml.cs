@@ -18,15 +18,16 @@ namespace AvaloniaTesty
 {
     public class MainWindow : Window, IMainUI, INotifyPropertyChanged
     {
-        public event IMainUI.OnPlay onPlay;
-        public event IMainUI.OnAddSong onAddSong;
+        public event IMainUI.OnPlay onPlay = delegate { };
+        public event IMainUI.OnAddSong onAddSong = (path) => { };
+
+        public ICustomDecoration CustomDecoration { get; set; }
+        public ISoundControlBar SoundControlBar { get; set; }
 
         public MainWindow()
         {
             InitializeComponent();
             this.AttachDevTools();
-            onPlay = () => { };
-            onAddSong = (string path) => { };
         }
 
         public override void Show()
@@ -46,26 +47,16 @@ namespace AvaloniaTesty
 
         private void InitializeComponent()
         {
-            if (Application.Current.Styles.Contains(App.FluentDark)
-               || Application.Current.Styles.Contains(App.FluentLight))
-            {
-                var theme = new Avalonia.Themes.Fluent.Controls.FluentControls();
-                theme.TryGetResource("Button", out _);
-            }
-            else
-            {
-                var theme = new Avalonia.Themes.Default.DefaultTheme();
-                theme.TryGetResource("Button", out _);
-            }
             AvaloniaXamlLoader.Load(this);
 
-            this.AddMinimizeMaximizeCloseDragToCustomDecoration("TitleBar", "MinimizeButton", "MaximizeButton", "CloseButton", "CustomDecoration", this.LogicalChildren);
+            CustomDecoration = this.ConnectCustomDecoration("CustomDecoration", this.LogicalChildren);
+            SoundControlBar = WindowExtensions.ConnectSoundControlBar(delegate { onPlay?.Invoke(); }, "SoundControlBar", this.LogicalChildren);
 
             this.Background = new SolidColorBrush(new Color(90, 124, 124, 124), 1);
             this.Title = "MusicPlayer";
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        new public event PropertyChangedEventHandler PropertyChanged;
 
         protected bool RaiseAndSetIfChanged<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
         {

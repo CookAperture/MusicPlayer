@@ -1,12 +1,28 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <AnalysisLevel>preview</AnalysisLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants />
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningsAsErrors />
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningsAsErrors />
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+    <DefineConstants />
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="Interactors\"/>
+    <Folder Include="Interactors\" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="TagLibSharp" Version="2.2.0"/>
-    <PackageReference Include="BASS" Version="2.4.12.1"/>
+    <PackageReference Include="TagLibSharp" Version="2.2.0" />
+    <PackageReference Include="BASS" Version="2.4.12.1" />
   </ItemGroup>
 </Project>
