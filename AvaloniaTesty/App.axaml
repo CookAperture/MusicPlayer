@@ -5,6 +5,6 @@
     <StyleInclude Source="avares://Avalonia.Themes.Default/DefaultTheme.xaml"></StyleInclude>
     <StyleInclude Source="avares://Avalonia.Themes.Fluent/FluentLight.xaml"></StyleInclude>
     <StyleInclude Source="avares://Avalonia.Themes.Fluent/FluentDark.xaml"></StyleInclude>
-    <StyleInclude Source="avares://Avalonia.AvaloniaTesty/Resources/Icons.axaml"></StyleInclude>
+    <StyleInclude Source="/Icons.axaml"></StyleInclude>
   </Application.Styles>
 </Application>

@@ -34,10 +34,7 @@
     <None Remove="Dlgs\**" />
   </ItemGroup>
   <ItemGroup>
-    <AvaloniaXaml Remove="Resources\Icons.axaml" />
-  </ItemGroup>
-  <ItemGroup>
-    <AvaloniaResource Include="Resources\Icons.axaml">
+    <AvaloniaResource Include="Icons.axaml">
       <Generator>MSBuild:Compile</Generator>
     </AvaloniaResource>
   </ItemGroup>
