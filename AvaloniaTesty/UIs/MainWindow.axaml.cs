@@ -1,15 +1,9 @@
 using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Controls.Chrome;
-using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
-using Avalonia.Media;
-using Avalonia.Platform;
 using ClassLibraryTesty;
 using ClassLibraryTesty.Contracts;
-using ReactiveUI;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -52,7 +46,6 @@ namespace AvaloniaTesty
             CustomDecoration = this.ConnectCustomDecoration("CustomDecoration", this.LogicalChildren);
             SoundControlBar = WindowExtensions.ConnectSoundControlBar(delegate { onPlay?.Invoke(); }, "SoundControlBar", this.LogicalChildren);
 
-            this.Background = new SolidColorBrush(new Color(90, 124, 124, 124), 1);
             this.Title = "MusicPlayer";
         }
 
@@ -71,6 +64,5 @@ namespace AvaloniaTesty
 
         protected void RaisePropertyChanged([CallerMemberName] string propertyName = null)
             => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-
     }
 }

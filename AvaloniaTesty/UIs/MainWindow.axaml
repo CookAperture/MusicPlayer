@@ -3,30 +3,50 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="AvaloniaTesty.MainWindow"
         Title="MusicPlayer"
         ExtendClientAreaToDecorationsHint="True"
         ExtendClientAreaChromeHints="NoChrome"
         TransparencyLevelHint="Blur"
-        Name="Window">
+        Background="Transparent"
+        Name="Window"
+        MinHeight="250"
+        MinWidth="250">
   
-  <Border BorderBrush="#333333" BorderThickness="1"> 
   <DockPanel Name="ContentWrapper"
            LastChildFill="True"
            HorizontalAlignment="Stretch"
 	         VerticalAlignment="Stretch">
-  <uc:CustomDecoration DockPanel.Dock="Top" HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
-  <uc:SoundControlBar DockPanel.Dock="Bottom" VerticalAlignment="Bottom" HorizontalAlignment="Stretch"/>
-  <Panel VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="Gray">
-      <Path Margin="30,30,30,30"
+    <ExperimentalAcrylicBorder IsHitTestVisible="False">
+      <ExperimentalAcrylicBorder.Material>
+        <ExperimentalAcrylicMaterial
+            BackgroundSource="Digger"
+            TintColor="Gray"
+            TintOpacity=".5"
+            MaterialOpacity=".85" />
+      </ExperimentalAcrylicBorder.Material>
+    </ExperimentalAcrylicBorder>
+  <uc:CustomDecoration DockPanel.Dock="Top" 
+                       HorizontalAlignment="Stretch" 
+                       VerticalAlignment="Top"/>
+  <uc:SoundControlBar DockPanel.Dock="Bottom" 
+                      VerticalAlignment="Bottom" 
+                      HorizontalAlignment="Stretch"/>
+  <Panel VerticalAlignment="Stretch" 
+         HorizontalAlignment="Stretch" 
+         Background="Gray" 
+         Name="ImageContainer">
+      <Path Margin="0,10,0,10"
             Stretch="Uniform"
             Data="{StaticResource img_icon}"
             Fill="{DynamicResource SystemControlForegroundBaseHighBrush}"
             Name="MusicImage"
-            VerticalAlignment="Center" HorizontalAlignment="Center">
+            VerticalAlignment="Center" 
+            HorizontalAlignment="Center"
+            MaxHeight="250"
+            MinHeight="47">
       </Path>
   </Panel>
 </DockPanel>
-  </Border>
+  
 </Window>
