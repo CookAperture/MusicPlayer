@@ -1,5 +1,7 @@
 # MusicPlayer
-> powered by avalonia
+> Powered by [Avalonia](https://github.com/AvaloniaUI/Avalonia)
+
+> Icons by [Radix Icons](https://icons.modulz.app/)
 
 ### Notes
 
