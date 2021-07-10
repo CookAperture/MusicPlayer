@@ -6,5 +6,53 @@
     <StyleInclude Source="avares://Avalonia.Themes.Fluent/FluentLight.xaml"></StyleInclude>
     <StyleInclude Source="avares://Avalonia.Themes.Fluent/FluentDark.xaml"></StyleInclude>
     <StyleInclude Source="/Icons.axaml"></StyleInclude>
+    
+    <!-- Add Custom Controll Styles here -->
+    <Style Selector="ToolTip">
+      <Setter Property="BorderThickness" Value="0"/>
+      <Setter Property="Background" Value="#FF000000"/>
+      <Setter Property="VerticalContentAlignment" Value="Center"/>
+      <Setter Property="HorizontalContentAlignment" Value="Center"/>
+      <Setter Property="Margin" Value="0"/>
+      <Setter Property="Padding" Value="0"/>
+    </Style>
+    
+    <Style Selector="Button:pointerover ContentPresenter">
+      <Setter Property="Background" Value="#44AAAAAA"/>
+    </Style>
+    <Style Selector="Button:not(:pointerover) ContentPresenter">
+      <Setter Property="Background" Value="Transparent"/>
+    </Style>
+
+    <Style Selector="Path">
+      <Setter Property="VerticalAlignment" Value="Center"/>
+      <Setter Property="HorizontalAlignment" Value="Center"/>
+      <Setter Property="Fill" Value="{DynamicResource SystemControlForegroundBaseHighBrush}"/>
+      <Setter Property="Margin" Value="0, 0, 0, 0"/>
+      <Setter Property="Stretch" Value="Uniform"/>
+    </Style>
+
+    <Style Selector="ToggleButton:checked ContentPresenter">
+      <Setter Property="HorizontalAlignment" Value="Center"/>
+      <Setter Property="VerticalAlignment" Value="Center"/>
+      <Setter Property="BorderThickness" Value="0"/>
+      <Setter Property="Background" Value="Transparent"/>
+    </Style>
+    
+    <Style Selector="ToggleButton:unchecked ContentPresenter">
+      <Setter Property="HorizontalAlignment" Value="Center"/>
+      <Setter Property="VerticalAlignment" Value="Center"/>
+      <Setter Property="BorderThickness" Value="0"/>
+      <Setter Property="Background" Value="Transparent"/>
+    </Style>
+
+    <Style Selector="ToggleButton:pointerover ContentPresenter">
+      <Setter Property="Background" Value="#44AAAAAA"/>
+    </Style>
+    
+    <Style Selector="ToggleButton:not(:pointerover) ContentPresenter">
+      <Setter Property="Background" Value="Transparent"/>
+    </Style>
   </Application.Styles>
+
 </Application>

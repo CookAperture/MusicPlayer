@@ -21,29 +21,17 @@
       <ToggleButton.Styles>
         <Style Selector="ToggleButton:checked > Path">
           <Setter Property="Data" Value="{StaticResource pause_icon}"/>
-          <Setter Property="Margin" Value="0, 0, 0, 0"/>
-          <Setter Property="Fill" Value="{DynamicResource SystemControlForegroundBaseHighBrush}"/>
           <Setter Property="Stretch" Value="Fill"/>
         </Style>
         <Style Selector="ToggleButton:unchecked > Path">
           <Setter Property="Data" Value="{StaticResource play_icon}"/>
-          <Setter Property="Margin" Value="0, 0, 0, 0"/>
-          <Setter Property="Fill" Value="{DynamicResource SystemControlForegroundBaseHighBrush}"/>
           <Setter Property="Stretch" Value="Fill"/>
         </Style>
         <Style Selector="ToggleButton:checked ContentPresenter">
           <Setter Property="DockPanel.Dock" Value="Bottom"/>
-          <Setter Property="HorizontalAlignment" Value="Center"/>
-          <Setter Property="VerticalAlignment" Value="Center"/>
-          <Setter Property="BorderThickness" Value="0"/>
-          <Setter Property="Background" Value="Transparent"/>
         </Style>
         <Style Selector="ToggleButton:unchecked ContentPresenter">
           <Setter Property="DockPanel.Dock" Value="Bottom"/>
-          <Setter Property="HorizontalAlignment" Value="Center"/>
-          <Setter Property="VerticalAlignment" Value="Center"/>
-          <Setter Property="BorderThickness" Value="0"/>
-          <Setter Property="Background" Value="Transparent"/>
         </Style>
       </ToggleButton.Styles>
       <Path Name ="PlayPause"></Path>

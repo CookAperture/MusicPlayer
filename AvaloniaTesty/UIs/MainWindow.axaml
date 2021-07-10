@@ -12,33 +12,11 @@
         Name="Window"
         MinHeight="250"
         MinWidth="250">
-
-  <Window.Styles>
-    <!-- Add Custom Controll Styles here -->
-    <Style Selector="ToolTip">
-      <Setter Property="BorderThickness" Value="0"/>
-      <Setter Property="Background" Value="#333333"/>
-    </Style>
-
-    <Style Selector="ToggleButton:pointerover ContentPresenter">
-      <Setter Property="Background" Value="#44AAAAAA"/>
-    </Style>
-    <Style Selector="ToggleButton:not(:pointerover) ContentPresenter">
-      <Setter Property="Background" Value="Transparent"/>
-    </Style>
-
-    <Style Selector="Button:pointerover ContentPresenter">
-      <Setter Property="Background" Value="#44AAAAAA"/>
-    </Style>
-    <Style Selector="Button:not(:pointerover) ContentPresenter">
-      <Setter Property="Background" Value="Transparent"/>
-    </Style>
-  </Window.Styles>
   
   <DockPanel Name="ContentWrapper"
-           LastChildFill="True"
-           HorizontalAlignment="Stretch"
-	         VerticalAlignment="Stretch">
+             LastChildFill="True"
+             HorizontalAlignment="Stretch"
+	           VerticalAlignment="Stretch">
     <ExperimentalAcrylicBorder IsHitTestVisible="False">
       <ExperimentalAcrylicBorder.Material>
         <ExperimentalAcrylicMaterial
@@ -63,8 +41,6 @@
             Data="{StaticResource img_icon}"
             Fill="{DynamicResource SystemControlForegroundBaseHighBrush}"
             Name="MusicImage"
-            VerticalAlignment="Center" 
-            HorizontalAlignment="Center"
             MaxHeight="250"
             MinHeight="47">
       </Path>
