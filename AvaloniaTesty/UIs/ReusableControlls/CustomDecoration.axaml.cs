@@ -20,23 +20,10 @@ namespace AvaloniaTesty
         {
             AvaloniaXamlLoader.Load(this);
 
-            this.FindControl<Control>("TitleBar").PointerPressed += (i, e) =>
-            {
-                onDrag?.Invoke(i,e);
-            };
-            this.FindControl<Button>("MinimizeButton").Click += (i, e) =>
-            {
-                onMinimize?.Invoke(e);
-            };
-            this.FindControl<Button>("MaximizeButton").Click += (i, e) =>
-            {
-                onMaximize?.Invoke(e);
-            };
-            this.FindControl<Button>("CloseButton").Click += (i, e) =>
-            {
-                onClose?.Invoke(e);
-            };
+            this.FindControl<Control>("TitleBar").PointerPressed += (i, e) => onDrag?.Invoke(i, e);
+            this.FindControl<Button>("MinimizeButton").Click += (i, e) => onMinimize?.Invoke(e);
+            this.FindControl<Button>("MaximizeButton").Click += (i, e) => onMaximize?.Invoke(e);
+            this.FindControl<Button>("CloseButton").Click += (i, e) => onClose?.Invoke(e);
         }
-
     }
 }

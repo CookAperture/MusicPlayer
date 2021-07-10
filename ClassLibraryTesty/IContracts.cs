@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ClassLibraryTesty
 {
@@ -11,9 +7,7 @@ namespace ClassLibraryTesty
         //Logic Contracts
         #region LogicContracts
         public interface IMainController
-        {
-
-        }
+        { }
 
         public interface IMusicPlayerInteractor //may use sound api here
         {

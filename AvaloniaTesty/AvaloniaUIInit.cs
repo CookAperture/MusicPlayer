@@ -1,10 +1,9 @@
-﻿using System.Threading;
-using Avalonia;
+﻿using Avalonia;
 using Avalonia.Controls;
 
 namespace AvaloniaTesty
 {
-    public class AvaloniaInit
+    public static class AvaloniaInit
     {
         // Avalonia configuration, don't remove; also used by visual designer.
         public static AppBuilder BuildAvaloniaApp() => AppBuilder.Configure<App>().UsePlatformDetect().LogToTrace();
@@ -15,19 +14,18 @@ namespace AvaloniaTesty
             // yet and stuff might break.
             onReady += onReadyDelegate;
             AppBuilder = BuildAvaloniaApp();
-            AppBuilder.Start(AppMain, args); 
+            AppBuilder.Start(AppMain, args);
         }
 
         static void AppMain(Application app, string[] args)
         {
             // Do you startup code here
-            MainUI = onReady?.Invoke(); 
+            MainUI = onReady?.Invoke();
             MainUI.Show();
             Application = app;
 
             // Start the main loop
             app.Run(MainUI);
-
         }
 
         public static Window MainUI { get; set; }
