@@ -6,9 +6,5 @@
     <StyleInclude Source="avares://Avalonia.Themes.Fluent/FluentLight.xaml"></StyleInclude>
     <StyleInclude Source="avares://Avalonia.Themes.Fluent/FluentDark.xaml"></StyleInclude>
     <StyleInclude Source="/Icons.axaml"></StyleInclude>
-    <!-- Add Custom Controll Styles here -->
-    <Style Selector="ToolTip">
-      <Setter Property="BorderThickness" Value="0"/>
-    </Style>
   </Application.Styles>
 </Application>
