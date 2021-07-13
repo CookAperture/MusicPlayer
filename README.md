@@ -16,3 +16,10 @@
 - [ ] Scrub a Song
 - [ ] Auto Load Songs from Dir
 - [ ] Save Own Lists of Songs
+
+# Commit Icons
+
+- 📝: Basic File Edit
+- 🔧: Edit over severall files as a new impl (plural of Basic File Edit)
+- 🐞: Bug Discovery/Fix
+- ➕: File Add/Removal
