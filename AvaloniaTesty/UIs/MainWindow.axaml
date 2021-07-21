@@ -7,7 +7,7 @@
         Title="MusicPlayer"
         ExtendClientAreaToDecorationsHint="True"
         ExtendClientAreaChromeHints="NoChrome"
-        TransparencyLevelHint="Blur"
+        TransparencyLevelHint="AcrylicBlur"
         Background="Transparent"
         Name="Window"
         MinHeight="250"
@@ -22,8 +22,8 @@
         <ExperimentalAcrylicMaterial
             BackgroundSource="Digger"
             TintColor="Gray"
-            TintOpacity=".5"
-            MaterialOpacity=".85" />
+            TintOpacity="0.5"
+            MaterialOpacity="0.85" />
       </ExperimentalAcrylicBorder.Material>
     </ExperimentalAcrylicBorder>
   <uc:CustomDecoration DockPanel.Dock="Top" 
