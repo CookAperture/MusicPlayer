@@ -44,7 +44,7 @@
     <PackageReference Include="Avalonia.Diagnostics" Version="0.10.6" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ClassLibraryTesty\ClassLibraryTesty.csproj" />
+    <ProjectReference Include="..\ClassLibraryTesty\MusicPlayerLibrary.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="UIs\ReusableControlls\ControlBar.axaml.cs">
