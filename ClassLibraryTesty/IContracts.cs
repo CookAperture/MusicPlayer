@@ -62,6 +62,15 @@ namespace ClassLibraryTesty
         {
             public void LoadCover(/* send img here */);
         }
+
+        public interface ISettings
+        {
+
+            //public delegate void OnSettingsChanged(EventArgs args);
+            //public event OnSettingsChanged onSettingsChanged;
+
+            public void LoadSettings(/* send settings here */);
+        }
         #endregion
     }
 }
