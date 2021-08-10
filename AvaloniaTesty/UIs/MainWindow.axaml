@@ -26,25 +26,14 @@
             MaterialOpacity="0.85" />
       </ExperimentalAcrylicBorder.Material>
     </ExperimentalAcrylicBorder>
-  <uc:CustomDecoration DockPanel.Dock="Top" 
-                       HorizontalAlignment="Stretch" 
-                       VerticalAlignment="Top"/>
-  <uc:SoundControlBar DockPanel.Dock="Bottom" 
-                      VerticalAlignment="Bottom" 
-                      HorizontalAlignment="Stretch"/>
-  <Panel VerticalAlignment="Stretch" 
-         HorizontalAlignment="Stretch" 
-         Background="Gray" 
-         Name="ImageContainer">
-      <Path Margin="0,10,0,10"
-            Stretch="Uniform"
-            Data="{StaticResource img_icon}"
-            Fill="{DynamicResource SystemControlForegroundBaseHighBrush}"
-            Name="MusicImage"
-            MaxHeight="250"
-            MinHeight="47">
-      </Path>
-  </Panel>
+    <uc:CustomDecoration DockPanel.Dock="Top" 
+                         HorizontalAlignment="Stretch" 
+                         VerticalAlignment="Top"/>
+    <uc:SoundControlBar DockPanel.Dock="Bottom" 
+                        VerticalAlignment="Bottom" 
+                        HorizontalAlignment="Stretch"/>
+    <uc:SongCover VerticalAlignment="Stretch"
+                  HorizontalAlignment="Stretch"/>
 </DockPanel>
   
 </Window>

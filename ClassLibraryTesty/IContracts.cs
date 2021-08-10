@@ -57,6 +57,11 @@ namespace ClassLibraryTesty
             public event OnClose onClose;
             public event OnDrag onDrag;
         }
+
+        public interface ISongCover
+        {
+            public void LoadCover(/* send img here */);
+        }
         #endregion
     }
 }

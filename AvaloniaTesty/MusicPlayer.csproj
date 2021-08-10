@@ -1,11 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net6.0-windows10.0.20348.0</TargetFramework>
     <Nullable>disable</Nullable>
     <StartupObject>AvaloniaTesty.Program</StartupObject>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
     <AnalysisLevel>preview</AnalysisLevel>
+    <ErrorReport>send</ErrorReport>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
@@ -13,6 +14,7 @@
     <DebugType>full</DebugType>
     <DebugSymbols>true</DebugSymbols>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
@@ -20,6 +22,7 @@
     <DebugType>none</DebugType>
     <DebugSymbols>false</DebugSymbols>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <ItemGroup>
     <AvaloniaResource Include="**\*.xaml">
@@ -47,6 +50,9 @@
     <ProjectReference Include="..\ClassLibraryTesty\MusicPlayerLibrary.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="UIs\ReusableControlls\SongCover.axaml.cs">
+      <DependentUpon>SongCover.axaml</DependentUpon>
+    </Compile>
     <Compile Update="UIs\ReusableControlls\ControlBar.axaml.cs">
       <DependentUpon>ControlBar.axaml</DependentUpon>
     </Compile>
