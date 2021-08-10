@@ -50,6 +50,9 @@
     <ProjectReference Include="..\ClassLibraryTesty\MusicPlayerLibrary.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="UIs\ReusableControlls\Settings.axaml.cs">
+      <DependentUpon>Settings.axaml</DependentUpon>
+    </Compile>
     <Compile Update="UIs\ReusableControlls\SongCover.axaml.cs">
       <DependentUpon>SongCover.axaml</DependentUpon>
     </Compile>

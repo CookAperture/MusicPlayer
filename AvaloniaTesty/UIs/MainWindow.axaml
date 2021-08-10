@@ -26,14 +26,22 @@
             MaterialOpacity="0.85" />
       </ExperimentalAcrylicBorder.Material>
     </ExperimentalAcrylicBorder>
-    <uc:CustomDecoration DockPanel.Dock="Top" 
-                         HorizontalAlignment="Stretch" 
-                         VerticalAlignment="Top"/>
     <uc:SoundControlBar DockPanel.Dock="Bottom" 
                         VerticalAlignment="Bottom" 
                         HorizontalAlignment="Stretch"/>
-    <uc:SongCover VerticalAlignment="Stretch"
-                  HorizontalAlignment="Stretch"/>
+    <uc:CustomDecoration DockPanel.Dock="Top" 
+                         HorizontalAlignment="Stretch" 
+                         VerticalAlignment="Top"/>
+    <TabControl>
+      <TabItem Header="Main" VerticalContentAlignment="Center">
+           <uc:SongCover VerticalAlignment="Stretch"
+                         HorizontalAlignment="Stretch"/>
+      </TabItem>
+      <TabItem Header="Settings" VerticalContentAlignment="Center">
+        <uc:Settings VerticalAlignment="Stretch"
+                     HorizontalAlignment="Stretch"/>
+      </TabItem>
+    </TabControl>
 </DockPanel>
   
 </Window>

@@ -3,12 +3,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="200" d:DesignHeight="400"
-             x:Class="AvaloniaTesty.SongCover"
+             x:Class="AvaloniaTesty.Settings"
              Name="Settings">
 
   <Panel Background="Gray"
-         Name="ImageContainer">
-    void is my name
+         Name="SettingsPanel">
+    <TextBlock>void is my name</TextBlock>
   </Panel>
 
 
