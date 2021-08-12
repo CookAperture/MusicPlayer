@@ -39,7 +39,7 @@ namespace AvaloniaTesty
             return Recursion(list);
         }
 
-        public static ICustomDecoration ConnectCustomDecoration(this MainWindow @this, string customDecorationName, IEnumerable<Avalonia.LogicalTree.ILogical> logicalTree)
+        public static ICustomDecoration ConnectCustomDecoration(this MainUI @this, string customDecorationName, IEnumerable<Avalonia.LogicalTree.ILogical> logicalTree)
         {
             CustomDecoration customDecoration = FindUserControl<CustomDecoration>(logicalTree, customDecorationName);
 
@@ -70,6 +70,11 @@ namespace AvaloniaTesty
             customDecoration.onPlay += onPlayDelegate;
 
             return customDecoration;
+        }
+
+        public static ISongCover ConnectSongCover(string songCoverName, IEnumerable<Avalonia.LogicalTree.ILogical> logicalTree)
+        {
+            return FindUserControl<SongCover>(logicalTree, songCoverName);
         }
     }
 

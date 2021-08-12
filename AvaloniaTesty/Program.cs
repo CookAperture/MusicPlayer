@@ -7,18 +7,28 @@ namespace AvaloniaTesty
     {
         public static IMusicPlayerInteractor musicPlayerInteractor;
         public static IMainUI mainUI;
+        public static ICustomDecoration customDecoration;
+        public static ISongCover songCover;
+        public static ISoundControlBar soundControlBar;
         public static IMainController mainController;
         public static void Main(string[] args)
         {
-            AvaloniaInit.Init(args, AvaloniaInit_onReady);
+            MusicPlayerApp.Init(args, MusicPlayerAppInit);
         }
 
-        private static MainWindow AvaloniaInit_onReady()
+        private static MainUI MusicPlayerAppInit()
         {
+            //init controller here
             musicPlayerInteractor = new MusicPlayerInteractor();
-            mainUI = new MainWindow();
-            mainController = new MainController(ref musicPlayerInteractor, ref mainUI);
-            return (MainWindow)mainUI;
+            customDecoration = new CustomDecoration();
+            songCover = new SongCover();
+            soundControlBar = new SoundControlBar();
+            mainUI = new MainUI();
+            ((MainUI)mainUI).CustomDecoration = customDecoration;
+            ((MainUI)mainUI).SoundControlBar = soundControlBar;
+            ((MainUI)mainUI).SongCover = ((SongCover)songCover);
+            mainController = new MainController(ref musicPlayerInteractor, ref mainUI, ref customDecoration, ref songCover, ref soundControlBar);
+            return (MainUI)mainUI;
         }
     }
 }

@@ -14,8 +14,8 @@ namespace AvaloniaTesty
         {
             //if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             //{
-            //    MainUI = new MainWindow();
-            //    desktop.MainWindow = MainUI;
+            //    MainUI = new MainUI();
+            //    desktop.MainUI = MainUI;
             //}
             //DoSomethingAppSpecific -> e.g. setup lifetime for various platforms eventually
 

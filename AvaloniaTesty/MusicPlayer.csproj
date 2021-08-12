@@ -42,14 +42,17 @@
     </AvaloniaResource>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Avalonia" Version="0.10.6" />
-    <PackageReference Include="Avalonia.Desktop" Version="0.10.6" />
-    <PackageReference Include="Avalonia.Diagnostics" Version="0.10.6" />
+    <PackageReference Include="Avalonia" Version="0.10.999-cibuild0014036-beta" />
+    <PackageReference Include="Avalonia.Desktop" Version="0.10.999-cibuild0014036-beta" />
+    <PackageReference Include="Avalonia.Diagnostics" Version="0.10.999-cibuild0014036-beta" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ClassLibraryTesty\MusicPlayerLibrary.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="UIs\MainUI.axaml.cs">
+      <DependentUpon>MainUI.axaml</DependentUpon>
+    </Compile>
     <Compile Update="UIs\ReusableControlls\Settings.axaml.cs">
       <DependentUpon>Settings.axaml</DependentUpon>
     </Compile>

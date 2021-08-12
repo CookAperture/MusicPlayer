@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        x:Class="AvaloniaTesty.MainWindow"
+        x:Class="AvaloniaTesty.MainUI"
         Title="MusicPlayer"
         ExtendClientAreaToDecorationsHint="True"
         ExtendClientAreaChromeHints="NoChrome"
@@ -32,16 +32,10 @@
     <uc:CustomDecoration DockPanel.Dock="Top" 
                          HorizontalAlignment="Stretch" 
                          VerticalAlignment="Top"/>
-    <TabControl>
-      <TabItem Header="Main" VerticalContentAlignment="Center">
-           <uc:SongCover VerticalAlignment="Stretch"
-                         HorizontalAlignment="Stretch"/>
-      </TabItem>
-      <TabItem Header="Settings" VerticalContentAlignment="Center">
-        <uc:Settings VerticalAlignment="Stretch"
-                     HorizontalAlignment="Stretch"/>
-      </TabItem>
-    </TabControl>
+    <!-- <uc:SongCover VerticalAlignment="Stretch"
+              HorizontalAlignment="Stretch"/> -->
+  <UserControl Name="SongCover" Content="{Binding SongCover}" VerticalAlignment="Stretch"
+              HorizontalAlignment="Stretch"/>
 </DockPanel>
   
 </Window>

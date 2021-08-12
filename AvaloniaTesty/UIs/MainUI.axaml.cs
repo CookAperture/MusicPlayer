@@ -10,15 +10,16 @@ using System.Runtime.CompilerServices;
 
 namespace AvaloniaTesty
 {
-    public class MainWindow : Window, IMainUI, INotifyPropertyChanged
+    public class MainUI : Window, IMainUI, INotifyPropertyChanged
     {
         public event IMainUI.OnPlay onPlay = delegate { };
         public event IMainUI.OnAddSong onAddSong = (path) => { };
 
         public ICustomDecoration CustomDecoration { get; set; }
         public ISoundControlBar SoundControlBar { get; set; }
+        public ISongCover SongCover { get; set; }
 
-        public MainWindow()
+        public MainUI()
         {
             InitializeComponent();
             this.AttachDevTools();
@@ -45,8 +46,11 @@ namespace AvaloniaTesty
 
             CustomDecoration = this.ConnectCustomDecoration("CustomDecoration", this.LogicalChildren);
             SoundControlBar = WindowExtensions.ConnectSoundControlBar(delegate { onPlay?.Invoke(); }, "SoundControlBar", this.LogicalChildren);
+            //SongCover = WindowExtensions.ConnectSongCover("SongCover", LogicalChildren);
 
             this.Title = "MusicPlayer";
+
+            this.DataContext = this;
         }
 
         new public event PropertyChangedEventHandler PropertyChanged;
