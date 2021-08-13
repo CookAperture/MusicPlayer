@@ -13,7 +13,13 @@
                VerticalAlignment="Center" 
                Margin="10,0,0,0" 
                Text="{Binding $parent[Window].Title}"></TextBlock>
-    <StackPanel Grid.Column="1" 
+    <TabStrip Grid.Column="1">
+      <Button Content="Cover"
+              Name="CoverButton"/>
+      <Button Content="Settings"
+              Name="SettingsButton"/>
+    </TabStrip>
+    <StackPanel Grid.Column="2" 
                 HorizontalAlignment="Right" 
                 Orientation="Horizontal">
       <Button Width="47"

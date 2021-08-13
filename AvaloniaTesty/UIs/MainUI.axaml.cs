@@ -17,7 +17,7 @@ namespace AvaloniaTesty
 
         public ICustomDecoration CustomDecoration { get; set; }
         public ISoundControlBar SoundControlBar { get; set; }
-        public ISongCover SongCover { get; set; }
+        public IContentPresenter ContentPresenter { get; set; }
 
         public MainUI()
         {
@@ -25,12 +25,14 @@ namespace AvaloniaTesty
 
             CustomDecoration = (ICustomDecoration)WindowHelperFunctions.FindUserControl<UserControl>(LogicalChildren, "CustomDecoration");
             SoundControlBar = (ISoundControlBar)WindowHelperFunctions.FindUserControl<UserControl>(LogicalChildren, "SoundControlBar");
-            SongCover = (ISongCover)WindowHelperFunctions.FindUserControl<UserControl>(LogicalChildren, "SongCover");
+            ContentPresenter = (IContentPresenter)WindowHelperFunctions.FindUserControl<UserControl>(LogicalChildren, "ContentPage");
 
             CustomDecoration.onDrag += (i, e) => { PlatformImpl?.BeginMoveDrag((PointerPressedEventArgs)e);};
             CustomDecoration.onMinimize += delegate { WindowState = WindowState.Minimized; };
             CustomDecoration.onMaximize += delegate { WindowState = WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized; };
             CustomDecoration.onClose += delegate { Close(); };
+            CustomDecoration.onCoverButtonClick += delegate { ContentPresenter.ShowCoverPage(); };
+            CustomDecoration.onSettingsButtonClick += delegate { ContentPresenter.ShowSettingsPage(); };
             SoundControlBar.onPlay += () => { onPlay.Invoke(); };
 
             Title = "MusicPlayer";

@@ -14,7 +14,7 @@
         {
             public ICustomDecoration CustomDecoration { get; set; }
             public ISoundControlBar SoundControlBar { get; set; }
-            public ISongCover SongCover { get; set; }
+            public IContentPresenter ContentPresenter { get; set; }
 
             public void Show();
 
@@ -40,11 +40,15 @@
             public delegate void OnMaximize(EventArgs args);
             public delegate void OnClose(object args);
             public delegate void OnDrag(object sender, EventArgs args);
+            public delegate void OnCoverButtonClick();
+            public delegate void OnSettingsButtonClick();
 
             public event OnMinimize onMinimize;
             public event OnMaximize onMaximize;
             public event OnClose onClose;
             public event OnDrag onDrag;
+            public event OnCoverButtonClick onCoverButtonClick;
+            public event OnSettingsButtonClick onSettingsButtonClick;
         }
 
         public interface ISongCover
@@ -59,6 +63,15 @@
             //public event OnSettingsChanged onSettingsChanged;
 
             public void LoadSettings(/* send settings here */);
+        }
+
+        public interface IContentPresenter
+        {
+            public ISongCover SongCover { get; set; }
+            public ISettings Settings { get; set; }
+
+            public void ShowCoverPage();
+            public void ShowSettingsPage();
         }
         #endregion
     }

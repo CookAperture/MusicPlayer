@@ -53,6 +53,9 @@
     <Compile Update="UIs\MainUI.axaml.cs">
       <DependentUpon>MainUI.axaml</DependentUpon>
     </Compile>
+    <Compile Update="UIs\ReusableControlls\ContentPresenter.axaml.cs">
+      <DependentUpon>ContentPresenter.axaml</DependentUpon>
+    </Compile>
     <Compile Update="UIs\ReusableControlls\Settings.axaml.cs">
       <DependentUpon>Settings.axaml</DependentUpon>
     </Compile>
