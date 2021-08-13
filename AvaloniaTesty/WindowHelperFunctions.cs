@@ -1,18 +1,10 @@
-﻿using Avalonia;
-using Avalonia.Collections;
-using Avalonia.Controls;
+﻿using Avalonia.Controls;
 using Avalonia.Input;
-using Avalonia.VisualTree;
 using ClassLibraryTesty.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AvaloniaTesty
 {
-    public static class WindowExtensions
+    public static class WindowHelperFunctions
     {
 
         public static T FindUserControl<T>(IEnumerable<Avalonia.LogicalTree.ILogical> list, string name) where T : UserControl
@@ -37,44 +29,6 @@ namespace AvaloniaTesty
                 return null;
             }
             return Recursion(list);
-        }
-
-        public static ICustomDecoration ConnectCustomDecoration(this MainUI @this, string customDecorationName, IEnumerable<Avalonia.LogicalTree.ILogical> logicalTree)
-        {
-            CustomDecoration customDecoration = FindUserControl<CustomDecoration>(logicalTree, customDecorationName);
-
-            customDecoration.onDrag += (i, e) =>
-            {
-                @this.PlatformImpl?.BeginMoveDrag((PointerPressedEventArgs)e);
-            };
-            customDecoration.onMinimize += delegate
-            {
-                @this.WindowState = WindowState.Minimized;
-            };
-            customDecoration.onMaximize += delegate
-            {
-                @this.WindowState = @this.WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
-            };
-            customDecoration.onClose += delegate
-            {
-                @this.Close();
-            };
-
-            return customDecoration;
-        }
-
-        public static ISoundControlBar ConnectSoundControlBar(ISoundControlBar.OnPlay onPlayDelegate, string soundControlBarName, IEnumerable<Avalonia.LogicalTree.ILogical> logicalTree)
-        {
-            SoundControlBar customDecoration = FindUserControl<SoundControlBar>(logicalTree, soundControlBarName);
-
-            customDecoration.onPlay += onPlayDelegate;
-
-            return customDecoration;
-        }
-
-        public static ISongCover ConnectSongCover(string songCoverName, IEnumerable<Avalonia.LogicalTree.ILogical> logicalTree)
-        {
-            return FindUserControl<SongCover>(logicalTree, songCoverName);
         }
     }
 

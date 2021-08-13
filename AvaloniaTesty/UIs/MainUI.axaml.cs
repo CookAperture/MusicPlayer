@@ -1,5 +1,6 @@
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using ClassLibraryTesty;
@@ -13,7 +14,6 @@ namespace AvaloniaTesty
     public class MainUI : Window, IMainUI, INotifyPropertyChanged
     {
         public event IMainUI.OnPlay onPlay = delegate { };
-        public event IMainUI.OnAddSong onAddSong = (path) => { };
 
         public ICustomDecoration CustomDecoration { get; set; }
         public ISoundControlBar SoundControlBar { get; set; }
@@ -21,36 +21,27 @@ namespace AvaloniaTesty
 
         public MainUI()
         {
-            InitializeComponent();
+            AvaloniaXamlLoader.Load(this);
+
+            CustomDecoration = (ICustomDecoration)WindowHelperFunctions.FindUserControl<UserControl>(LogicalChildren, "CustomDecoration");
+            SoundControlBar = (ISoundControlBar)WindowHelperFunctions.FindUserControl<UserControl>(LogicalChildren, "SoundControlBar");
+            SongCover = (ISongCover)WindowHelperFunctions.FindUserControl<UserControl>(LogicalChildren, "SongCover");
+
+            CustomDecoration.onDrag += (i, e) => { PlatformImpl?.BeginMoveDrag((PointerPressedEventArgs)e);};
+            CustomDecoration.onMinimize += delegate { WindowState = WindowState.Minimized; };
+            CustomDecoration.onMaximize += delegate { WindowState = WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized; };
+            CustomDecoration.onClose += delegate { Close(); };
+            SoundControlBar.onPlay += () => { onPlay.Invoke(); };
+
+            Title = "MusicPlayer";
+            DataContext = this;
+
             this.AttachDevTools();
         }
 
         public override void Show()
         {
             base.Show();
-        }
-
-        private void OnAddSong(object sender, RoutedEventArgs args)
-        {
-            onAddSong?.Invoke("");
-        }
-
-        public void OnSongAdded(SongMetaData meta)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        private void InitializeComponent()
-        {
-            AvaloniaXamlLoader.Load(this);
-
-            CustomDecoration = this.ConnectCustomDecoration("CustomDecoration", this.LogicalChildren);
-            SoundControlBar = WindowExtensions.ConnectSoundControlBar(delegate { onPlay?.Invoke(); }, "SoundControlBar", this.LogicalChildren);
-            //SongCover = WindowExtensions.ConnectSongCover("SongCover", LogicalChildren);
-
-            this.Title = "MusicPlayer";
-
-            this.DataContext = this;
         }
 
         new public event PropertyChangedEventHandler PropertyChanged;

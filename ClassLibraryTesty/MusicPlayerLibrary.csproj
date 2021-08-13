@@ -19,6 +19,7 @@
     <DefineConstants />
   </PropertyGroup>
   <ItemGroup>
+    <Folder Include="Implementations\" />
     <Folder Include="Interactors\" />
   </ItemGroup>
   <ItemGroup>

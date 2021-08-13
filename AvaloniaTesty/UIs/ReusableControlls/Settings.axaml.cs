@@ -9,11 +9,6 @@ namespace AvaloniaTesty
     {
         public Settings()
         {
-            InitializeComponent();
-        }
-
-        private void InitializeComponent()
-        {
             AvaloniaXamlLoader.Load(this);
         }
 

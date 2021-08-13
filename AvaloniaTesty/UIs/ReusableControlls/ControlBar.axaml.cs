@@ -10,11 +10,6 @@ namespace AvaloniaTesty
         public event ISoundControlBar.OnPlay onPlay;
         public SoundControlBar()
         {
-            InitializeComponent();
-        }
-
-        private void InitializeComponent()
-        {
             AvaloniaXamlLoader.Load(this);
         }
 

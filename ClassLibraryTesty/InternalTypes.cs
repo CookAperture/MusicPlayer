@@ -1,14 +1,12 @@
-﻿using System;
-//using TagLib;
-
+﻿//using TagLib;
 
 namespace ClassLibraryTesty
 {
-    public struct SongMetaData
-    {
-        //titel
-        //icon
-        string Title { get; set; }
-        TimeSpan Duration { get; set; }
-    }
+    //public struct SongMetaData
+    //{
+    //    //titel
+    //    //icon
+    //    string Title { get; set; }
+    //    TimeSpan Duration { get; set; }
+    //}
 }

@@ -13,11 +13,6 @@ namespace AvaloniaTesty
 
         public CustomDecoration()
         {
-            InitializeComponent();
-        }
-
-        private void InitializeComponent()
-        {
             AvaloniaXamlLoader.Load(this);
 
             this.FindControl<Control>("TitleBar").PointerPressed += (i, e) => onDrag?.Invoke(i, e);

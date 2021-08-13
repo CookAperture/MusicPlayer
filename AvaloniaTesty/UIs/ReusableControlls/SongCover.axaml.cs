@@ -9,11 +9,6 @@ namespace AvaloniaTesty
     {
         public SongCover()
         {
-            InitializeComponent();
-        }
-
-        private void InitializeComponent()
-        {
             AvaloniaXamlLoader.Load(this);
         }
 

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ClassLibraryTesty
+﻿namespace ClassLibraryTesty
 {
     namespace Contracts
     {
@@ -8,30 +6,21 @@ namespace ClassLibraryTesty
         #region LogicContracts
         public interface IMainController
         { }
-
-        public interface IMusicPlayerInteractor //may use sound api here
-        {
-            public void PlaySong();
-            public void AddSong(string path);
-
-            public delegate void OnSongAdded(SongMetaData meta);
-
-            public event OnSongAdded onSongAdded;
-        }
         #endregion
 
         #region UIContracts
         //UI Contracts
         public interface IMainUI
         {
-            public void OnSongAdded(SongMetaData meta);
+            public ICustomDecoration CustomDecoration { get; set; }
+            public ISoundControlBar SoundControlBar { get; set; }
+            public ISongCover SongCover { get; set; }
+
             public void Show();
 
             public delegate void OnPlay();
-            public delegate void OnAddSong(string path);
 
             public event OnPlay onPlay;
-            public event OnAddSong onAddSong;
         }
 
         public interface ISoundControlBar

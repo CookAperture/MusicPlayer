@@ -32,10 +32,8 @@
     <uc:CustomDecoration DockPanel.Dock="Top" 
                          HorizontalAlignment="Stretch" 
                          VerticalAlignment="Top"/>
-    <!-- <uc:SongCover VerticalAlignment="Stretch"
-              HorizontalAlignment="Stretch"/> -->
-  <UserControl Name="SongCover" Content="{Binding SongCover}" VerticalAlignment="Stretch"
-              HorizontalAlignment="Stretch"/>
+    <uc:SongCover VerticalAlignment="Stretch"
+                  HorizontalAlignment="Stretch"/>
 </DockPanel>
   
 </Window>
