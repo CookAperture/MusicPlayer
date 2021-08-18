@@ -10,7 +10,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/AvaloniaTesty/bin/Debug/net5.0/AvaloniaTesty.dll",
+            "program": "${workspaceFolder}/AvaloniaTesty/bin/Debug/net6.0-windows10.0.20348.0/MusicPlayer.dll",
             "args": [],
             "cwd": "${workspaceFolder}/AvaloniaTesty",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console

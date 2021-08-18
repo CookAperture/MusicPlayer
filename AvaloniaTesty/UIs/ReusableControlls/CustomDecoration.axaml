@@ -13,11 +13,27 @@
                VerticalAlignment="Center" 
                Margin="10,0,0,0" 
                Text="{Binding $parent[Window].Title}"></TextBlock>
-    <TabStrip Grid.Column="1">
-      <Button Content="Cover"
-              Name="CoverButton"/>
-      <Button Content="Settings"
-              Name="SettingsButton"/>
+    <TabStrip Grid.Column="1"
+              Padding="5">
+    <TabStrip.Styles>
+      <Styles>
+          <Style Selector="TabStripItem">
+            <Setter Property="Padding" Value="0"/>
+          </Style>
+      </Styles>
+    </TabStrip.Styles>
+      <Button Name="CoverButton"
+              Height="30">
+        <Path Margin="10,0,10,0"
+              Stretch="Uniform"
+              Data="{StaticResource hamburger_icon}"></Path>
+      </Button>
+      <Button Name="SettingsButton"
+              Height="30">
+        <Path Margin="10,0,10,0"
+              Stretch="Uniform"
+              Data="{StaticResource settings_icon}"></Path>
+      </Button>
     </TabStrip>
     <StackPanel Grid.Column="2" 
                 HorizontalAlignment="Right" 

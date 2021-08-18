@@ -1,7 +1,12 @@
 {
   "profiles": {
-    "AvaloniaTesty": {
+    "MusicPlayer": {
       "commandName": "Project",
+      "nativeDebugging": true
+    },
+    "MusicPlayerExe": {
+      "commandName": "Executable",
+      "executablePath": "G:\\Repositories\\MusicPlayer\\AvaloniaTesty\\bin\\Debug\\net6.0-windows10.0.20348.0\\MusicPlayer.exe",
       "nativeDebugging": true
     }
   }
