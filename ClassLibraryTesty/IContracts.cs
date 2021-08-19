@@ -6,6 +6,16 @@
         #region LogicContracts
         public interface IMainController
         { }
+        public interface ICustomDecorationController
+        { }
+        public interface ISoundControlBarController
+        { }
+        public interface IContentPresenterController
+        { }
+        public interface ISettingsController
+        { }
+        public interface ISongCoverController
+        { }
         #endregion
 
         #region UIContracts
