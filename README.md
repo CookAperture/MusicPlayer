@@ -5,7 +5,7 @@
 
 ### Notes
 
-[![CodeFactor](https://www.codefactor.io/repository/github/cookaperture/musicplayer/badge)](https://www.codefactor.io/repository/github/cookaperture/musicplayer)
+This software is in Slow Developement, as it is just for training and fun, and does not aim for any huge goal to achive. It also tries to check out the Avalonia framework capabilities.
 
 ## Basic Features
 
