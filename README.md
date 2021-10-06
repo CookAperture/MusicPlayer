@@ -3,10 +3,6 @@
 
 > Icons by [Radix Icons](https://icons.modulz.app/)
 
-### Notes
-
-[![CodeFactor](https://www.codefactor.io/repository/github/cookaperture/musicplayer/badge)](https://www.codefactor.io/repository/github/cookaperture/musicplayer)
-
 ## Basic Features
 
 - [ ] Import Song
