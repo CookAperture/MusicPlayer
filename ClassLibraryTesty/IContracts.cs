@@ -1,4 +1,6 @@
-﻿namespace ClassLibraryTesty
+﻿using System;
+
+namespace ClassLibraryTesty
 {
     namespace Contracts
     {

@@ -1,4 +1,5 @@
-﻿using Avalonia.Controls;
+﻿using Avalonia.Collections;
+using Avalonia.Controls;
 using Avalonia.Input;
 using ClassLibraryTesty.Contracts;
 
@@ -7,9 +8,9 @@ namespace AvaloniaTesty
     public static class WindowHelperFunctions
     {
 
-        public static T FindUserControl<T>(IEnumerable<Avalonia.LogicalTree.ILogical> list, string name) where T : UserControl
+        public static T FindUserControl<T>(IAvaloniaList<Avalonia.LogicalTree.ILogical> list, string name) where T : UserControl
         {
-            T Recursion(IEnumerable<Avalonia.LogicalTree.ILogical> list)
+            T Recursion(IAvaloniaReadOnlyList<Avalonia.LogicalTree.ILogical> list)
             {
                 foreach (Avalonia.LogicalTree.ILogical i in list)
                 {
