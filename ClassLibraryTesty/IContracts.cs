@@ -1,10 +1,22 @@
-﻿namespace ClassLibraryTesty
+﻿using System;
+
+namespace ClassLibraryTesty
 {
     namespace Contracts
     {
         //Logic Contracts
         #region LogicContracts
         public interface IMainController
+        { }
+        public interface ICustomDecorationController
+        { }
+        public interface ISoundControlBarController
+        { }
+        public interface IContentPresenterController
+        { }
+        public interface ISettingsController
+        { }
+        public interface ISongCoverController
         { }
         #endregion
 

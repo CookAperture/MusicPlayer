@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows10.0.20348.0</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
     <Nullable>disable</Nullable>
     <StartupObject></StartupObject>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
@@ -65,9 +65,9 @@
     </AvaloniaResource>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Avalonia" Version="0.10.999-cibuild0014036-beta" />
-    <PackageReference Include="Avalonia.Desktop" Version="0.10.999-cibuild0014036-beta" />
-    <PackageReference Include="Avalonia.Diagnostics" Version="0.10.999-cibuild0014036-beta" />
+    <PackageReference Include="Avalonia" Version="0.10.10" />
+    <PackageReference Include="Avalonia.Desktop" Version="0.10.10" />
+    <PackageReference Include="Avalonia.Diagnostics" Version="0.10.10" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ClassLibraryTesty\MusicPlayerLibrary.csproj" />
