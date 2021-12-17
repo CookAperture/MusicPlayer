@@ -46,7 +46,7 @@ jobs:
     runs-on: windows-latest
     env:
       Solution_Name: MusicPlayer.sln                    
-      Test_Project_Path: MusicPlayer\MusicPlayerTests
+      Test_Project_Path: MusicPlayerTests\MusicPlayerTests.csproj
 
     steps:
     - name: Checkout
