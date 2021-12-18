@@ -4,7 +4,7 @@ namespace ClassLibraryTesty
 {
     //public struct SongMetaData
     //{
-    //    //titel
+    //    string Titel
     //    //icon
     //    string Title { get; set; }
     //    TimeSpan Duration { get; set; }

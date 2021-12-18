@@ -6,6 +6,7 @@
     <StyleInclude Source="avares://Avalonia.Themes.Fluent/FluentLight.xaml"></StyleInclude>
     <StyleInclude Source="avares://Avalonia.Themes.Fluent/FluentDark.xaml"></StyleInclude>
     <StyleInclude Source="/Icons.axaml"></StyleInclude>
+    <FluentTheme Mode="Dark"/>
     
     <!-- Add Custom Controll Styles here -->
     <Style Selector="ToolTip">

@@ -33,6 +33,12 @@ namespace ClassLibraryTesty
             public void ResumePlaying();
         }
 
+        public interface ISettingsInteractor
+        {
+            public void WriteSettings();
+            public void /*SettingsStruct*/ ReadSettings();
+        }
+
         public interface IReadMetaDataInteractor
         {
             public void /*MetaDataStruct*/ ReadMetaDataFromFile(string path);
