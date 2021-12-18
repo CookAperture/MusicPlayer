@@ -11,12 +11,50 @@ namespace ClassLibraryTesty
         public interface ICustomDecorationController
         { }
         public interface ISoundControlBarController
-        { }
+        {
+            public void UpdateInformation(/*List<MetaDaten>*/);
+            public delegate void OnPlay(string name);
+            public delegate void OnSkip();
+            public delegate void ScrubTo(TimeSpan time);
+        }
         public interface IContentPresenterController
         { }
         public interface ISettingsController
         { }
         public interface ISongCoverController
+        { }
+
+        public interface ISoundPlayerInteractor
+        {
+            public void StartPlaying(string path);
+            public void StartPlayingAt(TimeSpan time);
+            public void SkipTo(int seconds);
+            public void StopPlaying();
+            public void ResumePlaying();
+        }
+
+        public interface IReadMetaDataInteractor
+        {
+            public void /*MetaDataStruct*/ ReadMetaDataFromFile(string path);
+        }
+
+        public interface ITagReader
+        {
+            //experiment first
+            public void /*MetaDataStruct*/ ReadMetaData(string path);
+        }
+
+        public interface ISoundEngine
+        {
+            //experiment first
+            public void StartPlaying(string path);
+            public void StopPlaying();
+            public void ResumePlaying();
+
+            //event asking for metadata (maybe just the duration?)
+        }
+
+        public interface IDataConverter
         { }
         #endregion
 

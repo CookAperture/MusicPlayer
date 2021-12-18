@@ -92,4 +92,12 @@
       <DependentUpon>CustomDecoration.axaml</DependentUpon>
     </Compile>
   </ItemGroup>
+  <ItemGroup>
+    <None Update="bass.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="tags.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>
