@@ -3,13 +3,13 @@ using System;
 
 namespace ClassLibraryTesty
 {
-    public class SoundPlayerInteractor : ISoundPlayerInteractor
+    public class AudioFileInteractor : IAudioFileInteractor
     {
 
         public ISoundEngine SoundEngine { get; set; }
         public IDataConverter DataConverter { get; set; }
 
-        public SoundPlayerInteractor(ref ISoundEngine soundEngine, ref IDataConverter dataConverter)
+        public AudioFileInteractor(ref ISoundEngine soundEngine, ref IDataConverter dataConverter)
         {
             SoundEngine = soundEngine;
             DataConverter = dataConverter;
@@ -36,6 +36,11 @@ namespace ClassLibraryTesty
         }
 
         public void ResumePlaying()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ReadMetaDataFromFile(string path)
         {
             throw new NotImplementedException();
         }

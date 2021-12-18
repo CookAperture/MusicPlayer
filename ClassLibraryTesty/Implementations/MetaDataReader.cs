@@ -4,9 +4,9 @@ using TagLib;
 
 namespace ClassLibraryTesty
 {
-    public class TagReader : ITagReader
+    public class MetaDataReader : IMetaDataReader
     {
-        public TagReader()
+        public MetaDataReader()
         {
 
         }

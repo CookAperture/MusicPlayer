@@ -24,27 +24,26 @@ namespace ClassLibraryTesty
         public interface ISongCoverController
         { }
 
-        public interface ISoundPlayerInteractor
+        public interface IAudioFileInteractor
         {
             public void StartPlaying(string path);
             public void StartPlayingAt(TimeSpan time);
             public void SkipTo(int seconds);
             public void StopPlaying();
             public void ResumePlaying();
+            public void /*MetaDataStruct*/ ReadMetaDataFromFile(string path);
         }
 
         public interface ISettingsInteractor
         {
-            public void WriteSettings();
+            public void WriteSettings(/*SettingsStruct*/);
             public void /*SettingsStruct*/ ReadSettings();
         }
 
-        public interface IReadMetaDataInteractor
-        {
-            public void /*MetaDataStruct*/ ReadMetaDataFromFile(string path);
-        }
+        public interface IMediaListInteractor
+        { }
 
-        public interface ITagReader
+        public interface IMetaDataReader
         {
             //experiment first
             public void /*MetaDataStruct*/ ReadMetaData(string path);
@@ -62,6 +61,18 @@ namespace ClassLibraryTesty
 
         public interface IDataConverter
         { }
+
+        public interface IJSONSerializer
+        { }
+
+        public interface IJSONDeserializer
+        { }
+
+        public interface IFileWriter
+        { }
+
+        public interface IFileReader
+        { }
         #endregion
 
         #region UIContracts
@@ -71,18 +82,11 @@ namespace ClassLibraryTesty
             public ICustomDecoration CustomDecoration { get; set; }
             public ISoundControlBar SoundControlBar { get; set; }
             public IContentPresenter ContentPresenter { get; set; }
-
             public void Show();
-
-            public delegate void OnPlay();
-
-            public event OnPlay onPlay;
         }
 
         public interface ISoundControlBar
         {
-            //public void Show();
-
             public delegate void OnPlay();
 
             public event OnPlay onPlay;
@@ -90,8 +94,6 @@ namespace ClassLibraryTesty
 
         public interface ICustomDecoration
         {
-            //public void Show();
-
             public delegate void OnMinimize(EventArgs args);
             public delegate void OnMaximize(EventArgs args);
             public delegate void OnClose(object args);
@@ -109,25 +111,37 @@ namespace ClassLibraryTesty
 
         public interface ISongCover
         {
-            public void LoadCover(/* send img here */);
+            public void LoadCover(/*Image*/);
         }
 
         public interface ISettings
         {
 
-            //public delegate void OnSettingsChanged(EventArgs args);
-            //public event OnSettingsChanged onSettingsChanged;
+            public delegate void OnSettingsChanged(/*SettingsStruct*/);
+            public event OnSettingsChanged onSettingsChanged;
 
-            public void LoadSettings(/* send settings here */);
+            public void LoadSettings(/*SettingsStruct*/);
         }
 
         public interface IContentPresenter
         {
             public ISongCover SongCover { get; set; }
             public ISettings Settings { get; set; }
+            public IMediaList MediaList { get; set; }
 
             public void ShowCoverPage();
             public void ShowSettingsPage();
+            public void ShowMediaListPage();
+        }
+
+        public interface IMediaList
+        {
+            public delegate void OnSelection(/*MediaListStruct*/);
+
+            public event OnSelection onSelection;
+
+            public void SetList(/*MediaListStruct*/);
+            public void SetPlaying(/*SongIdentifier*/);
         }
         #endregion
     }
