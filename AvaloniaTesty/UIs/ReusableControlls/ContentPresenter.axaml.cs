@@ -9,6 +9,7 @@ namespace AvaloniaTesty
     {
         public ISongCover SongCover { get; set; }
         public ISettings Settings { get; set; }
+        public IMediaList MediaList { get; set; }
 
         public ContentPage()
         {
@@ -16,6 +17,7 @@ namespace AvaloniaTesty
 
             SongCover = new SongCover();
             Settings = new Settings();
+            MediaList = new MediaList();
 
             DataContext = this;
             Content = SongCover;
@@ -29,6 +31,11 @@ namespace AvaloniaTesty
         public void ShowSettingsPage()
         {
             Content = Settings;
+        }
+
+        public void ShowMediaListPage()
+        {
+            Content = MediaList;
         }
     }
 }

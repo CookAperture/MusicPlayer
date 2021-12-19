@@ -6,10 +6,29 @@
              x:Class="AvaloniaTesty.Settings"
              Name="Settings">
 
-  <Panel Background="Gray"
-         Name="SettingsPanel">
-    <TextBlock>void is my name</TextBlock>
+  <Panel Name="SettingsPanel">
+    <StackPanel Spacing="5" 
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Center">
+      <ComboBox SelectedIndex="{Binding ThemeSelection}" 
+                HorizontalContentAlignment="Stretch">
+        <ComboBoxItem Content="Dark Theme"/>
+        <ComboBoxItem Content="Light Theme"/>
+      </ComboBox>
+      <ComboBox SelectedIndex="{Binding DeviceSelection}" 
+                Items="{Binding Devices}" 
+                HorizontalContentAlignment="Stretch">
+        <ComboBox.ItemTemplate>
+          <DataTemplate>
+            <TextBlock Text="{Binding Name}"/>
+          </DataTemplate>
+        </ComboBox.ItemTemplate>
+      </ComboBox>
+      <TextBox Watermark="Path to Media..." 
+               Text="{Binding MediaPath}"
+               HorizontalContentAlignment="Stretch"/>
+      <Button Content="Save" HorizontalAlignment="Center" Command="{Binding SaveSettings}"></Button>
+    </StackPanel>
   </Panel>
-
-
+  
 </UserControl>

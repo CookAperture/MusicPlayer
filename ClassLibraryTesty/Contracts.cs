@@ -100,6 +100,7 @@ namespace ClassLibraryTesty
             public delegate void OnDrag(object sender, EventArgs args);
             public delegate void OnCoverButtonClick();
             public delegate void OnSettingsButtonClick();
+            public delegate void OnMediaListButtonClick();
 
             public event OnMinimize onMinimize;
             public event OnMaximize onMaximize;
@@ -107,6 +108,7 @@ namespace ClassLibraryTesty
             public event OnDrag onDrag;
             public event OnCoverButtonClick onCoverButtonClick;
             public event OnSettingsButtonClick onSettingsButtonClick;
+            public event OnMediaListButtonClick onMediaListButtonClick;
         }
 
         public interface ISongCover

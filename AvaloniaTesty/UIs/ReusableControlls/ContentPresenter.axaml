@@ -4,8 +4,5 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="200" d:DesignHeight="400"
              x:Class="AvaloniaTesty.ContentPage"
-             Name="ContentPage">
-  
-  Filled by Code
-  
+             Name="ContentPage">  
 </UserControl>

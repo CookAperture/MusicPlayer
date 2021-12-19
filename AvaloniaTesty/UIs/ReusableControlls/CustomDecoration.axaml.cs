@@ -12,6 +12,7 @@ namespace AvaloniaTesty
         public event ICustomDecoration.OnDrag onDrag = delegate { };
         public event ICustomDecoration.OnCoverButtonClick onCoverButtonClick = delegate { };
         public event ICustomDecoration.OnSettingsButtonClick onSettingsButtonClick = delegate { };
+        public event ICustomDecoration.OnMediaListButtonClick onMediaListButtonClick = delegate { };
 
         public CustomDecoration()
         {
@@ -23,6 +24,7 @@ namespace AvaloniaTesty
             this.FindControl<Button>("CloseButton").Click += (i, e) => onClose?.Invoke(e);
             this.FindControl<Button>("CoverButton").Click += (i, e) => onCoverButtonClick?.Invoke();
             this.FindControl<Button>("SettingsButton").Click += (i, e) => onSettingsButtonClick?.Invoke();
+            this.FindControl<Button>("MediaListButton").Click += (i, e) => onMediaListButtonClick?.Invoke();
         }
     }
 }

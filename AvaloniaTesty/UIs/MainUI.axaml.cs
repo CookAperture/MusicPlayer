@@ -14,8 +14,6 @@ namespace AvaloniaTesty
 {
     public class MainUI : Window, IMainUI, INotifyPropertyChanged
     {
-        public event IMainUI.OnPlay onPlay = delegate { };
-
         public ICustomDecoration CustomDecoration { get; set; }
         public ISoundControlBar SoundControlBar { get; set; }
         public IContentPresenter ContentPresenter { get; set; }
@@ -34,7 +32,7 @@ namespace AvaloniaTesty
             CustomDecoration.onClose += delegate { Close(); };
             CustomDecoration.onCoverButtonClick += delegate { ContentPresenter.ShowCoverPage(); };
             CustomDecoration.onSettingsButtonClick += delegate { ContentPresenter.ShowSettingsPage(); };
-            SoundControlBar.onPlay += () => { onPlay.Invoke(); };
+            CustomDecoration.onMediaListButtonClick += delegate { ContentPresenter.ShowMediaListPage(); };
 
             Title = "MusicPlayer";
             DataContext = this;

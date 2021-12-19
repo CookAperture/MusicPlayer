@@ -8,8 +8,6 @@ namespace ClassLibraryTesty
         public MainController(ref IMainUI mainUI)
         {
             this.mainUI = mainUI;
-
-            this.mainUI.onPlay += () => { };
         }
     }
 }
