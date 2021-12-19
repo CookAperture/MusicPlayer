@@ -28,6 +28,12 @@
               Stretch="Uniform"
               Data="{StaticResource hamburger_icon}"></Path>
       </Button>
+      <Button Name="MediaListButton"
+        Height="30">
+        <Path Margin="10,0,10,0"
+              Stretch="Uniform"
+              Data="{StaticResource list_icon}"></Path>
+      </Button>
       <Button Name="SettingsButton"
               Height="30">
         <Path Margin="10,0,10,0"

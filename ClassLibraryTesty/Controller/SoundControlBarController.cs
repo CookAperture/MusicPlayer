@@ -11,5 +11,10 @@ namespace ClassLibraryTesty
 
             this.soundControlBar.onPlay += () => { };
         }
+
+        public void UpdateInformation()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
