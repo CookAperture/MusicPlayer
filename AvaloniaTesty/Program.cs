@@ -5,13 +5,15 @@ namespace AvaloniaTesty
 {
     static class Program
     {
+
+        public static IApplication app;
         public static IMainUI mainUI;
-        public static IMainController mainController;
-        public static ISoundControlBarController soundControlBarController;
-        public static ICustomDecorationController customDecorationController;
-        public static IContentPresenterController contentPresenterController;
-        public static ISettingsController settingsController;
-        public static ISongCoverController songCoverController;
+        public static IMainController MainController { get; set; }
+        public static ISoundControlBarController SoundControlBarController { get; set; }
+        public static ICustomDecorationController CustomDecorationController { get; set; }
+        public static IContentPresenterController ContentPresenterController { get; set; }
+        public static ISettingsController SettingsController { get; set; }
+        public static ISongCoverController SongCoverController { get; set; }
         public static void Main(string[] args)
         {
             MusicPlayerApp.Init(args, MusicPlayerAppInit);
@@ -21,12 +23,12 @@ namespace AvaloniaTesty
         {
             //init controller here
             mainUI = new MainUI();
-            mainController = new MainController(ref mainUI);
-            soundControlBarController = new SoundControlBarController(mainUI.SoundControlBar);
-            customDecorationController = new CustomDecorationController(mainUI.CustomDecoration);
-            contentPresenterController = new ContentPresenterController(mainUI.ContentPresenter);
-            settingsController = new SettingsController(mainUI.ContentPresenter.Settings);
-            songCoverController = new SongCoverController(mainUI.ContentPresenter.SongCover);
+            MainController = new MainController(ref mainUI, ref app);
+            SoundControlBarController = new SoundControlBarController(mainUI.SoundControlBar);
+            CustomDecorationController = new CustomDecorationController(mainUI.CustomDecoration);
+            ContentPresenterController = new ContentPresenterController(mainUI.ContentPresenter);
+            SettingsController = new SettingsController(mainUI.ContentPresenter.Settings);
+            SongCoverController = new SongCoverController(mainUI.ContentPresenter.SongCover);
             return (MainUI)mainUI;
         }
     }

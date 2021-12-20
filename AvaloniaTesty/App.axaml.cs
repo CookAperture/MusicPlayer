@@ -2,26 +2,24 @@ using Avalonia;
 using Avalonia.Markup.Xaml;
 using Avalonia.Markup.Xaml.Styling;
 using Avalonia.Styling;
+using Avalonia.Themes.Fluent;
+using ClassLibraryTesty;
+using ClassLibraryTesty.Contracts;
 using System;
 
 namespace AvaloniaTesty
 {
-    public class App : Application
+    public class App : Application, IApplication
     {
 
-        private static readonly StyleInclude DataGridFluent = new(new Uri("avares://ControlCatalog/Styles"))
+        private static readonly StyleInclude DataGridFluent = new(new Uri("avares://Avalonia.MusicPlayer/Styles"))
         {
             Source = new Uri("avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml")
         };
 
-        private static readonly StyleInclude DataGridDefault = new(new Uri("avares://ControlCatalog/Styles"))
-        {
-            Source = new Uri("avares://Avalonia.Controls.DataGrid/Themes/Default.xaml")
-        };
-
         public static Styles FluentDark = new Styles
         {
-            new StyleInclude(new Uri("avares://ControlCatalog/Styles"))
+            new StyleInclude(new Uri("avares://Avalonia.MusicPlayer/Styles"))
             {
                 Source = new Uri("avares://Avalonia.Themes.Fluent/FluentDark.xaml")
             },
@@ -30,61 +28,11 @@ namespace AvaloniaTesty
 
         public static Styles FluentLight = new Styles
         {
-            new StyleInclude(new Uri("avares://ControlCatalog/Styles"))
+            new StyleInclude(new Uri("avares://Avalonia.MusicPlayer/Styles"))
             {
                 Source = new Uri("avares://Avalonia.Themes.Fluent/FluentLight.xaml")
             },
             DataGridFluent
-        };
-
-        public static Styles DefaultLight = new Styles
-        {
-            new StyleInclude(new Uri("resm:Styles?assembly=ControlCatalog"))
-            {
-                Source = new Uri("avares://Avalonia.Themes.Fluent/Accents/AccentColors.xaml")
-            },
-            new StyleInclude(new Uri("resm:Styles?assembly=ControlCatalog"))
-            {
-                Source = new Uri("avares://Avalonia.Themes.Fluent/Accents/Base.xaml")
-            },
-            new StyleInclude(new Uri("resm:Styles?assembly=ControlCatalog"))
-            {
-                Source = new Uri("avares://Avalonia.Themes.Fluent/Accents/BaseLight.xaml")
-            },
-            new StyleInclude(new Uri("resm:Styles?assembly=ControlCatalog"))
-            {
-                Source = new Uri("avares://Avalonia.Themes.Default/Accents/BaseLight.xaml")
-            },
-            new StyleInclude(new Uri("resm:Styles?assembly=ControlCatalog"))
-            {
-                Source = new Uri("avares://Avalonia.Themes.Default/DefaultTheme.xaml")
-            },
-            DataGridDefault
-        };
-
-        public static Styles DefaultDark = new Styles
-        {
-            new StyleInclude(new Uri("resm:Styles?assembly=ControlCatalog"))
-            {
-                Source = new Uri("avares://Avalonia.Themes.Fluent/Accents/AccentColors.xaml")
-            },
-            new StyleInclude(new Uri("resm:Styles?assembly=ControlCatalog"))
-            {
-                Source = new Uri("avares://Avalonia.Themes.Fluent/Accents/Base.xaml")
-            },
-            new StyleInclude(new Uri("resm:Styles?assembly=ControlCatalog"))
-            {
-                Source = new Uri("avares://Avalonia.Themes.Fluent/Accents/BaseDark.xaml")
-            },
-            new StyleInclude(new Uri("resm:Styles?assembly=ControlCatalog"))
-            {
-                Source = new Uri("avares://Avalonia.Themes.Default/Accents/BaseDark.xaml")
-            },
-            new StyleInclude(new Uri("resm:Styles?assembly=ControlCatalog"))
-            {
-                Source = new Uri("avares://Avalonia.Themes.Default/DefaultTheme.xaml")
-            },
-            DataGridDefault
         };
 
         public override void Initialize()
@@ -102,6 +50,28 @@ namespace AvaloniaTesty
             //DoSomethingAppSpecific -> e.g. setup lifetime for various platforms eventually
 
             base.OnFrameworkInitializationCompleted();
+        }
+
+        public void SetStyle(APPLICATION_STYLE appStyle)
+        {
+            switch (appStyle)
+            {
+                case APPLICATION_STYLE.DARK:
+                    {
+                        Styles.Insert(0, FluentDark);
+                        break;
+                    }
+                case APPLICATION_STYLE.LIGHT:
+                    {
+                        Styles.Insert(0, FluentLight);
+                        break;
+                    }
+                default:
+                    {
+                        Styles.Insert(0, FluentDark);
+                        break;
+                    }
+            }
         }
     }
 }

@@ -2,11 +2,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              x:Class="AvaloniaTesty.App">
   <Application.Styles>
-    <StyleInclude Source="avares://Avalonia.Themes.Default/DefaultTheme.xaml"></StyleInclude>
-    <StyleInclude Source="avares://Avalonia.Themes.Fluent/FluentLight.xaml"></StyleInclude>
-    <StyleInclude Source="avares://Avalonia.Themes.Fluent/FluentDark.xaml"></StyleInclude>
     <StyleInclude Source="/Icons.axaml"></StyleInclude>
-    <FluentTheme Mode="Dark"/>
     
     <!-- Add Custom Controll Styles here -->
     <Style Selector="ToolTip">

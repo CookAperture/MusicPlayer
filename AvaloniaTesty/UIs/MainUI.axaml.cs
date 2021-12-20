@@ -36,7 +36,6 @@ namespace AvaloniaTesty
 
             Title = "MusicPlayer";
             DataContext = this;
-            SetDark();
 
             this.AttachDevTools();
         }
@@ -61,24 +60,5 @@ namespace AvaloniaTesty
 
         protected void RaisePropertyChanged([CallerMemberName] string propertyName = null)
             => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-
-        public void SetDark()
-        {
-            Background = new SolidColorBrush(new Color(120, 40, 40, 40));
-            //HighlightedBackgound = new SolidColorBrush(new Color(255, 40, 40, 40));
-            Foreground = new SolidColorBrush(new Color(255, 250, 250, 250));
-
-            Application.Current.Styles.Insert(0, App.DefaultDark);
-        }
-
-        public void SetLight()
-        {
-            Background = new SolidColorBrush(new Color(120, 238, 238, 238));
-            //HighlightedBackgound = new SolidColorBrush(new Color(255, 255, 255, 255));
-            Foreground = new SolidColorBrush(new Color(255, 70, 70, 70));
-
-            Application.Current.Styles.Insert(0, App.DefaultLight);
-
-        }
     }
 }

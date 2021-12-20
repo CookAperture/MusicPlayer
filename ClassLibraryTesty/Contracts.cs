@@ -4,6 +4,12 @@ namespace ClassLibraryTesty
 {
     namespace Contracts
     {
+
+        public interface IApplication
+        {
+            public void SetStyle(APPLICATION_STYLE appStyle);
+        }
+
         //Logic Contracts
         #region LogicContracts
         public interface IMainController
@@ -22,6 +28,9 @@ namespace ClassLibraryTesty
         public interface ISettingsController
         { }
         public interface ISongCoverController
+        { }
+
+        public interface IMediaListController
         { }
 
         public interface IAudioFileInteractor
@@ -120,7 +129,10 @@ namespace ClassLibraryTesty
         {
 
             public delegate void OnSettingsChanged(/*SettingsStruct*/);
-            public event OnSettingsChanged onSettingsChanged;
+            public delegate void OnChangeTheme(APPLICATION_STYLE theme);
+
+            //public event OnSettingsChanged onSettingsChanged;
+            //public event OnChangeTheme onChangeTheme;
 
             public void LoadSettings(/*SettingsStruct*/);
         }

@@ -4,10 +4,14 @@ namespace ClassLibraryTesty
 {
     public class MainController : IMainController
     {
-        IMainUI mainUI;
-        public MainController(ref IMainUI mainUI)
+        IMainUI MainUI { get; set; }
+        IApplication Application { get; set; }
+        public MainController(ref IMainUI mainUI, ref IApplication app)
         {
-            this.mainUI = mainUI;
+            MainUI = mainUI;
+            Application = app;
+
+            Application.SetStyle(APPLICATION_STYLE.LIGHT);
         }
     }
 }
