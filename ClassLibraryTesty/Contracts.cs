@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace ClassLibraryTesty
 {
@@ -13,7 +14,9 @@ namespace ClassLibraryTesty
         //Logic Contracts
         #region LogicContracts
         public interface IMainController
-        { }
+        {
+            public void ChangeTheme(APPLICATION_STYLE appStyle);
+        }
         public interface ICustomDecorationController
         { }
         public interface ISoundControlBarController
@@ -26,7 +29,11 @@ namespace ClassLibraryTesty
         public interface IContentPresenterController
         { }
         public interface ISettingsController
-        { }
+        {
+            public delegate void OnChangeTheme(APPLICATION_STYLE appStyle);
+
+            public event OnChangeTheme onChangeTheme;
+        }
         public interface ISongCoverController
         { }
 
@@ -97,8 +104,12 @@ namespace ClassLibraryTesty
         public interface ISoundControlBar
         {
             public delegate void OnPlay();
+            public delegate void OnPause();
 
             public event OnPlay onPlay;
+            public event OnPause onPause;
+
+            public void SetAudioMetaData(AudioMetaData audioMetaData);
         }
 
         public interface ICustomDecoration
@@ -128,13 +139,13 @@ namespace ClassLibraryTesty
         public interface ISettings
         {
 
-            public delegate void OnSettingsChanged(/*SettingsStruct*/);
+            public delegate void OnSettingsChanged(AppSettings appSettings);
             public delegate void OnChangeTheme(APPLICATION_STYLE theme);
 
-            //public event OnSettingsChanged onSettingsChanged;
-            //public event OnChangeTheme onChangeTheme;
+            public event OnSettingsChanged onSettingsChanged;
+            public event OnChangeTheme onChangeTheme;
 
-            public void LoadSettings(/*SettingsStruct*/);
+            public void LoadSettings(AppSettings appSettings);
         }
 
         public interface IContentPresenter
@@ -150,12 +161,12 @@ namespace ClassLibraryTesty
 
         public interface IMediaList
         {
-            public delegate void OnSelection(/*MediaListStruct*/);
+            public delegate void OnSelection(AudioMetaData selection);
 
             public event OnSelection onSelection;
 
-            public void SetList(/*MediaListStruct*/);
-            public void SetPlaying(/*SongIdentifier*/);
+            public void SetList(List<AudioMetaData> mediaList);
+            public void SetPlaying(AudioMetaData selection);
         }
         #endregion
     }

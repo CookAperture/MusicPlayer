@@ -58,17 +58,12 @@ namespace AvaloniaTesty
             {
                 case APPLICATION_STYLE.DARK:
                     {
-                        Styles.Insert(0, FluentDark);
+                        Styles[0] = FluentDark;
                         break;
                     }
                 case APPLICATION_STYLE.LIGHT:
                     {
-                        Styles.Insert(0, FluentLight);
-                        break;
-                    }
-                default:
-                    {
-                        Styles.Insert(0, FluentDark);
+                        Styles[0] = FluentLight;
                         break;
                     }
             }

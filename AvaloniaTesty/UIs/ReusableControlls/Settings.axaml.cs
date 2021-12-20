@@ -1,6 +1,7 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
+using ClassLibraryTesty;
 using ClassLibraryTesty.Contracts;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,9 +12,10 @@ namespace AvaloniaTesty
 {
     public class Settings : UserControl, ISettings, INotifyPropertyChanged
     {
-        public event ISettings.OnSettingsChanged onSettingsChanged;
+        new public event PropertyChangedEventHandler PropertyChanged;
 
-        new public event PropertyChangedEventHandler? PropertyChanged;
+        public event ISettings.OnSettingsChanged onSettingsChanged = (AppSettings settings) => {};
+        public event ISettings.OnChangeTheme onChangeTheme = (APPLICATION_STYLE style) => {};
 
         int themeSelection = -1;
         public int ThemeSelection
@@ -36,8 +38,15 @@ namespace AvaloniaTesty
             set => RaiseAndSetIfChanged(ref mediaPath, value);
         }
 
-        ObservableCollection<string> devices = new ObservableCollection<string>() {"Laursprecher", "Kopfhörer"};
-        public ObservableCollection<string> Devices
+        ObservableCollection<ThemesModel> themes = new ObservableCollection<ThemesModel>() { new ThemesModel() { Text = "Dark Theme" }, new ThemesModel() { Text = "Light Theme" } };
+        public ObservableCollection<ThemesModel> Themes
+        {
+            get => themes;
+            set => RaiseAndSetIfChanged(ref themes, value);
+        }
+
+        ObservableCollection<AudioDeviceModel> devices = new ObservableCollection<AudioDeviceModel>() { new AudioDeviceModel() { Text = "Lautsprecher" }, new AudioDeviceModel() { Text = "Lautsprecher" } };
+        public ObservableCollection<AudioDeviceModel> Devices
         {
             get => devices;
             set => RaiseAndSetIfChanged(ref devices, value);
@@ -51,12 +60,33 @@ namespace AvaloniaTesty
 
         public void SaveSettings()
         {
-            //TODO
+            AppSettings appSettings = new() { MediaPath = MediaPath, AudioDevice = Devices[DeviceSelection].Text};
+
+            APPLICATION_STYLE style = APPLICATION_STYLE.DARK;
+            if (Themes[ThemeSelection].Text == "Dark Theme")
+                style = APPLICATION_STYLE.DARK;
+            else if (Themes[ThemeSelection].Text == "Light Theme")
+                style = APPLICATION_STYLE.LIGHT;
+
+            appSettings.AppStyle = style;
+
+            onSettingsChanged?.Invoke(appSettings);
+            onChangeTheme?.Invoke(style);
         }
 
-        public void LoadSettings()
+        public void LoadSettings(AppSettings appSettings)
         {
-            throw new System.NotImplementedException();
+            MediaPath = appSettings.MediaPath;
+            Devices.Clear();
+            foreach (var device in appSettings.AudioDevices)
+                Devices.Add(new AudioDeviceModel() { Text = device });
+            string theme = "Dark Theme";
+            if (appSettings.AppStyle == APPLICATION_STYLE.DARK)
+                theme = "Dark Theme";
+            else if (appSettings.AppStyle == APPLICATION_STYLE.LIGHT)
+                theme = "Light Theme";
+            ThemeSelection = Themes.IndexOf(new ThemesModel() { Text = theme });
+            DeviceSelection = Devices.IndexOf(new AudioDeviceModel() { Text = appSettings.AudioDevice });
         }
 
         protected bool RaiseAndSetIfChanged<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
@@ -70,7 +100,8 @@ namespace AvaloniaTesty
             return false;
         }
 
-        protected void RaisePropertyChanged([CallerMemberName] string? propertyName = null)
+        protected void RaisePropertyChanged([CallerMemberName] string propertyName = null)
             => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+
     }
 }

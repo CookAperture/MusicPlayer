@@ -8,10 +8,15 @@
     <StackPanel Spacing="5"
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Stretch">
-      <ListBox Items="{Binding Songs}" SelectionMode="Toggle" SelectedItem="{Binding SelectedSong}">
+      <ListBox Items="{Binding Songs}"
+               SelectionMode="Toggle" 
+               SelectedItem="{Binding SelectedSong}">
         <ListBox.ItemTemplate>
           <DataTemplate>
-            <TextBlock Text="{Binding Song}"/>
+            <StackPanel Orientation="Horizontal">
+              <TextBlock Text="{Binding Title}"/>
+              <TextBlock Text="{Binding Duration}"/>
+            </StackPanel>
           </DataTemplate>
         </ListBox.ItemTemplate>
       </ListBox>

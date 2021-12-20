@@ -4,10 +4,15 @@ namespace ClassLibraryTesty
 {
     public class SettingsController : ISettingsController
     {
-        ISettings settings;
+        public event ISettingsController.OnChangeTheme onChangeTheme;
+
+        ISettings Settings { get; set; }
+
         public SettingsController(ISettings settings)
         {
-            this.settings = settings;
+            Settings = settings;
+            Settings.onChangeTheme += (APPLICATION_STYLE appStyle) => onChangeTheme.Invoke(appStyle);
         }
+
     }
 }

@@ -23,12 +23,15 @@ namespace AvaloniaTesty
         {
             //init controller here
             mainUI = new MainUI();
-            MainController = new MainController(ref mainUI, ref app);
             SoundControlBarController = new SoundControlBarController(mainUI.SoundControlBar);
             CustomDecorationController = new CustomDecorationController(mainUI.CustomDecoration);
             ContentPresenterController = new ContentPresenterController(mainUI.ContentPresenter);
             SettingsController = new SettingsController(mainUI.ContentPresenter.Settings);
             SongCoverController = new SongCoverController(mainUI.ContentPresenter.SongCover);
+            MainController = new MainController(ref mainUI, ref app);
+
+            SettingsController.onChangeTheme += (APPLICATION_STYLE appStyle) => MainController.ChangeTheme(appStyle);
+
             return (MainUI)mainUI;
         }
     }
