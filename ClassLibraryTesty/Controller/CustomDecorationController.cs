@@ -1,13 +1,21 @@
-using ClassLibraryTesty.Contracts;
+using MusicPlayerBackend.Contracts;
 
-namespace ClassLibraryTesty
+namespace MusicPlayerBackend
 {
     public class CustomDecorationController : ICustomDecorationController
     {
-        ICustomDecoration customDecoration;
+        public event ICustomDecorationController.OnSwitchedToSettings onSwitchedToSettings;
+        public event ICustomDecorationController.OnSwitchedToCover onSwitchedToCover;
+        public event ICustomDecorationController.OnSwitchedToMediaList onSwitchedToMediaList;
+
+        ICustomDecoration CustomDecoration { get; set; }
         public CustomDecorationController(ICustomDecoration customDecoration)
         {
-            this.customDecoration = customDecoration;
+            CustomDecoration = customDecoration;
+            CustomDecoration.onSettingsButtonClick += () => onSwitchedToSettings.Invoke();
+            CustomDecoration.onCoverButtonClick += () => onSwitchedToCover.Invoke();
+            CustomDecoration.onMediaListButtonClick += () => onSwitchedToMediaList.Invoke();
         }
+
     }
 }

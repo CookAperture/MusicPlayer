@@ -1,13 +1,20 @@
-using ClassLibraryTesty.Contracts;
+using MusicPlayerBackend.Contracts;
 
-namespace ClassLibraryTesty
+namespace MusicPlayerBackend
 {
     public class SongCoverController : ISongCoverController
     {
-        ISongCover songCover;
-        public SongCoverController(ISongCover songCover)
+        ISongCover SongCover { get; set; }
+        IAudioFileInteractor AudioFileInteractor { get; set; }
+        public SongCoverController(ISongCover songCover, IAudioFileInteractor audioFileInteractor)
         {
-            this.songCover = songCover;
+            SongCover = songCover;
+            AudioFileInteractor = audioFileInteractor;
+        }
+
+        public void SetCover(/*Image*/)
+        {
+            SongCover.LoadCover(/*Image*/);
         }
     }
 }

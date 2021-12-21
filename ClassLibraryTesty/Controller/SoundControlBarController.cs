@@ -1,20 +1,29 @@
-using ClassLibraryTesty.Contracts;
+using MusicPlayerBackend.Contracts;
 
-namespace ClassLibraryTesty
+namespace MusicPlayerBackend
 {
     public class SoundControlBarController : ISoundControlBarController
     {
-        ISoundControlBar soundControlBar;
-        public SoundControlBarController(ISoundControlBar soundControlBar)
-        {
-            this.soundControlBar = soundControlBar;
+        public event ISoundControlBarController.OnPlay onPlay;
+        public event ISoundControlBarController.OnSkipForward onSkipForward;
+        public event ISoundControlBarController.OnSkipBackward onSkipBackward;
+        public event ISoundControlBarController.ScrubTo onScrubTo;
 
-            this.soundControlBar.onPlay += () => { };
+        ISoundControlBar SoundControlBar { get; set; }
+        IAudioFileInteractor AudioFileInteractor { get; set; }
+        public SoundControlBarController(ISoundControlBar soundControlBar, IAudioFileInteractor audioFileInteractor)
+        {
+            SoundControlBar = soundControlBar;
+            AudioFileInteractor = audioFileInteractor;
+
+            SoundControlBar.onPlay += () => AudioFileInteractor.StartPlaying();
+            SoundControlBar.onPause += () => AudioFileInteractor.StopPlaying();
         }
 
         public void UpdateInformation()
         {
-            throw new System.NotImplementedException();
+            var data = AudioFileInteractor.ReadMetaDataFromActualAudio();
+            SoundControlBar.SetAudioMetaData(data);
         }
     }
 }

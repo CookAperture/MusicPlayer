@@ -1,9 +1,9 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
-using ClassLibraryTesty.Contracts;
+using MusicPlayerBackend.Contracts;
 
-namespace AvaloniaTesty
+namespace MusicPlayer
 {
     public class SongCover : UserControl, ISongCover
     {

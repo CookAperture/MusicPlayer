@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ClassLibraryTesty
+namespace MusicPlayerBackend
 {
     namespace Contracts
     {
@@ -19,11 +19,19 @@ namespace ClassLibraryTesty
         }
         public interface ICustomDecorationController
         {
+            public delegate void OnSwitchedToSettings();
+            public delegate void OnSwitchedToCover();
+            public delegate void OnSwitchedToMediaList();
+
+            public event OnSwitchedToSettings onSwitchedToSettings;
+            public event OnSwitchedToCover onSwitchedToCover;
+            public event OnSwitchedToMediaList onSwitchedToMediaList;
+
             //SafeActualSongOnExit -> OnExit event
         }
         public interface ISoundControlBarController
         {
-            public void UpdateInformation(AudioMetaData audioMetaData);
+            public void UpdateInformation();
 
             public delegate void OnPlay(string name);
             public delegate void OnSkipForward();
@@ -36,23 +44,14 @@ namespace ClassLibraryTesty
             public event ScrubTo onScrubTo;
         }
         public interface IContentPresenterController
-        {
-            public delegate void OnSwitchedToSettings();
-            public delegate void OnSwitchedToCover();
-            public delegate void OnSwitchedToMediaList();
-
-            public event OnSwitchedToSettings onSwitchedToSettings;
-            public event OnSwitchedToCover onSwitchedToCover;
-            public event OnSwitchedToMediaList onSwitchedToMediaList;
-        }
+        { }
         public interface ISettingsController
         {
             public delegate void OnChangeTheme(APPLICATION_STYLE appStyle);
 
             public event OnChangeTheme onChangeTheme;
 
-            public void SetSettings(AppSettings appSettings);
-            public AppSettings GetSettings();
+            public void LoadSettings();
         }
         public interface ISongCoverController
         {
@@ -69,12 +68,13 @@ namespace ClassLibraryTesty
 
         public interface IAudioFileInteractor
         {
-            public void StartPlaying(string path);
+            public void StartPlaying();
             public void StartPlayingAt(TimeSpan time);
             public void SkipTo(int seconds);
             public void StopPlaying();
             public void ResumePlaying();
-            public AudioMetaData ReadMetaDataFromFile(string path);
+            public void SetActualAudioFile(string path);
+            public AudioMetaData ReadMetaDataFromActualAudio();
         }
 
         public interface ISettingsInteractor
@@ -116,17 +116,24 @@ namespace ClassLibraryTesty
 
         public interface IJSONSerializer
         {
-            
+            public string Serialize<T>(T serializable); 
         }
 
         public interface IJSONDeserializer
-        { }
+        {
+            public T Serialize<T>(string deserializable);
+        }
 
         public interface IFileWriter
-        { }
+        {
+            public void Write(string text, string path);
+        }
 
         public interface IFileReader
-        { }
+        {
+            public string ReadWhole(string path);
+            public List<string> ReadAllLines(string path);
+        }
         #endregion
 
         #region UIContracts

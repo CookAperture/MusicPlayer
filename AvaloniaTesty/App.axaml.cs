@@ -3,21 +3,21 @@ using Avalonia.Markup.Xaml;
 using Avalonia.Markup.Xaml.Styling;
 using Avalonia.Styling;
 using Avalonia.Themes.Fluent;
-using ClassLibraryTesty;
-using ClassLibraryTesty.Contracts;
+using MusicPlayerBackend;
+using MusicPlayerBackend.Contracts;
 using System;
 
-namespace AvaloniaTesty
+namespace MusicPlayer
 {
     public class App : Application, IApplication
     {
 
-        private static readonly StyleInclude DataGridFluent = new StyleInclude(new Uri("avares://MusicPlayer/Styles"))
+        private static readonly StyleInclude DataGridFluent = new (new Uri("avares://MusicPlayer/Styles"))
         {
             Source = new Uri("avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml")
         };
 
-        public static Styles FluentDark = new Styles
+        public static readonly Styles FluentDark = new()
         {
             new StyleInclude(new Uri("avares://MusicPlayer/Styles"))
             {
@@ -26,7 +26,7 @@ namespace AvaloniaTesty
             DataGridFluent
         };
 
-        public static Styles FluentLight = new Styles
+        public static readonly Styles FluentLight = new()
         {
             new StyleInclude(new Uri("avares://MusicPlayer/Styles"))
             {

@@ -1,9 +1,9 @@
 ﻿using Avalonia.Collections;
 using Avalonia.Controls;
 using Avalonia.Input;
-using ClassLibraryTesty.Contracts;
+using MusicPlayerBackend.Contracts;
 
-namespace AvaloniaTesty
+namespace MusicPlayer
 {
     public static class WindowHelperFunctions
     {

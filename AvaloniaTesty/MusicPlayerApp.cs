@@ -1,8 +1,8 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
-using ClassLibraryTesty.Contracts;
+using MusicPlayerBackend.Contracts;
 
-namespace AvaloniaTesty
+namespace MusicPlayer
 {
     public static class MusicPlayerApp
     {

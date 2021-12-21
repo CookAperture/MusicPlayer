@@ -1,26 +1,23 @@
-﻿using ClassLibraryTesty.Contracts;
+﻿using MusicPlayerBackend.Contracts;
 using System;
 
-namespace ClassLibraryTesty
+namespace MusicPlayerBackend
 {
     public class AudioFileInteractor : IAudioFileInteractor
     {
 
         public ISoundEngine SoundEngine { get; set; }
+        public IMetaDataReader MetaDataReader { get; set; }
         public IDataConverter DataConverter { get; set; }
 
-        public AudioFileInteractor(ref ISoundEngine soundEngine, ref IDataConverter dataConverter)
+        public AudioFileInteractor(ISoundEngine soundEngine, IDataConverter dataConverter, IMetaDataReader metaDataReader)
         {
             SoundEngine = soundEngine;
             DataConverter = dataConverter;
+            MetaDataReader = metaDataReader;
         }
 
-        public void StopPlaying()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void StartPlaying(string path)
+        public void StartPlaying()
         {
             throw new NotImplementedException();
         }
@@ -35,12 +32,22 @@ namespace ClassLibraryTesty
             throw new NotImplementedException();
         }
 
+        public void StopPlaying()
+        {
+            throw new NotImplementedException();
+        }
+
         public void ResumePlaying()
         {
             throw new NotImplementedException();
         }
 
-        public void ReadMetaDataFromFile(string path)
+        public void SetActualAudioFile(string path)
+        {
+            throw new NotImplementedException();
+        }
+
+        public AudioMetaData ReadMetaDataFromActualAudio()
         {
             throw new NotImplementedException();
         }

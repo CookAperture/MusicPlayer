@@ -1,10 +1,10 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
-using ClassLibraryTesty;
-using ClassLibraryTesty.Contracts;
+using MusicPlayerBackend;
+using MusicPlayerBackend.Contracts;
 
-namespace AvaloniaTesty
+namespace MusicPlayer
 {
     public class SoundControlBar : UserControl, ISoundControlBar
     {

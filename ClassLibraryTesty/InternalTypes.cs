@@ -2,18 +2,57 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ClassLibraryTesty
+namespace MusicPlayerBackend
 {
+    /// <summary>
+    /// Holds the global variables.
+    /// </summary>
+    /// <remarks>
+    /// Usually only primitive types which are used in multiple places in code,
+    /// but are not changed by the user or by the programm.
+    /// </remarks>
+    public static class Globals
+    {
+        /// <summary>
+        /// Holds the path to the programms config file.
+        /// </summary>
+        public static string SettingsPath { get; } = "config.json";
+    }
+    /// <summary>
+    /// Represents the available Styles in an Typesafe manner.
+    /// </summary>
     public enum APPLICATION_STYLE
     {
+        /// <summary>
+        /// Represents the dark theme value/option.
+        /// </summary>
          DARK = 0,
-         LIGHT = 1
+        /// <summary>
+        /// Represents the light theme value/option.
+        /// </summary>
+        LIGHT = 1
     }
 
+    /// <summary>
+    /// Holds data for the UI of the Audio Devices.
+    /// Implements <see cref="IEquatable{T}"/> for equality checking. 
+    /// </summary>
     public struct AudioDeviceModel : IEquatable<AudioDeviceModel>
     {
+        /// <summary>
+        /// Name of the Audio Device
+        /// </summary>
         public string Text { get; set; }
 
+        /// <summary>
+        /// Overrides the Equals Method of <see langword="object"/>.
+        /// If is <see cref="AudioDeviceModel"/>, the call is delegated to <seealso cref="Equals(AudioDeviceModel)"/>
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns>
+        /// <para><see langword="true"/> if equal.</para>
+        /// <para><see langword="false"/> if not equal.</para>
+        /// </returns>
         public override bool Equals(object obj)
         {
             try
@@ -33,7 +72,7 @@ namespace ClassLibraryTesty
 
         public override int GetHashCode()
         {
-            HashCode hashCode = new HashCode();
+            HashCode hashCode = new ();
 
             hashCode.Add(Text.GetHashCode());
 
@@ -46,12 +85,31 @@ namespace ClassLibraryTesty
 
             return str;
         }
+
+        public static bool operator ==(AudioDeviceModel left, AudioDeviceModel right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(AudioDeviceModel left, AudioDeviceModel right)
+        {
+            return !(left == right);
+        }
     }
 
     public struct ThemesModel : IEquatable<ThemesModel>
     {
         public string Text { get; set; }
 
+        /// <summary>
+        /// Overrides the Equals Method of <see langword="object"/>.
+        /// If is <see cref="ThemesModel"/>, the call is delegated to <seealso cref="Equals(ThemesModel)"/>
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns>
+        /// <para><see langword="true"/> if equal.</para>
+        /// <para><see langword="false"/> if not equal.</para>
+        /// </returns>
         public override bool Equals(object obj)
         {
             try
@@ -71,7 +129,7 @@ namespace ClassLibraryTesty
 
         public override int GetHashCode()
         {
-            HashCode hashCode = new HashCode();
+            HashCode hashCode = new ();
 
             hashCode.Add(Text.GetHashCode());
 
@@ -84,6 +142,16 @@ namespace ClassLibraryTesty
 
             return str;
         }
+
+        public static bool operator ==(ThemesModel left, ThemesModel right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(ThemesModel left, ThemesModel right)
+        {
+            return !(left == right);
+        }
     }
 
     public struct AudioDataModel : IEquatable<AudioDataModel>
@@ -91,6 +159,15 @@ namespace ClassLibraryTesty
         public string Title { get; set; }
         public string Duration { get; set; }
 
+        /// <summary>
+        /// Overrides the Equals Method of <see langword="object"/>.
+        /// If is <see cref="AudioDataModel"/>, the call is delegated to <seealso cref="Equals(AudioDataModel)"/>
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns>
+        /// <para><see langword="true"/> if equal.</para>
+        /// <para><see langword="false"/> if not equal.</para>
+        /// </returns>
         public override bool Equals(object obj)
         {
             try
@@ -111,7 +188,7 @@ namespace ClassLibraryTesty
 
         public override int GetHashCode()
         {
-            HashCode hashCode = new HashCode();
+            HashCode hashCode = new ();
 
             hashCode.Add(Title.GetHashCode());
             hashCode.Add(Duration.GetHashCode());
@@ -126,6 +203,16 @@ namespace ClassLibraryTesty
 
             return str;
         }
+
+        public static bool operator ==(AudioDataModel left, AudioDataModel right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(AudioDataModel left, AudioDataModel right)
+        {
+            return !(left == right);
+        }
     }
 
     public struct AudioMetaData : IEquatable<AudioMetaData>
@@ -135,6 +222,15 @@ namespace ClassLibraryTesty
         public TimeSpan Duration { get; set; }
         public string AudioFilePath { get; set; }
 
+        /// <summary>
+        /// Overrides the Equals Method of <see langword="object"/>.
+        /// If is <see cref="AudioMetaData"/>, the call is delegated to <seealso cref="Equals(AudioMetaData)"/>
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns>
+        /// <para><see langword="true"/> if equal.</para>
+        /// <para><see langword="false"/> if not equal.</para>
+        /// </returns>
         public override bool Equals(object obj)
         {
             try
@@ -156,7 +252,7 @@ namespace ClassLibraryTesty
 
         public override int GetHashCode()
         {
-            HashCode hashCode = new HashCode();
+            HashCode hashCode = new ();
 
             hashCode.Add(Title.GetHashCode());
             hashCode.Add(Duration.GetHashCode());
@@ -173,6 +269,16 @@ namespace ClassLibraryTesty
 
             return str;
         }
+
+        public static bool operator ==(AudioMetaData left, AudioMetaData right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(AudioMetaData left, AudioMetaData right)
+        {
+            return !(left == right);
+        }
     }
 
     public struct AppSettings : IEquatable<AppSettings>
@@ -182,6 +288,15 @@ namespace ClassLibraryTesty
         public List<string> AudioDevices { get; set; }
         public APPLICATION_STYLE AppStyle { get; set; }
 
+        /// <summary>
+        /// Overrides the Equals Method of <see langword="object"/>.
+        /// If is <see cref="AppSettings"/>, the call is delegated to <seealso cref="Equals(AppSettings)"/>
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns>
+        /// <para><see langword="true"/> if equal.</para>
+        /// <para><see langword="false"/> if not equal.</para>
+        /// </returns>
         public override bool Equals(object obj)
         {
             try
@@ -204,7 +319,7 @@ namespace ClassLibraryTesty
 
         public override int GetHashCode()
         {
-            HashCode hashCode = new HashCode();
+            HashCode hashCode = new ();
 
             hashCode.Add(MediaPath.GetHashCode());
             hashCode.Add(AudioDevice.GetHashCode());
@@ -224,6 +339,16 @@ namespace ClassLibraryTesty
                 str += dev + ", ";
 
             return str;
+        }
+
+        public static bool operator ==(AppSettings left, AppSettings right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(AppSettings left, AppSettings right)
+        {
+            return !(left == right);
         }
     }
 }

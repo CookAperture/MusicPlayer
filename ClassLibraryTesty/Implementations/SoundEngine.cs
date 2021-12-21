@@ -1,9 +1,10 @@
-﻿using ClassLibraryTesty.Contracts;
+﻿using MusicPlayerBackend.Contracts;
 using System;
 using System.Threading;
 using ManagedBass;
+using System.Collections.Generic;
 
-namespace ClassLibraryTesty
+namespace MusicPlayerBackend
 {
     public class SoundEngine : ISoundEngine
     {
@@ -19,14 +20,22 @@ namespace ClassLibraryTesty
             Bass.Free();
         }
 
-        //public void PlayTest()
-        //{
-        //    ActualStream = Bass.CreateStream("G:\\NewMusic\\AWOLNATION - Here Come the Runts.mp3", 0, 0, BassFlags.Prescan);
-        //    bool res = Bass.ChannelPlay(ActualStream);
-        //    Bass.StreamFree(ActualStream);
-        //}
+        public void SetAudioDevice(string device)
+        {
+            throw new NotImplementedException();
+        }
 
-        public void StartPlaying(string path)
+        public List<string> GetAudioDevices()
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GetAudioDevice()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void StartPlaying(AudioMetaData audioMetaData)
         {
             throw new NotImplementedException();
         }
@@ -40,5 +49,12 @@ namespace ClassLibraryTesty
         {
             throw new NotImplementedException();
         }
+
+        //public void PlayTest()
+        //{
+        //    ActualStream = Bass.CreateStream("G:\\NewMusic\\AWOLNATION - Here Come the Runts.mp3", 0, 0, BassFlags.Prescan);
+        //    bool res = Bass.ChannelPlay(ActualStream);
+        //    Bass.StreamFree(ActualStream);
+        //}
     }
 }

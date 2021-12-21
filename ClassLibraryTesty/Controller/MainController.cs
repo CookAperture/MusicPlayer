@@ -1,6 +1,6 @@
-﻿using ClassLibraryTesty.Contracts;
+﻿using MusicPlayerBackend.Contracts;
 
-namespace ClassLibraryTesty
+namespace MusicPlayerBackend
 {
     public class MainController : IMainController
     {

@@ -1,15 +1,15 @@
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
-using ClassLibraryTesty;
-using ClassLibraryTesty.Contracts;
+using MusicPlayerBackend;
+using MusicPlayerBackend.Contracts;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Linq;
 
-namespace AvaloniaTesty
+namespace MusicPlayer
 {
     public class MediaList : UserControl, IMediaList, INotifyPropertyChanged
     {

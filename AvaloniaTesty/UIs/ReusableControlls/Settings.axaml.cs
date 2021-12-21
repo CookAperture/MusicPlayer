@@ -1,14 +1,14 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
-using ClassLibraryTesty;
-using ClassLibraryTesty.Contracts;
+using MusicPlayerBackend;
+using MusicPlayerBackend.Contracts;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace AvaloniaTesty
+namespace MusicPlayer
 {
     public class Settings : UserControl, ISettings, INotifyPropertyChanged
     {
