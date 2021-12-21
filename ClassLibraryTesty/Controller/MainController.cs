@@ -17,7 +17,7 @@ namespace ClassLibraryTesty
 
         public void ChangeTheme(APPLICATION_STYLE appStyle)
         {
-            //Application.SetStyle(APPLICATION_STYLE.LIGHT);
+            Application.SetStyle(appStyle);
         }
     }
 }

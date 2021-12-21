@@ -12,18 +12,12 @@ namespace AvaloniaTesty
     public class App : Application, IApplication
     {
 
-        private static readonly StyleInclude DataGridFluent = new(new Uri("avares://Avalonia.MusicPlayer/Styles"))
-        {
-            Source = new Uri("avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml")
-        };
-
         public static Styles FluentDark = new Styles
         {
             new StyleInclude(new Uri("avares://Avalonia.MusicPlayer/Styles"))
             {
                 Source = new Uri("avares://Avalonia.Themes.Fluent/FluentDark.xaml")
             },
-            DataGridFluent
         };
 
         public static Styles FluentLight = new Styles
@@ -32,7 +26,6 @@ namespace AvaloniaTesty
             {
                 Source = new Uri("avares://Avalonia.Themes.Fluent/FluentLight.xaml")
             },
-            DataGridFluent
         };
 
         public override void Initialize()
