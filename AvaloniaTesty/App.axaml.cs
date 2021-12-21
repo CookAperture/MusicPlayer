@@ -12,24 +12,33 @@ namespace AvaloniaTesty
     public class App : Application, IApplication
     {
 
+        private static readonly StyleInclude DataGridFluent = new StyleInclude(new Uri("avares://MusicPlayer/Styles"))
+        {
+            Source = new Uri("avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml")
+        };
+
         public static Styles FluentDark = new Styles
         {
-            new StyleInclude(new Uri("avares://Avalonia.MusicPlayer/Styles"))
+            new StyleInclude(new Uri("avares://MusicPlayer/Styles"))
             {
                 Source = new Uri("avares://Avalonia.Themes.Fluent/FluentDark.xaml")
             },
+            DataGridFluent
         };
 
         public static Styles FluentLight = new Styles
         {
-            new StyleInclude(new Uri("avares://Avalonia.MusicPlayer/Styles"))
+            new StyleInclude(new Uri("avares://MusicPlayer/Styles"))
             {
                 Source = new Uri("avares://Avalonia.Themes.Fluent/FluentLight.xaml")
             },
+            DataGridFluent
         };
 
         public override void Initialize()
         {
+            SetStyle(APPLICATION_STYLE.DARK);
+            DataContext = this;
             AvaloniaXamlLoader.Load(this);
         }
 
@@ -51,12 +60,20 @@ namespace AvaloniaTesty
             {
                 case APPLICATION_STYLE.DARK:
                     {
-                        Styles[0] = FluentDark;
+                        //Styles[0] = FluentDark;
+                        if(Styles.Count > 0)
+                            Styles.RemoveAt(0);
+                        //Styles.Remove(FluentDark);
+                        Styles.Insert(0, FluentDark);
                         break;
                     }
                 case APPLICATION_STYLE.LIGHT:
                     {
-                        Styles[0] = FluentLight;
+                        //Styles[0] = FluentLight;
+                        if (Styles.Count > 0)
+                            Styles.RemoveAt(0);
+                        //Styles.Remove(FluentLight);
+                        Styles.Insert(0, FluentLight);
                         break;
                     }
             }

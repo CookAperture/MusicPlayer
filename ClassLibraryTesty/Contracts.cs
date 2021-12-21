@@ -18,27 +18,54 @@ namespace ClassLibraryTesty
             public void ChangeTheme(APPLICATION_STYLE appStyle);
         }
         public interface ICustomDecorationController
-        { }
+        {
+            //SafeActualSongOnExit -> OnExit event
+        }
         public interface ISoundControlBarController
         {
-            public void UpdateInformation(/*List<MetaDaten>*/);
+            public void UpdateInformation(AudioMetaData audioMetaData);
+
             public delegate void OnPlay(string name);
-            public delegate void OnSkip();
+            public delegate void OnSkipForward();
+            public delegate void OnSkipBackward();
             public delegate void ScrubTo(TimeSpan time);
+
+            public event OnPlay onPlay;
+            public event OnSkipForward onSkipForward;
+            public event OnSkipBackward onSkipBackward;
+            public event ScrubTo onScrubTo;
         }
         public interface IContentPresenterController
-        { }
+        {
+            public delegate void OnSwitchedToSettings();
+            public delegate void OnSwitchedToCover();
+            public delegate void OnSwitchedToMediaList();
+
+            public event OnSwitchedToSettings onSwitchedToSettings;
+            public event OnSwitchedToCover onSwitchedToCover;
+            public event OnSwitchedToMediaList onSwitchedToMediaList;
+        }
         public interface ISettingsController
         {
             public delegate void OnChangeTheme(APPLICATION_STYLE appStyle);
 
             public event OnChangeTheme onChangeTheme;
+
+            public void SetSettings(AppSettings appSettings);
+            public AppSettings GetSettings();
         }
         public interface ISongCoverController
-        { }
+        {
+            public void SetCover(/*Image*/);
+        }
 
         public interface IMediaListController
-        { }
+        {
+            public delegate void OnAudioSelected(AudioMetaData selected);
+
+            public event OnAudioSelected onAudioSelected;
+            public void SetMediaList(List<AudioMetaData> audioMetaDatas);
+        }
 
         public interface IAudioFileInteractor
         {
@@ -47,39 +74,50 @@ namespace ClassLibraryTesty
             public void SkipTo(int seconds);
             public void StopPlaying();
             public void ResumePlaying();
-            public void /*MetaDataStruct*/ ReadMetaDataFromFile(string path);
+            public AudioMetaData ReadMetaDataFromFile(string path);
         }
 
         public interface ISettingsInteractor
         {
-            public void WriteSettings(/*SettingsStruct*/);
-            public void /*SettingsStruct*/ ReadSettings();
+            public void WriteSettings(AppSettings appSettings);
+            public AppSettings ReadSettings();
         }
 
         public interface IMediaListInteractor
-        { }
+        {
+            public delegate void OnMediaFound(AudioMetaData audioMetaData);
+
+            public event OnMediaFound onMediaFound;
+            public List<AudioMetaData> GetMediaList(string rootPath);
+        }
+
+        public interface IFileSystemHandler
+        {
+            public List<string> FindAudioFilesFromRootPath(string rootPath);
+        }
 
         public interface IMetaDataReader
         {
-            //experiment first
-            public void /*MetaDataStruct*/ ReadMetaData(string path);
+            public AudioMetaData ReadMetaDataFromFile(string path);
         }
 
         public interface ISoundEngine
         {
-            //experiment first
-            public void StartPlaying(string path);
+            public void SetAudioDevice(string device);
+            public List<string> GetAudioDevices();
+            public string GetAudioDevice();
+            public void StartPlaying(AudioMetaData audioMetaData);
             public void StopPlaying();
             public void ResumePlaying();
-
-            //event asking for metadata (maybe just the duration?)
         }
 
         public interface IDataConverter
         { }
 
         public interface IJSONSerializer
-        { }
+        {
+            
+        }
 
         public interface IJSONDeserializer
         { }
