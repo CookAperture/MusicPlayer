@@ -1,6 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿global using System;
+global using System.Collections.Generic;
+global using System.Linq;
 
 namespace MusicPlayerBackend
 {
@@ -37,33 +37,12 @@ namespace MusicPlayerBackend
     /// Holds data for the UI of the Audio Devices.
     /// Implements <see cref="IEquatable{T}"/> for equality checking. 
     /// </summary>
-    public struct AudioDeviceModel : IEquatable<AudioDeviceModel>
+    public record struct AudioDeviceModel : IEquatable<AudioDeviceModel>
     {
         /// <summary>
         /// Name of the Audio Device
         /// </summary>
         public string Text { get; set; }
-
-        /// <summary>
-        /// Overrides the Equals Method of <see langword="object"/>.
-        /// If is <see cref="AudioDeviceModel"/>, the call is delegated to <seealso cref="Equals(AudioDeviceModel)"/>
-        /// </summary>
-        /// <param name="obj"></param>
-        /// <returns>
-        /// <para><see langword="true"/> if equal.</para>
-        /// <para><see langword="false"/> if not equal.</para>
-        /// </returns>
-        public override bool Equals(object obj)
-        {
-            try
-            {
-                return Equals((AudioDeviceModel)obj);
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-        }
 
         public bool Equals(AudioDeviceModel other)
         {
@@ -85,42 +64,11 @@ namespace MusicPlayerBackend
 
             return str;
         }
-
-        public static bool operator ==(AudioDeviceModel left, AudioDeviceModel right)
-        {
-            return left.Equals(right);
-        }
-
-        public static bool operator !=(AudioDeviceModel left, AudioDeviceModel right)
-        {
-            return !(left == right);
-        }
     }
 
-    public struct ThemesModel : IEquatable<ThemesModel>
+    public record struct ThemesModel : IEquatable<ThemesModel>
     {
         public string Text { get; set; }
-
-        /// <summary>
-        /// Overrides the Equals Method of <see langword="object"/>.
-        /// If is <see cref="ThemesModel"/>, the call is delegated to <seealso cref="Equals(ThemesModel)"/>
-        /// </summary>
-        /// <param name="obj"></param>
-        /// <returns>
-        /// <para><see langword="true"/> if equal.</para>
-        /// <para><see langword="false"/> if not equal.</para>
-        /// </returns>
-        public override bool Equals(object obj)
-        {
-            try
-            {
-                return Equals((ThemesModel)obj);
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-        }
 
         public bool Equals(ThemesModel other)
         {
@@ -142,19 +90,9 @@ namespace MusicPlayerBackend
 
             return str;
         }
-
-        public static bool operator ==(ThemesModel left, ThemesModel right)
-        {
-            return left.Equals(right);
-        }
-
-        public static bool operator !=(ThemesModel left, ThemesModel right)
-        {
-            return !(left == right);
-        }
     }
 
-    public struct AudioDataModel : IEquatable<AudioDataModel>
+    public record struct AudioDataModel : IEquatable<AudioDataModel>
     {
         public string Title { get; set; }
         public string Duration { get; set; }
@@ -163,22 +101,11 @@ namespace MusicPlayerBackend
         /// Overrides the Equals Method of <see langword="object"/>.
         /// If is <see cref="AudioDataModel"/>, the call is delegated to <seealso cref="Equals(AudioDataModel)"/>
         /// </summary>
-        /// <param name="obj"></param>
+        /// <param name="other"></param>
         /// <returns>
-        /// <para><see langword="true"/> if equal.</para>
-        /// <para><see langword="false"/> if not equal.</para>
+        /// <see langword="true"/> if equal.
+        /// <see langword="false"/> if not equal.
         /// </returns>
-        public override bool Equals(object obj)
-        {
-            try
-            {
-                return Equals((AudioDataModel)obj);
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-        }
 
         public bool Equals(AudioDataModel other)
         {
@@ -203,45 +130,14 @@ namespace MusicPlayerBackend
 
             return str;
         }
-
-        public static bool operator ==(AudioDataModel left, AudioDataModel right)
-        {
-            return left.Equals(right);
-        }
-
-        public static bool operator !=(AudioDataModel left, AudioDataModel right)
-        {
-            return !(left == right);
-        }
     }
 
-    public struct AudioMetaData : IEquatable<AudioMetaData>
+    public record struct AudioMetaData : IEquatable<AudioMetaData>
     {
         //icon
         public string Title { get; set; }
         public TimeSpan Duration { get; set; }
         public string AudioFilePath { get; set; }
-
-        /// <summary>
-        /// Overrides the Equals Method of <see langword="object"/>.
-        /// If is <see cref="AudioMetaData"/>, the call is delegated to <seealso cref="Equals(AudioMetaData)"/>
-        /// </summary>
-        /// <param name="obj"></param>
-        /// <returns>
-        /// <para><see langword="true"/> if equal.</para>
-        /// <para><see langword="false"/> if not equal.</para>
-        /// </returns>
-        public override bool Equals(object obj)
-        {
-            try
-            {
-                return Equals((AudioMetaData)obj);
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-        }
 
         public bool Equals(AudioMetaData other)
         {
@@ -269,45 +165,14 @@ namespace MusicPlayerBackend
 
             return str;
         }
-
-        public static bool operator ==(AudioMetaData left, AudioMetaData right)
-        {
-            return left.Equals(right);
-        }
-
-        public static bool operator !=(AudioMetaData left, AudioMetaData right)
-        {
-            return !(left == right);
-        }
     }
 
-    public struct AppSettings : IEquatable<AppSettings>
+    public record struct AppSettings : IEquatable<AppSettings>
     {
         public string MediaPath { get; set; }
         public string AudioDevice { get; set; }
         public List<string> AudioDevices { get; set; }
         public APPLICATION_STYLE AppStyle { get; set; }
-
-        /// <summary>
-        /// Overrides the Equals Method of <see langword="object"/>.
-        /// If is <see cref="AppSettings"/>, the call is delegated to <seealso cref="Equals(AppSettings)"/>
-        /// </summary>
-        /// <param name="obj"></param>
-        /// <returns>
-        /// <para><see langword="true"/> if equal.</para>
-        /// <para><see langword="false"/> if not equal.</para>
-        /// </returns>
-        public override bool Equals(object obj)
-        {
-            try
-            {
-                return Equals((AppSettings)obj);
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-        }
 
         public bool Equals(AppSettings other)
         {
@@ -339,16 +204,6 @@ namespace MusicPlayerBackend
                 str += dev + ", ";
 
             return str;
-        }
-
-        public static bool operator ==(AppSettings left, AppSettings right)
-        {
-            return left.Equals(right);
-        }
-
-        public static bool operator !=(AppSettings left, AppSettings right)
-        {
-            return !(left == right);
         }
     }
 }

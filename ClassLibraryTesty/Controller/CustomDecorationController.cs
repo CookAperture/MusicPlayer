@@ -4,9 +4,9 @@ namespace MusicPlayerBackend
 {
     public class CustomDecorationController : ICustomDecorationController
     {
-        public event ICustomDecorationController.OnSwitchedToSettings onSwitchedToSettings;
-        public event ICustomDecorationController.OnSwitchedToCover onSwitchedToCover;
-        public event ICustomDecorationController.OnSwitchedToMediaList onSwitchedToMediaList;
+        public event ICustomDecorationController.OnSwitchedToSettings onSwitchedToSettings = () => { };
+        public event ICustomDecorationController.OnSwitchedToCover onSwitchedToCover = () => { };
+        public event ICustomDecorationController.OnSwitchedToMediaList onSwitchedToMediaList = () => { };
 
         ICustomDecoration CustomDecoration { get; set; }
         public CustomDecorationController(ICustomDecoration customDecoration)

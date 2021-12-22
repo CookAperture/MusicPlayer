@@ -16,7 +16,7 @@ namespace MusicPlayerBackend
     {
         public int ActualStream { get; set; }
         public int ActualDevice { get; set; }
-        private List<string> Devices { get; set; }
+        private List<string> Devices { get; set; } = new List<string>();
 
         public SoundEngine()
         {

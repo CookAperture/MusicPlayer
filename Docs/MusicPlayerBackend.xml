@@ -4,5 +4,64 @@
         <name>MusicPlayerBackend</name>
     </assembly>
     <members>
+        <member name="T:MusicPlayerBackend.SoundEngine">
+            <summary>
+            Implements <see cref="T:MusicPlayerBackend.Contracts.ISoundEngine"/> for handling of audiofiles and communication to audiodevices.
+            The underlying API can be subject to change, but the output and consistensy will remain.
+            Playing happens async.
+            </summary>
+            <inheritdoc cref="T:MusicPlayerBackend.Contracts.ISoundEngine"/>
+        </member>
+        <member name="T:MusicPlayerBackend.Globals">
+            <summary>
+            Holds the global variables.
+            </summary>
+            <remarks>
+            Usually only primitive types which are used in multiple places in code,
+            but are not changed by the user or by the programm.
+            </remarks>
+        </member>
+        <member name="P:MusicPlayerBackend.Globals.SettingsPath">
+            <summary>
+            Holds the path to the programms config file.
+            </summary>
+        </member>
+        <member name="T:MusicPlayerBackend.APPLICATION_STYLE">
+            <summary>
+            Represents the available Styles in an Typesafe manner.
+            </summary>
+        </member>
+        <member name="F:MusicPlayerBackend.APPLICATION_STYLE.DARK">
+            <summary>
+            Represents the dark theme value/option.
+            </summary>
+        </member>
+        <member name="F:MusicPlayerBackend.APPLICATION_STYLE.LIGHT">
+            <summary>
+            Represents the light theme value/option.
+            </summary>
+        </member>
+        <member name="T:MusicPlayerBackend.AudioDeviceModel">
+            <summary>
+            Holds data for the UI of the Audio Devices.
+            Implements <see cref="T:System.IEquatable`1"/> for equality checking. 
+            </summary>
+        </member>
+        <member name="P:MusicPlayerBackend.AudioDeviceModel.Text">
+            <summary>
+            Name of the Audio Device
+            </summary>
+        </member>
+        <member name="M:MusicPlayerBackend.AudioDataModel.Equals(MusicPlayerBackend.AudioDataModel)">
+            <summary>
+            Overrides the Equals Method of <see langword="object"/>.
+            If is <see cref="T:MusicPlayerBackend.AudioDataModel"/>, the call is delegated to <seealso cref="M:MusicPlayerBackend.AudioDataModel.Equals(MusicPlayerBackend.AudioDataModel)"/>
+            </summary>
+            <param name="other"></param>
+            <returns>
+            <see langword="true"/> if equal.
+            <see langword="false"/> if not equal.
+            </returns>
+        </member>
     </members>
 </doc>
