@@ -8,9 +8,101 @@
             <summary>
             Implements <see cref="T:MusicPlayerBackend.Contracts.ISoundEngine"/> for handling of audiofiles and communication to audiodevices.
             The underlying API can be subject to change, but the output and consistensy will remain.
-            Playing happens async.
+            Playing happens <see langword="async"/>.
             </summary>
             <inheritdoc cref="T:MusicPlayerBackend.Contracts.ISoundEngine"/>
+        </member>
+        <member name="E:MusicPlayerBackend.SoundEngine.onUpdatePlayProgress">
+            <summary>
+            Called every second while playing an audio file. 
+            Containing the latest progress, synced with the actual replay as <see cref="T:System.TimeSpan"/>.
+            </summary>
+        </member>
+        <member name="E:MusicPlayerBackend.SoundEngine.onAudioFileFinished">
+            <summary>
+            Called when a replay is finished regulary, not paused or manually stopped.
+            </summary>
+        </member>
+        <member name="P:MusicPlayerBackend.SoundEngine.ActualStream">
+            <summary>
+            Represents the actual stream handle. Only usefull for the engine itself. 
+            </summary>
+        </member>
+        <member name="P:MusicPlayerBackend.SoundEngine.ActualDevice">
+            <summary>
+            Represents the actual device handle. Only usefull for the engine itself.
+            </summary>
+        </member>
+        <member name="P:MusicPlayerBackend.SoundEngine.CurrentProgress">
+            <summary>
+            Represents the current progress of replay in Milliseconds. 
+            </summary>
+        </member>
+        <member name="P:MusicPlayerBackend.SoundEngine.CurrentMaxPlayDuration">
+            <summary>
+            Represents the actual maximal replay duration for the current stream in Milliseconds.
+            </summary>
+        </member>
+        <member name="P:MusicPlayerBackend.SoundEngine.CurrentAudioMetaData">
+            <summary>
+            Represents the safed MetaData of the current or last played audio file.
+            </summary>
+        </member>
+        <member name="P:MusicPlayerBackend.SoundEngine.Devices">
+            <summary>
+            Contains available devices by description usually the name. 
+            Can be used with the <see cref="P:MusicPlayerBackend.SoundEngine.ActualDevice"/> handle to determine the actual device name.
+            </summary>
+        </member>
+        <member name="M:MusicPlayerBackend.SoundEngine.#ctor">
+            <summary>
+            Does all the Init to properly use the <see cref="T:MusicPlayerBackend.SoundEngine"/>. No external configuration is needed.
+            </summary>
+        </member>
+        <member name="M:MusicPlayerBackend.SoundEngine.Finalize">
+            <summary>
+            Frees all acquired resources, as well as stopping all <see cref="T:MusicPlayerBackend.SoundEngine"/> related running threads.
+            </summary>
+        </member>
+        <member name="M:MusicPlayerBackend.SoundEngine.SetAudioDevice(System.String)">
+            <summary>
+            Uses <see cref="P:MusicPlayerBackend.SoundEngine.Devices"/> to init the given <paramref name="device"/>.
+            It will also free any previously initialized resources. 
+            </summary>
+            <param name="device"></param>
+        </member>
+        <member name="M:MusicPlayerBackend.SoundEngine.GetAudioDevices">
+            <summary>
+            Gets the audio devices. 
+            </summary>
+            <returns>List of device names that the <see cref="T:MusicPlayerBackend.SoundEngine"/> can find.</returns>
+        </member>
+        <member name="M:MusicPlayerBackend.SoundEngine.GetCurrentAudioDevice">
+            <summary>
+            Gets the name of the current device.
+            Determined by using <see cref="P:MusicPlayerBackend.SoundEngine.ActualDevice"/> and <see cref="P:MusicPlayerBackend.SoundEngine.Devices"/>
+            </summary>
+            <returns>
+            The name of the current device initialized. 
+            </returns>
+        </member>
+        <member name="M:MusicPlayerBackend.SoundEngine.StartPlaying(MusicPlayerBackend.AudioMetaData)">
+            <summary>
+            Starts playing the requested audio file.
+            Background a new task is started with proper cancellation token.
+            </summary>
+            <param name="audioMetaData"></param>
+        </member>
+        <member name="M:MusicPlayerBackend.SoundEngine.StopPlaying">
+            <summary>
+            Stops the task related to playing the song. The progress is not affected. 
+            </summary>
+        </member>
+        <member name="M:MusicPlayerBackend.SoundEngine.ResumePlaying">
+            <summary>
+            Starts resuming the requested audio file.
+            Background a new task is started with proper cancellation token.
+            </summary>
         </member>
         <member name="T:MusicPlayerBackend.Globals">
             <summary>

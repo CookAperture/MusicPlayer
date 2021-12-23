@@ -103,9 +103,15 @@ namespace MusicPlayerBackend
 
         public interface ISoundEngine
         {
+            public delegate void OnUpdatePlayProgress(TimeSpan current);
+            public delegate void OnAudioFileFinished();
+
+            public event OnUpdatePlayProgress onUpdatePlayProgress;
+            public event OnAudioFileFinished onAudioFileFinished;
+
             public void SetAudioDevice(string device);
             public List<string> GetAudioDevices();
-            public string GetAudioDevice();
+            public string GetCurrentAudioDevice();
             public void StartPlaying(AudioMetaData audioMetaData);
             public void StopPlaying();
             public void ResumePlaying();
