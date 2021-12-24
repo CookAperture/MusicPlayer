@@ -1,12 +1,19 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
-    <AnalysisLevel>preview</AnalysisLevel>
+    <AnalysisLevel>6.0</AnalysisLevel>
     <DebugType>embedded</DebugType>
     <ErrorReport>send</ErrorReport>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/CookAperture/MusicPlayer.git</RepositoryUrl>
+    <AssemblyName>MusicPlayerBackend</AssemblyName>
+    <RootNamespace>MusicPlayerBackend</RootNamespace>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <DocumentationFile>..\Docs\MusicPlayerBackend.xml</DocumentationFile>
+    <SignAssembly>False</SignAssembly>
+    <AssemblyOriginatorKeyFile>G:\Repositories\MyRepos\MusicPlayer\AvaloniaTesty\AvaloniaTesty_TemporaryKey.pfx</AssemblyOriginatorKeyFile>
+    <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DefineConstants />
@@ -16,7 +23,8 @@
     <DebugSymbols>true</DebugSymbols>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
-    <NoWarn />
+    <NoWarn>IDE1006</NoWarn>
+    <WarningLevel>5</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
@@ -26,7 +34,8 @@
     <DefineConstants />
     <PlatformTarget>AnyCPU</PlatformTarget>
     <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
-    <NoWarn />
+    <NoWarn>IDE1006</NoWarn>
+    <WarningLevel>5</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
     <None Include="..\README.md">

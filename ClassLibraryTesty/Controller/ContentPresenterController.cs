@@ -1,13 +1,14 @@
-using ClassLibraryTesty.Contracts;
+using MusicPlayerBackend.Contracts;
 
-namespace ClassLibraryTesty
+namespace MusicPlayerBackend
 {
     public class ContentPresenterController : IContentPresenterController
     {
-        IContentPresenter contentPresenter;
+        IContentPresenter ContentPresenter { get; set; }
         public ContentPresenterController(IContentPresenter contentPresenter)
         {
-            this.contentPresenter = contentPresenter;
+            ContentPresenter = contentPresenter;
         }
+
     }
 }

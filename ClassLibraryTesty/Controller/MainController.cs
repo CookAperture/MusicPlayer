@@ -1,13 +1,23 @@
-﻿using ClassLibraryTesty.Contracts;
+﻿using MusicPlayerBackend.Contracts;
 
-namespace ClassLibraryTesty
+namespace MusicPlayerBackend
 {
     public class MainController : IMainController
     {
-        IMainUI mainUI;
-        public MainController(ref IMainUI mainUI)
+        IMainUI MainUI { get; set; }
+        IApplication Application { get; set; }
+
+        public MainController(ref IMainUI mainUI, ref IApplication app)
         {
-            this.mainUI = mainUI;
+            MainUI = mainUI;
+            Application = app;
+
+            Application.SetStyle(APPLICATION_STYLE.DARK);
+        }
+
+        public void ChangeTheme(APPLICATION_STYLE appStyle)
+        {
+            Application.SetStyle(appStyle);
         }
     }
 }

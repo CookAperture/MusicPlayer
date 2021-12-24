@@ -1,15 +1,19 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <Nullable>disable</Nullable>
-    <StartupObject></StartupObject>
+    <StartupObject>MusicPlayer.Program</StartupObject>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
-    <AnalysisLevel>preview</AnalysisLevel>
+    <AnalysisLevel>6.0</AnalysisLevel>
     <ErrorReport>send</ErrorReport>
     <DebugType>embedded</DebugType>
     <MinimumPlatformVersion>7.0</MinimumPlatformVersion>
     <Platforms>AnyCPU;x64</Platforms>
+    <SignAssembly>True</SignAssembly>
+    <AssemblyOriginatorKeyFile></AssemblyOriginatorKeyFile>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
@@ -19,15 +23,21 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <PlatformTarget>x64</PlatformTarget>
     <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <WarningLevel>5</WarningLevel>
+    <NoWarn>IDE1006</NoWarn>
+    <WarningsNotAsErrors>IDE1006</WarningsNotAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <WarningsAsErrors />
     <DebugType>full</DebugType>
     <DebugSymbols>true</DebugSymbols>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
     <PlatformTarget>x64</PlatformTarget>
     <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <WarningLevel>5</WarningLevel>
+    <NoWarn>IDE1006</NoWarn>
+    <WarningsNotAsErrors>IDE1006</WarningsNotAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
@@ -37,6 +47,9 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <PlatformTarget>x64</PlatformTarget>
     <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <WarningLevel>5</WarningLevel>
+    <NoWarn>IDE1006</NoWarn>
+    <WarningsNotAsErrors>IDE1006</WarningsNotAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
@@ -46,6 +59,9 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <PlatformTarget>x64</PlatformTarget>
     <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <WarningLevel>5</WarningLevel>
+    <NoWarn>IDE1006</NoWarn>
+    <WarningsNotAsErrors>IDE1006</WarningsNotAsErrors>
   </PropertyGroup>
   <ItemGroup>
     <AvaloniaResource Include="**\*.xaml">
@@ -66,7 +82,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Avalonia" Version="0.10.11" />
-    <PackageReference Include="Avalonia.Desktop" Version="0.10.10" />
+    <PackageReference Include="Avalonia.Desktop" Version="0.10.11" />
     <PackageReference Include="Avalonia.Diagnostics" Version="0.10.11" />
   </ItemGroup>
   <ItemGroup>

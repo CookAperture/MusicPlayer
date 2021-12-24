@@ -1,8 +1,8 @@
-﻿using ClassLibraryTesty.Contracts;
+﻿using MusicPlayerBackend.Contracts;
 using System;
 using TagLib;
 
-namespace ClassLibraryTesty
+namespace MusicPlayerBackend
 {
     public class MetaDataReader : IMetaDataReader
     {
@@ -11,7 +11,7 @@ namespace ClassLibraryTesty
 
         }
 
-        public void ReadMetaData(string path)
+        public AudioMetaData ReadMetaDataFromFile(string path)
         {
             throw new NotImplementedException();
         }

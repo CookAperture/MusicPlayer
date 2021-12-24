@@ -1,8 +1,8 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
-using ClassLibraryTesty.Contracts;
+using MusicPlayerBackend.Contracts;
 
-namespace AvaloniaTesty
+namespace MusicPlayer
 {
     public class CustomDecoration : UserControl, ICustomDecoration
     {
