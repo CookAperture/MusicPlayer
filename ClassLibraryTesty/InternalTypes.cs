@@ -1,6 +1,7 @@
 ﻿global using System;
 global using System.Collections.Generic;
 global using System.Linq;
+using MusicPlayerBackend.Contracts;
 
 namespace MusicPlayerBackend
 {
@@ -34,7 +35,7 @@ namespace MusicPlayerBackend
     }
 
     /// <summary>
-    /// Holds data for the UI of the Audio Devices.
+    /// Holds data for the <see cref="ISettings"/> UI of the Audio Devices.
     /// Implements <see cref="IEquatable{T}"/> for equality checking. 
     /// </summary>
     public record struct AudioDeviceModel : IEquatable<AudioDeviceModel>
@@ -43,12 +44,21 @@ namespace MusicPlayerBackend
         /// Name of the Audio Device
         /// </summary>
         public string Text { get; set; }
-
+        
+        /// <summary>
+        /// Implements <see cref="IEquatable{T}"/>. Equals by hold values.
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns><see langword="true"/> if equal. <see langword="false"/> if unequal.</returns>
         public bool Equals(AudioDeviceModel other)
         {
             return Text == other.Text;
         }
-
+        
+        /// <summary>
+        /// Summs hash codes of every field.
+        /// </summary>
+        /// <returns>Summed hash code as <see langword="int"/>.</returns>
         public override int GetHashCode()
         {
             HashCode hashCode = new ();
@@ -58,6 +68,11 @@ namespace MusicPlayerBackend
             return hashCode.ToHashCode();
         }
 
+        /// <summary>
+        /// Adds every property formatted by name and value seperated by a pipe to a string.
+        /// Uses subsequent <see cref="ToString"/> calls.
+        /// </summary>
+        /// <returns><see cref="string"/></returns>
         public override string ToString()
         {
             string str = "Text: " + Text;
@@ -66,15 +81,32 @@ namespace MusicPlayerBackend
         }
     }
 
+    /// <summary>
+    /// Holds data for the <see cref="ISettings"/> UI of the available Themes.
+    /// Implements <see cref="IEquatable{T}"/> for equality checking. 
+    /// </summary>
     public record struct ThemesModel : IEquatable<ThemesModel>
     {
+
+        /// <summary>
+        /// Represents the name of the Theme as <see cref="string"/>.
+        /// </summary>
         public string Text { get; set; }
 
+        /// <summary>
+        /// Implements <see cref="IEquatable{T}"/>. Equals by hold values.
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns><see langword="true"/> if equal. <see langword="false"/> if unequal.</returns>
         public bool Equals(ThemesModel other)
         {
             return Text == other.Text;
         }
 
+        /// <summary>
+        /// Summs hash codes of every field.
+        /// </summary>
+        /// <returns>Summed hash code as <see langword="int"/>.</returns>
         public override int GetHashCode()
         {
             HashCode hashCode = new ();
@@ -84,6 +116,11 @@ namespace MusicPlayerBackend
             return hashCode.ToHashCode();
         }
 
+        /// <summary>
+        /// Adds every property formatted by name and value seperated by a pipe to a string.
+        /// Uses subsequent <see cref="ToString"/> calls.
+        /// </summary>
+        /// <returns><see cref="string"/></returns>
         public override string ToString()
         {
             string str = "Text: " + Text;
@@ -92,9 +129,22 @@ namespace MusicPlayerBackend
         }
     }
 
+    /// <summary>
+    /// Holds data for the <see cref="ISoundControlBar"/> UI of the available Themes.
+    /// Implements <see cref="IEquatable{T}"/> for equality checking. 
+    /// </summary>
     public record struct AudioDataModel : IEquatable<AudioDataModel>
     {
+
+        /// <summary>
+        /// Represents the title of the audio file.
+        /// </summary>
         public string Title { get; set; }
+
+        /// <summary>
+        /// Represents the duration of the audio file. 
+        /// Has no predefined format.
+        /// </summary>
         public string Duration { get; set; }
 
         /// <summary>
@@ -106,13 +156,16 @@ namespace MusicPlayerBackend
         /// <see langword="true"/> if equal.
         /// <see langword="false"/> if not equal.
         /// </returns>
-
         public bool Equals(AudioDataModel other)
         {
             return Title == other.Title &&
                 Duration == other.Duration;
         }
 
+        /// <summary>
+        /// Summs hash codes of every field.
+        /// </summary>
+        /// <returns>Summed hash code as <see langword="int"/>.</returns>
         public override int GetHashCode()
         {
             HashCode hashCode = new ();
@@ -123,6 +176,11 @@ namespace MusicPlayerBackend
             return hashCode.ToHashCode();
         }
 
+        /// <summary>
+        /// Adds every property formatted by name and value seperated by a pipe to a string.
+        /// Uses subsequent <see cref="ToString"/> calls.
+        /// </summary>
+        /// <returns><see cref="string"/></returns>
         public override string ToString()
         {
             string str = "Title: " + Title +
@@ -132,13 +190,38 @@ namespace MusicPlayerBackend
         }
     }
 
+    /// <summary>
+    /// Holds an abstracted unified set of properties to carry the needed meta data of an audio file.
+    /// Implements <see cref="IEquatable{T}"/> for equality checking. 
+    /// </summary>
     public record struct AudioMetaData : IEquatable<AudioMetaData>
     {
         //icon
+
+        /// <summary>
+        /// Represents the title of the audio file, if it was available in the files meta data.
+        /// </summary>
         public string Title { get; set; }
+
+        /// <summary>
+        /// Represents the duration of the audio files content.
+        /// </summary>
         public TimeSpan Duration { get; set; }
+
+        /// <summary>
+        /// Represents the path the file was read from.
+        /// </summary>
         public string AudioFilePath { get; set; }
 
+        /// <summary>
+        /// Overrides the Equals Method of <see langword="object"/>.
+        /// If is <see cref="AudioDataModel"/>, the call is delegated to <seealso cref="Equals(AudioMetaData)"/>
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns>
+        /// <see langword="true"/> if equal.
+        /// <see langword="false"/> if not equal.
+        /// </returns>
         public bool Equals(AudioMetaData other)
         {
             return Title == other.Title &&
@@ -146,6 +229,10 @@ namespace MusicPlayerBackend
                 AudioFilePath == other.AudioFilePath;
         }
 
+        /// <summary>
+        /// Summs hash codes of every field. Calls subsequent <see cref="GetHashCode"/> of the fields.
+        /// </summary>
+        /// <returns>Summed hash code as <see langword="int"/>.</returns>
         public override int GetHashCode()
         {
             HashCode hashCode = new ();
@@ -157,6 +244,11 @@ namespace MusicPlayerBackend
             return hashCode.ToHashCode();
         }
 
+        /// <summary>
+        /// Adds every property formatted by name and value seperated by a pipe to a string.
+        /// Uses subsequent <see cref="ToString"/> calls.
+        /// </summary>
+        /// <returns><see cref="string"/></returns>
         public override string ToString()
         {
             string str = "Title: " + Title + 
@@ -167,13 +259,42 @@ namespace MusicPlayerBackend
         }
     }
 
+    /// <summary>
+    /// Holds an abstracted unified set of properties to carry the needed meta data of an audio file.
+    /// Implements <see cref="IEquatable{T}"/> for equality checking. 
+    /// </summary>
     public record struct AppSettings : IEquatable<AppSettings>
     {
+
+        /// <summary>
+        /// Represents the path of all media files. 
+        /// </summary>
         public string MediaPath { get; set; }
+
+        /// <summary>
+        /// Represents the audio devices name. 
+        /// </summary>
         public string AudioDevice { get; set; }
+
+        /// <summary>
+        /// Represents all found audio devices by their name.
+        /// </summary>
         public List<string> AudioDevices { get; set; }
+
+        /// <summary>
+        /// Represents the theme as enum. The choices are predefined by the enum.
+        /// </summary>
         public APPLICATION_STYLE AppStyle { get; set; }
 
+        /// <summary>
+        /// Overrides the Equals Method of <see langword="object"/>.
+        /// If is <see cref="AudioDataModel"/>, the call is delegated to <seealso cref="Equals(AppSettings)"/>
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns>
+        /// <see langword="true"/> if equal.
+        /// <see langword="false"/> if not equal.
+        /// </returns>
         public bool Equals(AppSettings other)
         {
             return MediaPath == other.MediaPath &&
@@ -182,6 +303,10 @@ namespace MusicPlayerBackend
                 AppStyle == other.AppStyle;
         }
 
+        /// <summary>
+        /// Summs hash codes of every field. Calls subsequent <see cref="GetHashCode"/> of the fields.
+        /// </summary>
+        /// <returns>Summed hash code as <see langword="int"/>.</returns>
         public override int GetHashCode()
         {
             HashCode hashCode = new ();
@@ -195,6 +320,11 @@ namespace MusicPlayerBackend
             return hashCode.ToHashCode();
         }
 
+        /// <summary>
+        /// Adds every property formatted by name and value seperated by a pipe to a string.
+        /// Uses subsequent <see cref="ToString"/> calls.
+        /// </summary>
+        /// <returns><see cref="string"/></returns>
         public override string ToString()
         {
             string str = "Style: " + AppStyle +

@@ -4,6 +4,83 @@
         <name>MusicPlayerBackend</name>
     </assembly>
     <members>
+        <member name="T:MusicPlayerBackend.Contracts.IApplication">
+            <summary>
+            Contracts the neccesary functions to communicate with it's subcomponents and vice versa.
+            </summary>
+        </member>
+        <member name="M:MusicPlayerBackend.Contracts.IApplication.SetStyle(MusicPlayerBackend.APPLICATION_STYLE)">
+            <summary>
+            Communicates to the App to set the <paramref name="appStyle"/> predefined in <see cref="T:MusicPlayerBackend.APPLICATION_STYLE"/>.
+            </summary>
+            <param name="appStyle"></param>
+        </member>
+        <member name="T:MusicPlayerBackend.Contracts.ISoundEngine">
+            <summary>
+            Contracts the neccessary functions and events
+            to ensure communication with the specific implementation of an sound handler
+            to other components that might want to work with audio file.
+            </summary>
+        </member>
+        <member name="T:MusicPlayerBackend.Contracts.ISoundEngine.OnUpdatePlayProgress">
+            <summary>
+            Defines the delegation for an update of any replay progress.
+            </summary>
+            <param name="current">
+            Contains the value of the passed time of the replay.
+            </param>
+        </member>
+        <member name="T:MusicPlayerBackend.Contracts.ISoundEngine.OnAudioFileFinished">
+            <summary>
+            Defines the delegation for an notification that a replay has finished on it self.
+            </summary>
+        </member>
+        <member name="E:MusicPlayerBackend.Contracts.ISoundEngine.onUpdatePlayProgress">
+            <summary>
+            Declares the must that an event exists in any implementation of <see cref="T:MusicPlayerBackend.Contracts.ISoundEngine"/>.
+            The use of it is not guranteed, but advised.
+            </summary>
+        </member>
+        <member name="E:MusicPlayerBackend.Contracts.ISoundEngine.onAudioFileFinished">
+            <summary>
+            Declares the must that an event exists in any implementation of <see cref="T:MusicPlayerBackend.Contracts.ISoundEngine"/>.
+            The use of it is not guranteed, but advised.
+            </summary>
+        </member>
+        <member name="M:MusicPlayerBackend.Contracts.ISoundEngine.SetAudioDevice(System.String)">
+            <summary>
+            Communicates the <paramref name="device"/> to be used. 
+            </summary>
+            <param name="device"></param>
+        </member>
+        <member name="M:MusicPlayerBackend.Contracts.ISoundEngine.GetAudioDevices">
+            <summary>
+            Communicates the audio devices an <see cref="T:MusicPlayerBackend.Contracts.ISoundEngine"/> implementation can find.
+            </summary>
+            <returns> List of device names.</returns>
+        </member>
+        <member name="M:MusicPlayerBackend.Contracts.ISoundEngine.GetCurrentAudioDevice">
+            <summary>
+            Communicates the current set audio device.
+            </summary>
+            <returns>Name of current device.</returns>
+        </member>
+        <member name="M:MusicPlayerBackend.Contracts.ISoundEngine.StartPlaying(MusicPlayerBackend.AudioMetaData)">
+            <summary>
+            Communicates to start playing the given audio file via <paramref name="audioMetaData"/>.
+            </summary>
+            <param name="audioMetaData"><inheritdoc cref="T:MusicPlayerBackend.AudioMetaData"/></param>
+        </member>
+        <member name="M:MusicPlayerBackend.Contracts.ISoundEngine.StopPlaying">
+            <summary>
+            Communicates to stop playing current audio file.
+            </summary>
+        </member>
+        <member name="M:MusicPlayerBackend.Contracts.ISoundEngine.ResumePlaying">
+            <summary>
+            Communicates to resume playing the current audio file.
+            </summary>
+        </member>
         <member name="T:MusicPlayerBackend.SoundEngine">
             <summary>
             Implements <see cref="T:MusicPlayerBackend.Contracts.ISoundEngine"/> for handling of audiofiles and communication to audiodevices.
@@ -135,13 +212,81 @@
         </member>
         <member name="T:MusicPlayerBackend.AudioDeviceModel">
             <summary>
-            Holds data for the UI of the Audio Devices.
+            Holds data for the <see cref="T:MusicPlayerBackend.Contracts.ISettings"/> UI of the Audio Devices.
             Implements <see cref="T:System.IEquatable`1"/> for equality checking. 
             </summary>
         </member>
         <member name="P:MusicPlayerBackend.AudioDeviceModel.Text">
             <summary>
             Name of the Audio Device
+            </summary>
+        </member>
+        <member name="M:MusicPlayerBackend.AudioDeviceModel.Equals(MusicPlayerBackend.AudioDeviceModel)">
+            <summary>
+            Implements <see cref="T:System.IEquatable`1"/>. Equals by hold values.
+            </summary>
+            <param name="other"></param>
+            <returns><see langword="true"/> if equal. <see langword="false"/> if unequal.</returns>
+        </member>
+        <member name="M:MusicPlayerBackend.AudioDeviceModel.GetHashCode">
+            <summary>
+            Summs hash codes of every field.
+            </summary>
+            <returns>Summed hash code as <see langword="int"/>.</returns>
+        </member>
+        <member name="M:MusicPlayerBackend.AudioDeviceModel.ToString">
+            <summary>
+            Adds every property formatted by name and value seperated by a pipe to a string.
+            Uses subsequent <see cref="M:MusicPlayerBackend.AudioDeviceModel.ToString"/> calls.
+            </summary>
+            <returns><see cref="T:System.String"/></returns>
+        </member>
+        <member name="T:MusicPlayerBackend.ThemesModel">
+            <summary>
+            Holds data for the <see cref="T:MusicPlayerBackend.Contracts.ISettings"/> UI of the available Themes.
+            Implements <see cref="T:System.IEquatable`1"/> for equality checking. 
+            </summary>
+        </member>
+        <member name="P:MusicPlayerBackend.ThemesModel.Text">
+            <summary>
+            Represents the name of the Theme as <see cref="T:System.String"/>.
+            </summary>
+        </member>
+        <member name="M:MusicPlayerBackend.ThemesModel.Equals(MusicPlayerBackend.ThemesModel)">
+            <summary>
+            Implements <see cref="T:System.IEquatable`1"/>. Equals by hold values.
+            </summary>
+            <param name="other"></param>
+            <returns><see langword="true"/> if equal. <see langword="false"/> if unequal.</returns>
+        </member>
+        <member name="M:MusicPlayerBackend.ThemesModel.GetHashCode">
+            <summary>
+            Summs hash codes of every field.
+            </summary>
+            <returns>Summed hash code as <see langword="int"/>.</returns>
+        </member>
+        <member name="M:MusicPlayerBackend.ThemesModel.ToString">
+            <summary>
+            Adds every property formatted by name and value seperated by a pipe to a string.
+            Uses subsequent <see cref="M:MusicPlayerBackend.ThemesModel.ToString"/> calls.
+            </summary>
+            <returns><see cref="T:System.String"/></returns>
+        </member>
+        <member name="T:MusicPlayerBackend.AudioDataModel">
+            <summary>
+            Holds data for the <see cref="T:MusicPlayerBackend.Contracts.ISoundControlBar"/> UI of the available Themes.
+            Implements <see cref="T:System.IEquatable`1"/> for equality checking. 
+            </summary>
+        </member>
+        <member name="P:MusicPlayerBackend.AudioDataModel.Title">
+            <summary>
+            Represents the title of the audio file.
+            </summary>
+        </member>
+        <member name="P:MusicPlayerBackend.AudioDataModel.Duration">
+            <summary>
+            Represents the duration of the audio file. 
+            Has no predefined format.
             </summary>
         </member>
         <member name="M:MusicPlayerBackend.AudioDataModel.Equals(MusicPlayerBackend.AudioDataModel)">
@@ -154,6 +299,114 @@
             <see langword="true"/> if equal.
             <see langword="false"/> if not equal.
             </returns>
+        </member>
+        <member name="M:MusicPlayerBackend.AudioDataModel.GetHashCode">
+            <summary>
+            Summs hash codes of every field.
+            </summary>
+            <returns>Summed hash code as <see langword="int"/>.</returns>
+        </member>
+        <member name="M:MusicPlayerBackend.AudioDataModel.ToString">
+            <summary>
+            Adds every property formatted by name and value seperated by a pipe to a string.
+            Uses subsequent <see cref="M:MusicPlayerBackend.AudioDataModel.ToString"/> calls.
+            </summary>
+            <returns><see cref="T:System.String"/></returns>
+        </member>
+        <member name="T:MusicPlayerBackend.AudioMetaData">
+            <summary>
+            Holds an abstracted unified set of properties to carry the needed meta data of an audio file.
+            Implements <see cref="T:System.IEquatable`1"/> for equality checking. 
+            </summary>
+        </member>
+        <member name="P:MusicPlayerBackend.AudioMetaData.Title">
+            <summary>
+            Represents the title of the audio file, if it was available in the files meta data.
+            </summary>
+        </member>
+        <member name="P:MusicPlayerBackend.AudioMetaData.Duration">
+            <summary>
+            Represents the duration of the audio files content.
+            </summary>
+        </member>
+        <member name="P:MusicPlayerBackend.AudioMetaData.AudioFilePath">
+            <summary>
+            Represents the path the file was read from.
+            </summary>
+        </member>
+        <member name="M:MusicPlayerBackend.AudioMetaData.Equals(MusicPlayerBackend.AudioMetaData)">
+            <summary>
+            Overrides the Equals Method of <see langword="object"/>.
+            If is <see cref="T:MusicPlayerBackend.AudioDataModel"/>, the call is delegated to <seealso cref="M:MusicPlayerBackend.AudioMetaData.Equals(MusicPlayerBackend.AudioMetaData)"/>
+            </summary>
+            <param name="other"></param>
+            <returns>
+            <see langword="true"/> if equal.
+            <see langword="false"/> if not equal.
+            </returns>
+        </member>
+        <member name="M:MusicPlayerBackend.AudioMetaData.GetHashCode">
+            <summary>
+            Summs hash codes of every field. Calls subsequent <see cref="M:MusicPlayerBackend.AudioMetaData.GetHashCode"/> of the fields.
+            </summary>
+            <returns>Summed hash code as <see langword="int"/>.</returns>
+        </member>
+        <member name="M:MusicPlayerBackend.AudioMetaData.ToString">
+            <summary>
+            Adds every property formatted by name and value seperated by a pipe to a string.
+            Uses subsequent <see cref="M:MusicPlayerBackend.AudioMetaData.ToString"/> calls.
+            </summary>
+            <returns><see cref="T:System.String"/></returns>
+        </member>
+        <member name="T:MusicPlayerBackend.AppSettings">
+            <summary>
+            Holds an abstracted unified set of properties to carry the needed meta data of an audio file.
+            Implements <see cref="T:System.IEquatable`1"/> for equality checking. 
+            </summary>
+        </member>
+        <member name="P:MusicPlayerBackend.AppSettings.MediaPath">
+            <summary>
+            Represents the path of all media files. 
+            </summary>
+        </member>
+        <member name="P:MusicPlayerBackend.AppSettings.AudioDevice">
+            <summary>
+            Represents the audio devices name. 
+            </summary>
+        </member>
+        <member name="P:MusicPlayerBackend.AppSettings.AudioDevices">
+            <summary>
+            Represents all found audio devices by their name.
+            </summary>
+        </member>
+        <member name="P:MusicPlayerBackend.AppSettings.AppStyle">
+            <summary>
+            Represents the theme as enum. The choices are predefined by the enum.
+            </summary>
+        </member>
+        <member name="M:MusicPlayerBackend.AppSettings.Equals(MusicPlayerBackend.AppSettings)">
+            <summary>
+            Overrides the Equals Method of <see langword="object"/>.
+            If is <see cref="T:MusicPlayerBackend.AudioDataModel"/>, the call is delegated to <seealso cref="M:MusicPlayerBackend.AppSettings.Equals(MusicPlayerBackend.AppSettings)"/>
+            </summary>
+            <param name="other"></param>
+            <returns>
+            <see langword="true"/> if equal.
+            <see langword="false"/> if not equal.
+            </returns>
+        </member>
+        <member name="M:MusicPlayerBackend.AppSettings.GetHashCode">
+            <summary>
+            Summs hash codes of every field. Calls subsequent <see cref="M:MusicPlayerBackend.AppSettings.GetHashCode"/> of the fields.
+            </summary>
+            <returns>Summed hash code as <see langword="int"/>.</returns>
+        </member>
+        <member name="M:MusicPlayerBackend.AppSettings.ToString">
+            <summary>
+            Adds every property formatted by name and value seperated by a pipe to a string.
+            Uses subsequent <see cref="M:MusicPlayerBackend.AppSettings.ToString"/> calls.
+            </summary>
+            <returns><see cref="T:System.String"/></returns>
         </member>
     </members>
 </doc>
