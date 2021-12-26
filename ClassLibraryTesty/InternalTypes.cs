@@ -252,8 +252,8 @@ namespace MusicPlayerBackend
         public override string ToString()
         {
             string str = "Title: " + Title + 
-                " | Duration: " + Duration.ToString() + 
-                " | Path: " + AudioFilePath;
+                " | Duration: " + Duration.ToString() +
+                " | AudioFilePath: " + AudioFilePath;
 
             return str;
         }
@@ -327,9 +327,9 @@ namespace MusicPlayerBackend
         /// <returns><see cref="string"/></returns>
         public override string ToString()
         {
-            string str = "Style: " + AppStyle +
-                " | Device: " + AudioDevice +
-                " | Path: " + MediaPath + " | Devices: ";
+            string str = "AppStyle: " + AppStyle +
+                " | AudioDevice: " + AudioDevice +
+                " | MediaPath: " + MediaPath + " | AudioDevices: ";
             foreach (var dev in AudioDevices)
                 str += dev + ", ";
 
