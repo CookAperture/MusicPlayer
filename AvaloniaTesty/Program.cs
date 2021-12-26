@@ -1,3 +1,5 @@
+using Avalonia;
+using Avalonia.ReactiveUI;
 using MusicPlayerBackend;
 using MusicPlayerBackend.Contracts;
 
@@ -5,6 +7,15 @@ namespace MusicPlayer
 {
     static class Program
     {
+        public static AppBuilder BuildAvaloniaApp() => 
+            AppBuilder.Configure<App>().UsePlatformDetect()
+                .UsePlatformDetect()
+                .UseSkia()
+                .UseReactiveUI()
+                .With(new X11PlatformOptions() { UseDeferredRendering = true })
+                .With(new MacOSPlatformOptions() { ShowInDock = true })
+                .With(new Win32PlatformOptions() { AllowEglInitialization = true, UseDeferredRendering = true })
+                .LogToTrace();
 
         public static IApplication app;
         public static IMainUI mainUI;
