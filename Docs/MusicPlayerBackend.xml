@@ -81,6 +81,19 @@
             Communicates to resume playing the current audio file.
             </summary>
         </member>
+        <member name="T:MusicPlayerBackend.Contracts.IJSONSerializer">
+            <summary>
+            Contracts the neccessary functions to allow serialization of objects.
+            </summary>
+        </member>
+        <member name="M:MusicPlayerBackend.Contracts.IJSONSerializer.Serialize``1(``0)">
+            <summary>
+            Describes the neccessary input and output for serialization.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="serializable"></param>
+            <returns>Should be an representation of the object as <see cref="T:System.String"/>.</returns>
+        </member>
         <member name="T:MusicPlayerBackend.Contracts.IJSONDeserializer">
             <summary>
             Contracts the neccessary functions to allow deserializing of objects.
@@ -92,12 +105,13 @@
             </summary>
             <typeparam name="T"></typeparam>
             <param name="deserializable"></param>
-            <returns> Should be an representation of the string as <typeparamref name="T"/>.</returns>
+            <returns>Should be an representation of the string as <typeparamref name="T"/>.</returns>
         </member>
         <member name="T:MusicPlayerBackend.JSONDeserializer">
             <summary>
-            Implements <see cref="T:MusicPlayerBackend.Contracts.IJSONDeserializer"/> to geserialize any json string for given type.
+            Implements <see cref="T:MusicPlayerBackend.Contracts.IJSONDeserializer"/> to seserialize any json string for given type.
             </summary>
+            /// <seealso cref="T:MusicPlayerBackend.Contracts.IJSONDeserializer" />
         </member>
         <member name="M:MusicPlayerBackend.JSONDeserializer.#ctor">
             <summary>
@@ -112,6 +126,12 @@
             <typeparam name="T"></typeparam>
             <param name="deserializable"></param>
             <returns>Deserialized object of type <typeparamref name="T"/>.</returns>
+        </member>
+        <member name="T:MusicPlayerBackend.JSONSerializer">
+            <summary>
+            Implements <see cref="T:MusicPlayerBackend.Contracts.IJSONSerializer"/> to serialize any object to json string for given type.
+            </summary>
+            <seealso cref="T:MusicPlayerBackend.Contracts.IJSONSerializer" />
         </member>
         <member name="T:MusicPlayerBackend.SoundEngine">
             <summary>

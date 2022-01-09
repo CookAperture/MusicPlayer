@@ -19,7 +19,7 @@ namespace MusicPlayerBackend
         }
 
         //Logic Contracts
-        #region LogicContracts
+        #region LogicContracts        
         public interface IMainController
         {
             public void ChangeTheme(APPLICATION_STYLE appStyle);
@@ -175,11 +175,25 @@ namespace MusicPlayerBackend
             public void ResumePlaying();
         }
 
+        /// <summary>
+        /// Contracts the neccessary functions
+        /// to conversio from Models to Structs and vice vers as well as convert any other complex type into another needed.
+        /// </summary>
         public interface IDataConverter
         { }
 
+        /// <summary>
+        /// Contracts the neccessary functions to allow serialization of objects.
+        /// </summary>
         public interface IJSONSerializer
         {
+
+            /// <summary>
+            /// Describes the neccessary input and output for serialization.
+            /// </summary>
+            /// <typeparam name="T"></typeparam>
+            /// <param name="serializable"></param>
+            /// <returns>Should be an representation of the object as <see cref="string"/>.</returns>
             public string Serialize<T>(T serializable); 
         }
 
@@ -194,7 +208,7 @@ namespace MusicPlayerBackend
             /// </summary>
             /// <typeparam name="T"></typeparam>
             /// <param name="deserializable"></param>
-            /// <returns> Should be an representation of the string as <typeparamref name="T"/>.</returns>
+            /// <returns>Should be an representation of the string as <typeparamref name="T"/>.</returns>
             public T Deserialize<T>(string deserializable);
         }
 

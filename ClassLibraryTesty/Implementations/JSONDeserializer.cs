@@ -7,8 +7,9 @@ namespace MusicPlayerBackend
 {
 
     /// <summary>
-    /// Implements <see cref="IJSONDeserializer"/> to geserialize any json string for given type.
+    /// Implements <see cref="IJSONDeserializer"/> to seserialize any json string for given type.
     /// </summary>
+    /// /// <seealso cref="MusicPlayerBackend.Contracts.IJSONDeserializer" />
     public class JSONDeserializer : IJSONDeserializer
     {
 

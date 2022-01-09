@@ -2,6 +2,7 @@ using Avalonia;
 using Avalonia.ReactiveUI;
 using MusicPlayerBackend;
 using MusicPlayerBackend.Contracts;
+using System.Runtime;
 
 namespace MusicPlayer
 {
@@ -34,6 +35,7 @@ namespace MusicPlayer
         public static IJSONDeserializer JSONDeserializer { get; set; }
         public static IMetaDataReader MetaDataReader { get; set; }
         public static ISoundEngine SoundEngine { get; set; }
+
         public static void Main(string[] args)
         {
             MusicPlayerApp.Init(args, MusicPlayerAppInit);
