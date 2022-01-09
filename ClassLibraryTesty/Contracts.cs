@@ -103,8 +103,17 @@ namespace MusicPlayerBackend
             public List<string> FindAudioFilesFromRootPath(string rootPath);
         }
 
+        /// <summary>
+        /// Contracts the neccessary functions to read a audio meta data struct from files.
+        /// </summary>
         public interface IMetaDataReader
         {
+
+            /// <summary>
+            /// Communicates that <paramref name="path"/> is used to obtain an <see cref="AudioMetaData"/>.
+            /// </summary>
+            /// <param name="path"></param>
+            /// <returns>Should return an correctly filled <see cref="AudioMetaData"/> struct.</returns>
             public AudioMetaData ReadMetaDataFromFile(string path);
         }
 
