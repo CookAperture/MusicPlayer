@@ -10,12 +10,11 @@ namespace MusicPlayer
     {
         public static AppBuilder BuildAvaloniaApp() => 
             AppBuilder.Configure<App>().UsePlatformDetect()
-                .UsePlatformDetect()
                 .UseSkia()
                 .UseReactiveUI()
                 .With(new X11PlatformOptions() { UseDeferredRendering = true })
                 .With(new MacOSPlatformOptions() { ShowInDock = true })
-                .With(new Win32PlatformOptions() { AllowEglInitialization = true, UseDeferredRendering = true })
+                .With(new Win32PlatformOptions() { AllowEglInitialization = true, UseDeferredRendering = true, UseWindowsUIComposition = true, UseWgl = true })
                 .LogToTrace();
 
         public static IApplication app;

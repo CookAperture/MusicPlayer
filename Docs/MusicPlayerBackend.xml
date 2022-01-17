@@ -15,9 +15,261 @@
             </summary>
             <param name="appStyle"></param>
         </member>
+        <member name="T:MusicPlayerBackend.Contracts.IMainController">
+            <summary>
+            Contracts the neccessary functions to connect and handle all sub-controller with the ui.
+            </summary>
+        </member>
+        <member name="M:MusicPlayerBackend.Contracts.IMainController.ChangeTheme(MusicPlayerBackend.APPLICATION_STYLE)">
+            <summary>
+            Contracts to change the theme on top level.
+            </summary>
+            <param name="appStyle"></param>
+        </member>
+        <member name="T:MusicPlayerBackend.Contracts.ICustomDecorationController">
+            <summary>
+            Contracts the neccessary functions to commmunicate to another controller and ui and connect with interactor.
+            </summary>
+        </member>
+        <member name="T:MusicPlayerBackend.Contracts.ICustomDecorationController.OnSwitchedToSettings">
+            <summary>
+            Interfaces no event args.
+            </summary>
+        </member>
+        <member name="T:MusicPlayerBackend.Contracts.ICustomDecorationController.OnSwitchedToCover">
+            <summary>
+            Interfaces no event args.
+            </summary>
+        </member>
+        <member name="T:MusicPlayerBackend.Contracts.ICustomDecorationController.OnSwitchedToMediaList">
+            <summary>
+            Interfaces no event args.
+            </summary>
+        </member>
+        <member name="E:MusicPlayerBackend.Contracts.ICustomDecorationController.onSwitchedToSettings">
+            <summary>
+            To be called when ui has been triggert. Shall be connected to show settings.
+            </summary>
+        </member>
+        <member name="E:MusicPlayerBackend.Contracts.ICustomDecorationController.onSwitchedToCover">
+            <summary>
+            To be called when ui has been triggert. Shall be connected to show the cover.
+            </summary>
+        </member>
+        <member name="E:MusicPlayerBackend.Contracts.ICustomDecorationController.onSwitchedToMediaList">
+            <summary>
+            To be called when ui has been triggert. Shall be connected to show media list.
+            </summary>
+        </member>
+        <member name="T:MusicPlayerBackend.Contracts.ISoundControlBarController">
+            <summary>
+            Contracts neccessary functions to communicate and connect <see cref="T:MusicPlayerBackend.Contracts.ISoundControlBar"/> with <see cref="T:MusicPlayerBackend.Contracts.IAudioFileInteractor"/>.
+            </summary>
+        </member>
+        <member name="M:MusicPlayerBackend.Contracts.ISoundControlBarController.UpdateInformation">
+            <summary>
+            Contracts to set audio meta data to the ui.
+            </summary>
+        </member>
+        <member name="T:MusicPlayerBackend.Contracts.ISoundControlBarController.OnPlay">
+            <summary>
+            To be triggered from the ui. Sends the file path of selected song.
+            </summary>
+            <param name="name"></param>
+        </member>
+        <member name="T:MusicPlayerBackend.Contracts.ISoundControlBarController.OnSkipForward">
+            <summary>
+            To be triggered from the ui. Next song.
+            </summary>
+        </member>
+        <member name="T:MusicPlayerBackend.Contracts.ISoundControlBarController.OnSkipBackward">
+            <summary>
+            To be triggered from the ui. Previous song.
+            </summary>
+        </member>
+        <member name="T:MusicPlayerBackend.Contracts.ISoundControlBarController.ScrubTo">
+            <summary>
+            To be triggered from the ui. Set playback to specific time.
+            </summary>
+            <param name="time"></param>
+        </member>
+        <member name="E:MusicPlayerBackend.Contracts.ISoundControlBarController.onPlay">
+            <summary>
+            <see cref="T:MusicPlayerBackend.Contracts.ISoundControlBarController.OnPlay"/>
+            </summary>
+        </member>
+        <member name="E:MusicPlayerBackend.Contracts.ISoundControlBarController.onSkipForward">
+            <summary>
+            <see cref="T:MusicPlayerBackend.Contracts.ISoundControlBarController.OnSkipForward"/>
+            </summary>
+        </member>
+        <member name="E:MusicPlayerBackend.Contracts.ISoundControlBarController.onSkipBackward">
+            <summary>
+            <see cref="T:MusicPlayerBackend.Contracts.ISoundControlBarController.OnSkipBackward"/>
+            </summary>
+        </member>
+        <member name="E:MusicPlayerBackend.Contracts.ISoundControlBarController.onScrubTo">
+            <summary>
+            <see cref="T:MusicPlayerBackend.Contracts.ISoundControlBarController.ScrubTo"/>
+            </summary>
+        </member>
+        <member name="T:MusicPlayerBackend.Contracts.IContentPresenterController">
+            <summary>
+            Contracts neccessary functions to communicate and connect ui with interactor.
+            </summary>
+        </member>
+        <member name="T:MusicPlayerBackend.Contracts.ISettingsController">
+            <summary>
+            Contracts neccessary functions to communicate and connect ui with interactor.
+            </summary>
+        </member>
+        <member name="T:MusicPlayerBackend.Contracts.ISettingsController.OnChangeTheme">
+            <summary>
+            To be invoked by settings ui. 
+            </summary>
+            <param name="appStyle"></param>
+        </member>
+        <member name="E:MusicPlayerBackend.Contracts.ISettingsController.onChangeTheme">
+            <summary>
+            <see cref="T:MusicPlayerBackend.Contracts.ISettingsController.OnChangeTheme"/>
+            </summary>
+        </member>
+        <member name="M:MusicPlayerBackend.Contracts.ISettingsController.LoadSettings">
+            <summary>
+            Contracts to load the settings. To the settings ui.
+            </summary>
+        </member>
+        <member name="T:MusicPlayerBackend.Contracts.ISongCoverController">
+            <summary>
+            Contract to connect the <see cref="T:MusicPlayerBackend.Contracts.ISongCover"/> with <see cref="T:MusicPlayerBackend.Contracts.IAudioFileInteractor"/>.
+            </summary>
+        </member>
+        <member name="M:MusicPlayerBackend.Contracts.ISongCoverController.SetCover">
+            <summary>
+            Contracts to load the sover, is delegated to ui.
+            </summary>
+        </member>
+        <member name="T:MusicPlayerBackend.Contracts.IMediaListController">
+            <summary>
+            Contracts to connect <see cref="T:MusicPlayerBackend.Contracts.IMediaList"/> with <see cref="T:MusicPlayerBackend.Contracts.IMediaListInteractor"/>.
+            </summary>
+        </member>
+        <member name="T:MusicPlayerBackend.Contracts.IMediaListController.OnAudioSelected">
+            <summary>
+            To be called from ui. Sends back the data package of selected audio file.
+            </summary>
+            <param name="selected"></param>
+        </member>
+        <member name="E:MusicPlayerBackend.Contracts.IMediaListController.onAudioSelected">
+            <summary>
+            <see cref="T:MusicPlayerBackend.Contracts.IMediaListController.OnAudioSelected"/>
+            </summary>
+        </member>
+        <member name="M:MusicPlayerBackend.Contracts.IMediaListController.SetMediaList(System.Collections.Generic.List{MusicPlayerBackend.AudioMetaData})">
+            <summary>
+            Contracts to load media files into the ui.
+            </summary>
+            <param name="audioMetaDatas"></param>
+        </member>
+        <member name="T:MusicPlayerBackend.Contracts.IAudioFileInteractor">
+            <summary>
+            Contracts to connect <see cref="T:MusicPlayerBackend.Contracts.ISoundEngine"/> with <see cref="T:MusicPlayerBackend.Contracts.IMetaDataReader"/> and with <see cref="T:MusicPlayerBackend.Contracts.IDataConverter"/>.
+            </summary>
+        </member>
+        <member name="M:MusicPlayerBackend.Contracts.IAudioFileInteractor.StartPlaying">
+            <summary>
+            Contracts to play actual audio file.
+            </summary>
+        </member>
+        <member name="M:MusicPlayerBackend.Contracts.IAudioFileInteractor.StartPlayingAt(System.TimeSpan)">
+            <summary>
+            Contracts to start actual audio file at given time.
+            </summary>
+            <param name="time"></param>
+        </member>
+        <member name="M:MusicPlayerBackend.Contracts.IAudioFileInteractor.SkipTo(System.Int32)">
+            <summary>
+            Contracts to Skip to specific time.
+            </summary>
+            <param name="seconds"></param>
+        </member>
+        <member name="M:MusicPlayerBackend.Contracts.IAudioFileInteractor.StopPlaying">
+            <summary>
+            Contracts to stop playing the actual song.
+            </summary>
+        </member>
+        <member name="M:MusicPlayerBackend.Contracts.IAudioFileInteractor.ResumePlaying">
+            <summary>
+            Contracts to resume playing the actual song.
+            </summary>
+        </member>
+        <member name="M:MusicPlayerBackend.Contracts.IAudioFileInteractor.SetActualAudioFile(System.String)">
+            <summary>
+            Contracts to set the actual audio file.
+            </summary>
+            <param name="path"></param>
+        </member>
+        <member name="M:MusicPlayerBackend.Contracts.IAudioFileInteractor.ReadMetaDataFromActualAudio">
+            <summary>
+            Contracts to fetch the MetaData from the actual audio file.
+            </summary>
+            <returns>MetaData from actual audio file.</returns>
+        </member>
+        <member name="T:MusicPlayerBackend.Contracts.ISettingsInteractor">
+            <summary>
+            Contracts to connect <see cref="T:MusicPlayerBackend.Contracts.IFileReader"/>, <see cref="T:MusicPlayerBackend.Contracts.IFileWriter"/>, 
+            <see cref="T:MusicPlayerBackend.Contracts.IJSONSerializer"/>, <see cref="T:MusicPlayerBackend.Contracts.IJSONDeserializer"/> and <see cref="T:MusicPlayerBackend.Contracts.IDataConverter"/> with each other.
+            </summary>
+        </member>
+        <member name="M:MusicPlayerBackend.Contracts.ISettingsInteractor.WriteSettings(MusicPlayerBackend.AppSettings)">
+            <summary>
+            Contracts to write <paramref name="appSettings"/> to the settings file.
+            </summary>
+            <param name="appSettings"></param>
+        </member>
+        <member name="M:MusicPlayerBackend.Contracts.ISettingsInteractor.ReadSettings">
+            <summary>
+            Contracts to read app settings from the settings file.
+            </summary>
+            <returns><see cref="T:MusicPlayerBackend.AppSettings"/> saved in settings file.</returns>
+        </member>
+        <member name="T:MusicPlayerBackend.Contracts.IMediaListInteractor">
+            <summary>
+            Contracts to connect <see cref="T:MusicPlayerBackend.Contracts.IMetaDataReader"/> with <see cref="T:MusicPlayerBackend.Contracts.IFileSystemHandler"/>.
+            </summary>
+        </member>
+        <member name="T:MusicPlayerBackend.Contracts.IMediaListInteractor.OnMediaFound">
+            <summary>
+            To be called with each found media. 
+            </summary>
+            <param name="audioMetaData"></param>
+        </member>
+        <member name="E:MusicPlayerBackend.Contracts.IMediaListInteractor.onMediaFound">
+            <summary>
+            <see cref="T:MusicPlayerBackend.Contracts.IMediaListInteractor.OnMediaFound"/>
+            </summary>
+        </member>
+        <member name="M:MusicPlayerBackend.Contracts.IMediaListInteractor.GetMediaList(System.String)">
+            <summary>
+            Contracts to fetch all audio files recursivly from a root dir.
+            </summary>
+            <param name="rootPath"></param>
+            <returns>List of <see cref="T:MusicPlayerBackend.AudioMetaData"/> from all found media files.</returns>
+        </member>
         <member name="T:MusicPlayerBackend.Contracts.IFileSystemHandler">
             <summary>
             Contracts the neccessary functions to handle a file system.
+            </summary>
+        </member>
+        <member name="T:MusicPlayerBackend.Contracts.IFileSystemHandler.OnMediaFound">
+            <summary>
+            To be called with each found media. 
+            </summary>
+            <param name="mediafile"></param>
+        </member>
+        <member name="E:MusicPlayerBackend.Contracts.IFileSystemHandler.onMediaFound">
+            <summary>
+            <see cref="T:MusicPlayerBackend.Contracts.IFileSystemHandler.OnMediaFound"/>
             </summary>
         </member>
         <member name="M:MusicPlayerBackend.Contracts.IFileSystemHandler.FindAudioFilesFromRootPath(System.String,System.Collections.Generic.List{System.String})">
@@ -27,6 +279,13 @@
             <param name="rootPath">The root path.</param>
             <param name="validAudioFiles">The valid file endings.</param>
             <returns>All valid audio files in a List of paths.</returns>
+        </member>
+        <member name="M:MusicPlayerBackend.Contracts.IFileSystemHandler.FindAudioFilesFromRootPathAsync(System.String,System.Collections.Generic.List{System.String})">
+            <summary>
+            Describes the neccessary input and output to fetch audio file paths from a root. Calls <see cref="T:MusicPlayerBackend.Contracts.IFileSystemHandler.OnMediaFound"/> for every found media.
+            </summary>
+            <param name="rootPath">The root path.</param>
+            <param name="validAudioFiles">The valid file endings.</param>
         </member>
         <member name="T:MusicPlayerBackend.Contracts.IMetaDataReader">
             <summary>
@@ -317,8 +576,99 @@
         </member>
         <member name="T:MusicPlayerBackend.Contracts.ISettings">
             <summary>
+            Contracts the neccessary functions to communicate with Settings.
+            </summary>
+        </member>
+        <member name="T:MusicPlayerBackend.Contracts.ISettings.OnSettingsChanged">
+            <summary>
+            Interfaces settings changed event data.
+            </summary>
+            <param name="appSettings"></param>
+        </member>
+        <member name="T:MusicPlayerBackend.Contracts.ISettings.OnChangeTheme">
+            <summary>
+            Interfaces theme changed event data.
+            </summary>
+            <param name="theme"></param>
+        </member>
+        <member name="E:MusicPlayerBackend.Contracts.ISettings.onSettingsChanged">
+            <summary>
+            To be invoked when settings are changed.
+            </summary>
+        </member>
+        <member name="E:MusicPlayerBackend.Contracts.ISettings.onChangeTheme">
+            <summary>
+            To be invoked when theme is changed.
+            </summary>
+        </member>
+        <member name="M:MusicPlayerBackend.Contracts.ISettings.LoadSettings(MusicPlayerBackend.AppSettings)">
+            <summary>
             
             </summary>
+            <param name="appSettings"></param>
+        </member>
+        <member name="T:MusicPlayerBackend.Contracts.IContentPresenter">
+            <summary>
+            Contracts the neccessary functions to communicate with ContentPresenter.
+            </summary>
+        </member>
+        <member name="P:MusicPlayerBackend.Contracts.IContentPresenter.SongCover">
+            <summary>
+            Holding the SongCover UI element.
+            </summary>
+        </member>
+        <member name="P:MusicPlayerBackend.Contracts.IContentPresenter.Settings">
+            <summary>
+            Holding the Settings UI element.
+            </summary>
+        </member>
+        <member name="P:MusicPlayerBackend.Contracts.IContentPresenter.MediaList">
+            <summary>
+            Holding the MediaList UI element.
+            </summary>
+        </member>
+        <member name="M:MusicPlayerBackend.Contracts.IContentPresenter.ShowCoverPage">
+            <summary>
+            Shows the SongCover.
+            </summary>
+        </member>
+        <member name="M:MusicPlayerBackend.Contracts.IContentPresenter.ShowSettingsPage">
+            <summary>
+            Shows the Settings.
+            </summary>
+        </member>
+        <member name="M:MusicPlayerBackend.Contracts.IContentPresenter.ShowMediaListPage">
+            <summary>
+            Shows the MediaList.
+            </summary>
+        </member>
+        <member name="T:MusicPlayerBackend.Contracts.IMediaList">
+            <summary>
+            Contracts the neccessary functions to communicate with MediaList
+            </summary>
+        </member>
+        <member name="T:MusicPlayerBackend.Contracts.IMediaList.OnSelection">
+            <summary>
+            Interfaces selection event data.
+            </summary>
+            <param name="selection"></param>
+        </member>
+        <member name="E:MusicPlayerBackend.Contracts.IMediaList.onSelection">
+            <summary>
+            To be invoked upon selection and selection changes.
+            </summary>
+        </member>
+        <member name="M:MusicPlayerBackend.Contracts.IMediaList.SetList(System.Collections.Generic.List{MusicPlayerBackend.AudioMetaData})">
+            <summary>
+            Sets the media list content.
+            </summary>
+            <param name="mediaList"></param>
+        </member>
+        <member name="M:MusicPlayerBackend.Contracts.IMediaList.SetPlaying(MusicPlayerBackend.AudioMetaData)">
+            <summary>
+            Marks the actually playing file.
+            </summary>
+            <param name="selection"></param>
         </member>
         <member name="T:MusicPlayerBackend.DataConverter">
             <summary>
@@ -364,6 +714,11 @@
             Acquires all neccessary resources to go through a file system.
             </summary>
         </member>
+        <member name="E:MusicPlayerBackend.FileSystemHandler.onMediaFound">
+            <summary>
+            Gets called when <see cref="M:MusicPlayerBackend.FileSystemHandler.FindAudioFilesFromRootPathAsync(System.String,System.Collections.Generic.List{System.String})"/> is used for every found media file.
+            </summary>
+        </member>
         <member name="M:MusicPlayerBackend.FileSystemHandler.FindAudioFilesFromRootPath(System.String,System.Collections.Generic.List{System.String})">
             <summary>
             Finds all audio files from the given root <paramref name="rootPath"/>.
@@ -371,6 +726,13 @@
             <param name="rootPath">The root path.</param>
             <param name="validAudioFiles">The valid file endings.</param>
             <returns>All valid audio files in a List of paths.</returns>
+        </member>
+        <member name="M:MusicPlayerBackend.FileSystemHandler.FindAudioFilesFromRootPathAsync(System.String,System.Collections.Generic.List{System.String})">
+            <summary>
+            Finds all audio files from the given root <paramref name="rootPath"/>.
+            </summary>
+            <param name="rootPath">The root path.</param>
+            <param name="validAudioFiles">The valid file endings.</param>
         </member>
         <member name="T:MusicPlayerBackend.FileWriter">
             <summary>
@@ -545,6 +907,58 @@
             Starts resuming the requested audio file.
             Background a new task is started with proper cancellation token.
             </summary>
+        </member>
+        <member name="T:MusicPlayerBackend.MediaListInteractor">
+            <summary>
+            Implements <see cref="T:MusicPlayerBackend.Contracts.IMediaListInteractor"/>
+            </summary>
+        </member>
+        <member name="E:MusicPlayerBackend.MediaListInteractor.onMediaFound">
+            <summary>
+            Gets called when media file gets found in the async call.
+            </summary>
+        </member>
+        <member name="M:MusicPlayerBackend.MediaListInteractor.#ctor(MusicPlayerBackend.Contracts.IFileSystemHandler,MusicPlayerBackend.Contracts.IMetaDataReader)">
+            <summary>
+            Connects <paramref name="fileSystemHandler"/> with <paramref name="metaDataReader"/>.
+            </summary>
+            <param name="fileSystemHandler"></param>
+            <param name="metaDataReader"></param>
+        </member>
+        <member name="M:MusicPlayerBackend.MediaListInteractor.GetMediaList(System.String)">
+            <summary>
+            Fetches all audio filepaths and fetches the meta data from them.
+            </summary>
+            <param name="rootPath"></param>
+            <returns>List of <see cref="T:MusicPlayerBackend.AudioMetaData"/> of all found filepaths.</returns>
+        </member>
+        <member name="T:MusicPlayerBackend.SettingsInteractor">
+            <summary>
+            Implements <see cref="T:MusicPlayerBackend.Contracts.ISettingsInteractor"/>.
+            </summary>
+        </member>
+        <member name="M:MusicPlayerBackend.SettingsInteractor.#ctor(MusicPlayerBackend.Contracts.IDataConverter,MusicPlayerBackend.Contracts.IJSONDeserializer,MusicPlayerBackend.Contracts.IJSONSerializer,MusicPlayerBackend.Contracts.IFileReader,MusicPlayerBackend.Contracts.IFileWriter)">
+            <summary>
+            Connects <paramref name="dataConverter"/>, <paramref name="fileReader"/>, <paramref name="fileWriter"/>
+            <paramref name="jsonDeserializer"/> and <paramref name="jsonSerializer"/> with each other.
+            </summary>
+            <param name="dataConverter"></param>
+            <param name="jsonDeserializer"></param>
+            <param name="jsonSerializer"></param>
+            <param name="fileReader"></param>
+            <param name="fileWriter"></param>
+        </member>
+        <member name="M:MusicPlayerBackend.SettingsInteractor.WriteSettings(MusicPlayerBackend.AppSettings)">
+            <summary>
+            Serializes and writes away the <paramref name="appSettings"/>.
+            </summary>
+            <param name="appSettings"></param>
+        </member>
+        <member name="M:MusicPlayerBackend.SettingsInteractor.ReadSettings">
+            <summary>
+            Reads settings and deserializes them.
+            </summary>
+            <returns><see cref="T:MusicPlayerBackend.AppSettings"/> read from settings file.</returns>
         </member>
         <member name="T:MusicPlayerBackend.Globals">
             <summary>
