@@ -19,82 +19,267 @@ namespace MusicPlayerBackend
         }
 
         //Logic Contracts
-        #region LogicContracts        
+        #region LogicContracts   
+        
+        /// <summary>
+        /// Contracts the neccessary functions to connect and handle all sub-controller with the ui.
+        /// </summary>
         public interface IMainController
         {
+
+            /// <summary>
+            /// Contracts to change the theme on top level.
+            /// </summary>
+            /// <param name="appStyle"></param>
             public void ChangeTheme(APPLICATION_STYLE appStyle);
         }
+
+        /// <summary>
+        /// Contracts the neccessary functions to commmunicate to another controller and ui and connect with interactor.
+        /// </summary>
         public interface ICustomDecorationController
         {
+
+            /// <summary>
+            /// Interfaces no event args.
+            /// </summary>
             public delegate void OnSwitchedToSettings();
+
+            /// <summary>
+            /// Interfaces no event args.
+            /// </summary>
             public delegate void OnSwitchedToCover();
+
+            /// <summary>
+            /// Interfaces no event args.
+            /// </summary>
             public delegate void OnSwitchedToMediaList();
 
+            /// <summary>
+            /// To be called when ui has been triggert. Shall be connected to show settings.
+            /// </summary>
             public event OnSwitchedToSettings onSwitchedToSettings;
+
+            /// <summary>
+            /// To be called when ui has been triggert. Shall be connected to show the cover.
+            /// </summary>
             public event OnSwitchedToCover onSwitchedToCover;
+
+            /// <summary>
+            /// To be called when ui has been triggert. Shall be connected to show media list.
+            /// </summary>
             public event OnSwitchedToMediaList onSwitchedToMediaList;
 
             //SafeActualSongOnExit -> OnExit event
         }
+
+        /// <summary>
+        /// Contracts neccessary functions to communicate and connect <see cref="ISoundControlBar"/> with <see cref="IAudioFileInteractor"/>.
+        /// </summary>
         public interface ISoundControlBarController
         {
+
+            /// <summary>
+            /// Contracts to set audio meta data to the ui.
+            /// </summary>
             public void UpdateInformation();
 
+            /// <summary>
+            /// To be triggered from the ui. Sends the file path of selected song.
+            /// </summary>
+            /// <param name="name"></param>
             public delegate void OnPlay(string name);
+
+            /// <summary>
+            /// To be triggered from the ui. Next song.
+            /// </summary>
             public delegate void OnSkipForward();
+
+            /// <summary>
+            /// To be triggered from the ui. Previous song.
+            /// </summary>
             public delegate void OnSkipBackward();
+
+            /// <summary>
+            /// To be triggered from the ui. Set playback to specific time.
+            /// </summary>
+            /// <param name="time"></param>
             public delegate void ScrubTo(TimeSpan time);
 
+            /// <summary>
+            /// <see cref="OnPlay"/>
+            /// </summary>
             public event OnPlay onPlay;
+
+            /// <summary>
+            /// <see cref="OnSkipForward"/>
+            /// </summary>
             public event OnSkipForward onSkipForward;
+
+            /// <summary>
+            /// <see cref="OnSkipBackward"/>
+            /// </summary>
             public event OnSkipBackward onSkipBackward;
+
+            /// <summary>
+            /// <see cref="ScrubTo"/>
+            /// </summary>
             public event ScrubTo onScrubTo;
         }
+
+        /// <summary>
+        /// Contracts neccessary functions to communicate and connect ui with interactor.
+        /// </summary>
         public interface IContentPresenterController
         { }
+
+        /// <summary>
+        /// Contracts neccessary functions to communicate and connect ui with interactor.
+        /// </summary>
         public interface ISettingsController
         {
+
+            /// <summary>
+            /// To be invoked by settings ui. 
+            /// </summary>
+            /// <param name="appStyle"></param>
             public delegate void OnChangeTheme(APPLICATION_STYLE appStyle);
 
+            /// <summary>
+            /// <see cref="OnChangeTheme"/>
+            /// </summary>
             public event OnChangeTheme onChangeTheme;
 
+            /// <summary>
+            /// Contracts to load the settings. To the settings ui.
+            /// </summary>
             public void LoadSettings();
         }
+
+        /// <summary>
+        /// Contract to connect the <see cref="ISongCover"/> with <see cref="IAudioFileInteractor"/>.
+        /// </summary>
         public interface ISongCoverController
         {
+
+            /// <summary>
+            /// Contracts to load the sover, is delegated to ui.
+            /// </summary>
             public void SetCover(/*Image*/);
         }
 
+        /// <summary>
+        /// Contracts to connect <see cref="IMediaList"/> with <see cref="IMediaListInteractor"/>.
+        /// </summary>
         public interface IMediaListController
         {
+
+            /// <summary>
+            /// To be called from ui. Sends back the data package of selected audio file.
+            /// </summary>
+            /// <param name="selected"></param>
             public delegate void OnAudioSelected(AudioMetaData selected);
 
+            /// <summary>
+            /// <see cref="OnAudioSelected"/>
+            /// </summary>
             public event OnAudioSelected onAudioSelected;
+
+            /// <summary>
+            /// Contracts to load media files into the ui.
+            /// </summary>
+            /// <param name="audioMetaDatas"></param>
             public void SetMediaList(List<AudioMetaData> audioMetaDatas);
         }
 
+        /// <summary>
+        /// Contracts to connect <see cref="ISoundEngine"/> with <see cref="IMetaDataReader"/> and with <see cref="IDataConverter"/>.
+        /// </summary>
         public interface IAudioFileInteractor
         {
+
+            /// <summary>
+            /// Contracts to play actual audio file.
+            /// </summary>
             public void StartPlaying();
+
+            /// <summary>
+            /// Contracts to start actual audio file at given time.
+            /// </summary>
+            /// <param name="time"></param>
             public void StartPlayingAt(TimeSpan time);
+
+            /// <summary>
+            /// Contracts to Skip to specific time.
+            /// </summary>
+            /// <param name="seconds"></param>
             public void SkipTo(int seconds);
+
+            /// <summary>
+            /// Contracts to stop playing the actual song.
+            /// </summary>
             public void StopPlaying();
+
+            /// <summary>
+            /// Contracts to resume playing the actual song.
+            /// </summary>
             public void ResumePlaying();
+
+            /// <summary>
+            /// Contracts to set the actual audio file.
+            /// </summary>
+            /// <param name="path"></param>
             public void SetActualAudioFile(string path);
+
+            /// <summary>
+            /// Contracts to fetch the MetaData from the actual audio file.
+            /// </summary>
+            /// <returns>MetaData from actual audio file.</returns>
             public AudioMetaData ReadMetaDataFromActualAudio();
         }
 
+        /// <summary>
+        /// Contracts to connect <see cref="IFileReader"/>, <see cref="IFileWriter"/>, 
+        /// <see cref="IJSONSerializer"/>, <see cref="IJSONDeserializer"/> and <see cref="IDataConverter"/> with each other.
+        /// </summary>
         public interface ISettingsInteractor
         {
+
+            /// <summary>
+            /// Contracts to write <paramref name="appSettings"/> to the settings file.
+            /// </summary>
+            /// <param name="appSettings"></param>
             public void WriteSettings(AppSettings appSettings);
+
+            /// <summary>
+            /// Contracts to read app settings from the settings file.
+            /// </summary>
+            /// <returns><see cref="AppSettings"/> saved in settings file.</returns>
             public AppSettings ReadSettings();
         }
 
+        /// <summary>
+        /// Contracts to connect <see cref="IMetaDataReader"/> with <see cref="IFileSystemHandler"/>.
+        /// </summary>
         public interface IMediaListInteractor
         {
+
+            /// <summary>
+            /// To be called with each found media. 
+            /// </summary>
+            /// <param name="audioMetaData"></param>
             public delegate void OnMediaFound(AudioMetaData audioMetaData);
 
+            /// <summary>
+            /// <see cref="OnMediaFound"/>
+            /// </summary>
             public event OnMediaFound onMediaFound;
+
+            /// <summary>
+            /// Contracts to fetch all audio files recursivly from a root dir.
+            /// </summary>
+            /// <param name="rootPath"></param>
+            /// <returns>List of <see cref="AudioMetaData"/> from all found media files.</returns>
             public List<AudioMetaData> GetMediaList(string rootPath);
         }
 
@@ -105,12 +290,30 @@ namespace MusicPlayerBackend
         {
 
             /// <summary>
+            /// To be called with each found media. 
+            /// </summary>
+            /// <param name="mediafile"></param>
+            public delegate void OnMediaFound(string mediafile);
+
+            /// <summary>
+            /// <see cref="OnMediaFound"/>
+            /// </summary>
+            public event OnMediaFound onMediaFound;
+
+            /// <summary>
             /// Describes the neccessary input and output to fetch audio file paths from a root.
             /// </summary>
             /// <param name="rootPath">The root path.</param>
             /// <param name="validAudioFiles">The valid file endings.</param>
             /// <returns>All valid audio files in a List of paths.</returns>
             public List<string> FindAudioFilesFromRootPath(string rootPath, List<string> validAudioFiles);
+
+            /// <summary>
+            /// Describes the neccessary input and output to fetch audio file paths from a root. Calls <see cref="OnMediaFound"/> for every found media.
+            /// </summary>
+            /// <param name="rootPath">The root path.</param>
+            /// <param name="validAudioFiles">The valid file endings.</param>
+            public void FindAudioFilesFromRootPathAsync(string rootPath, List<string> validAudioFiles);
         }
 
         /// <summary>
