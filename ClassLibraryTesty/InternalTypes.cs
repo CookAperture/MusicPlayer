@@ -18,6 +18,14 @@ namespace MusicPlayerBackend
         /// Holds the path to the programms config file.
         /// </summary>
         public static string SettingsPath { get; } = "config.json";
+
+        /// <summary>
+        /// Stores the valid audio file endings the application is able to play and find.
+        /// </summary>
+        public static List<string> ValidAudioFileEndings { get; } = new List<string>() 
+        {
+            "mp3",
+        };
     }
     /// <summary>
     /// Represents the available Styles in an Typesafe manner.
