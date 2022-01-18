@@ -146,14 +146,31 @@ namespace MusicPlayerBackend
             public delegate void OnChangeTheme(APPLICATION_STYLE appStyle);
 
             /// <summary>
-            /// <see cref="OnChangeTheme"/>
+            /// To be invoked by settings, when settings are loaded.
+            /// </summary>
+            /// <param name="appSettings"></param>
+            public delegate void OnSettingsLoaded(AppSettings appSettings);
+
+            /// <summary>
+            /// <see cref="OnChangeTheme"/>.
             /// </summary>
             public event OnChangeTheme onChangeTheme;
+
+            /// <summary>
+            /// <see cref="OnSettingsLoaded"/>.
+            /// </summary>
+            public event OnSettingsLoaded onSettingsLoaded;
 
             /// <summary>
             /// Contracts to load the settings. To the settings ui.
             /// </summary>
             public void LoadSettings();
+
+            /// <summary>
+            /// Loads the settings to return it to the caller.
+            /// </summary>
+            /// <returns><see cref="AppSettings"/> from settings.</returns>
+            public AppSettings LoadAppSettings();
         }
 
         /// <summary>
@@ -188,8 +205,14 @@ namespace MusicPlayerBackend
             /// <summary>
             /// Contracts to load media files into the ui.
             /// </summary>
-            /// <param name="audioMetaDatas"></param>
-            public void SetMediaList(List<AudioMetaData> audioMetaDatas);
+            /// <param name="rootPath"></param>
+            public void SetMediaList(string rootPath);
+
+            /// <summary>
+            /// Contracts to mark the currently playing song.
+            /// </summary>
+            /// <param name="audioMetaData"></param>
+            public void SetPlaying(AudioMetaData audioMetaData);
         }
 
         /// <summary>
