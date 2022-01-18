@@ -47,9 +47,36 @@ namespace MusicPlayerTests
             mdr.ReadMetaDataFromFile(@"C:://Song.mp3").Returns(data);
 
             audioFileInteractor.SetActualAudioFile(@"C:://Song.mp3");
+            audioFileInteractor.StartPlaying();
 
             mdr.Received().ReadMetaDataFromFile(@"C:://Song.mp3");
             se.Received().StartPlaying(data);
+        }
+
+        [Fact]
+        public void StopPlaying_CallsToSubsequentResourcesAndLogic_ExpectCallsToSoundEngine()
+        {
+            var se = Substitute.For<ISoundEngine>();
+            var mdr = Substitute.For<IMetaDataReader>();
+            var dc = Substitute.For<IDataConverter>();
+            var audioFileInteractor = Substitute.For<AudioFileInteractor>(se, dc, mdr);
+
+            audioFileInteractor.StopPlaying();
+
+            se.Received().StopPlaying();
+        }
+
+        [Fact]
+        public void ResumePlaying_CallsToSubsequentResourcesAndLogic_ExpectCallsToSoundEngine()
+        {
+            var se = Substitute.For<ISoundEngine>();
+            var mdr = Substitute.For<IMetaDataReader>();
+            var dc = Substitute.For<IDataConverter>();
+            var audioFileInteractor = Substitute.For<AudioFileInteractor>(se, dc, mdr);
+
+            audioFileInteractor.ResumePlaying();
+
+            se.Received().ResumePlaying();
         }
     }
 }

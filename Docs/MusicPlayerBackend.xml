@@ -176,6 +176,31 @@
             Contracts to connect <see cref="T:MusicPlayerBackend.Contracts.ISoundEngine"/> with <see cref="T:MusicPlayerBackend.Contracts.IMetaDataReader"/> and with <see cref="T:MusicPlayerBackend.Contracts.IDataConverter"/>.
             </summary>
         </member>
+        <member name="T:MusicPlayerBackend.Contracts.IAudioFileInteractor.OnUpdatePlayProgress">
+            <summary>
+            Defines the delegation for an update of any replay progress.
+            </summary>
+            <param name="current">
+            Contains the value of the passed time of the replay.
+            </param>
+        </member>
+        <member name="T:MusicPlayerBackend.Contracts.IAudioFileInteractor.OnAudioFileFinished">
+            <summary>
+            Defines the delegation for an notification that a replay has finished on it self.
+            </summary>
+        </member>
+        <member name="E:MusicPlayerBackend.Contracts.IAudioFileInteractor.onUpdatePlayProgress">
+            <summary>
+            Declares the must that an event exists in any implementation of <see cref="T:MusicPlayerBackend.Contracts.IAudioFileInteractor"/>.
+            The use of it is not guranteed, but advised.
+            </summary>
+        </member>
+        <member name="E:MusicPlayerBackend.Contracts.IAudioFileInteractor.onAudioFileFinished">
+            <summary>
+            Declares the must that an event exists in any implementation of <see cref="T:MusicPlayerBackend.Contracts.IAudioFileInteractor"/>.
+            The use of it is not guranteed, but advised.
+            </summary>
+        </member>
         <member name="M:MusicPlayerBackend.Contracts.IAudioFileInteractor.StartPlaying">
             <summary>
             Contracts to play actual audio file.
@@ -907,6 +932,68 @@
             Starts resuming the requested audio file.
             Background a new task is started with proper cancellation token.
             </summary>
+        </member>
+        <member name="T:MusicPlayerBackend.AudioFileInteractor">
+            <summary>
+            Implements <see cref="T:MusicPlayerBackend.Contracts.IAudioFileInteractor"/>
+            </summary>
+        </member>
+        <member name="E:MusicPlayerBackend.AudioFileInteractor.onUpdatePlayProgress">
+            <summary>
+            Routes from the <see cref="T:MusicPlayerBackend.Contracts.ISoundEngine"/>.
+            </summary>
+        </member>
+        <member name="E:MusicPlayerBackend.AudioFileInteractor.onAudioFileFinished">
+            <summary>
+            Routes from the <see cref="T:MusicPlayerBackend.Contracts.ISoundEngine"/>.
+            </summary>
+        </member>
+        <member name="M:MusicPlayerBackend.AudioFileInteractor.#ctor(MusicPlayerBackend.Contracts.ISoundEngine,MusicPlayerBackend.Contracts.IDataConverter,MusicPlayerBackend.Contracts.IMetaDataReader)">
+            <summary>
+            Connects <paramref name="dataConverter"/> with <paramref name="metaDataReader"/> and with <paramref name="soundEngine"/>.
+            </summary>
+            <param name="soundEngine"></param>
+            <param name="dataConverter"></param>
+            <param name="metaDataReader"></param>
+        </member>
+        <member name="M:MusicPlayerBackend.AudioFileInteractor.StartPlaying">
+            <summary>
+            Starts playing actual song selected.
+            </summary>
+        </member>
+        <member name="M:MusicPlayerBackend.AudioFileInteractor.StartPlayingAt(System.TimeSpan)">
+            <summary>
+            Starts playing the actual audio at given <paramref name="time"/>.
+            </summary>
+            <param name="time"></param>
+        </member>
+        <member name="M:MusicPlayerBackend.AudioFileInteractor.SkipTo(System.Int32)">
+            <summary>
+            Skips to <paramref name="seconds"/> in actual replay.
+            </summary>
+            <param name="seconds"></param>
+        </member>
+        <member name="M:MusicPlayerBackend.AudioFileInteractor.StopPlaying">
+            <summary>
+            Stops playing the actual audio.
+            </summary>
+        </member>
+        <member name="M:MusicPlayerBackend.AudioFileInteractor.ResumePlaying">
+            <summary>
+            Resumes playing the actual audio.
+            </summary>
+        </member>
+        <member name="M:MusicPlayerBackend.AudioFileInteractor.SetActualAudioFile(System.String)">
+            <summary>
+            Sets the actual audio file.
+            </summary>
+            <param name="path"></param>
+        </member>
+        <member name="M:MusicPlayerBackend.AudioFileInteractor.ReadMetaDataFromActualAudio">
+            <summary>
+            Fetches <see cref="T:MusicPlayerBackend.AudioMetaData"/> from actual auio file.
+            </summary>
+            <returns><see cref="T:MusicPlayerBackend.AudioMetaData"/></returns>
         </member>
         <member name="T:MusicPlayerBackend.MediaListInteractor">
             <summary>

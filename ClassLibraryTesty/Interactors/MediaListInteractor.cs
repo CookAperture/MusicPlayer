@@ -26,6 +26,8 @@ namespace MusicPlayerBackend
         {
             FileSystemHandler = fileSystemHandler;
             MetaDataReader = metaDataReader;
+
+            FileSystemHandler.onMediaFound += (string path) => { onMediaFound.Invoke(MetaDataReader.ReadMetaDataFromFile(path)); };
         }
 
         /// <summary>

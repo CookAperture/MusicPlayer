@@ -13,7 +13,17 @@ namespace MusicPlayerBackend
         IMetaDataReader MetaDataReader { get; set; }
         IDataConverter DataConverter { get; set; }
 
-        string _actualAudioFile = "";
+        string _actualAudioFile;
+
+        /// <summary>
+        /// Routes from the <see cref="ISoundEngine"/>.
+        /// </summary>
+        public event IAudioFileInteractor.OnUpdatePlayProgress onUpdatePlayProgress;
+
+        /// <summary>
+        /// Routes from the <see cref="ISoundEngine"/>.
+        /// </summary>
+        public event IAudioFileInteractor.OnAudioFileFinished onAudioFileFinished;
 
         /// <summary>
         /// Connects <paramref name="dataConverter"/> with <paramref name="metaDataReader"/> and with <paramref name="soundEngine"/>.
@@ -26,6 +36,9 @@ namespace MusicPlayerBackend
             SoundEngine = soundEngine;
             DataConverter = dataConverter;
             MetaDataReader = metaDataReader;
+
+            SoundEngine.onAudioFileFinished += () => { onAudioFileFinished.Invoke(); };
+            SoundEngine.onUpdatePlayProgress += (TimeSpan current) => { onUpdatePlayProgress.Invoke(current); };
         }
 
         /// <summary>
@@ -33,7 +46,8 @@ namespace MusicPlayerBackend
         /// </summary>
         public void StartPlaying()
         {
-            throw new NotImplementedException();
+            var data = MetaDataReader.ReadMetaDataFromFile(_actualAudioFile);
+            SoundEngine.StartPlaying(data);
         }
 
         /// <summary>
@@ -59,7 +73,7 @@ namespace MusicPlayerBackend
         /// </summary>
         public void StopPlaying()
         {
-            throw new NotImplementedException();
+            SoundEngine.StopPlaying();
         }
 
         /// <summary>
@@ -67,7 +81,7 @@ namespace MusicPlayerBackend
         /// </summary>
         public void ResumePlaying()
         {
-            throw new NotImplementedException();
+            SoundEngine?.ResumePlaying();
         }
 
         /// <summary>
@@ -76,7 +90,7 @@ namespace MusicPlayerBackend
         /// <param name="path"></param>
         public void SetActualAudioFile(string path)
         {
-            throw new NotImplementedException();
+            _actualAudioFile = path;
         }
 
         /// <summary>
@@ -85,7 +99,7 @@ namespace MusicPlayerBackend
         /// <returns><see cref="AudioMetaData"/></returns>
         public AudioMetaData ReadMetaDataFromActualAudio()
         {
-            throw new NotImplementedException();
+            return MetaDataReader.ReadMetaDataFromFile(_actualAudioFile);
         }
     }
 }
