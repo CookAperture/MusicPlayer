@@ -18,6 +18,14 @@ namespace MusicPlayerBackend
         /// Holds the path to the programms config file.
         /// </summary>
         public static string SettingsPath { get; } = "config.json";
+
+        /// <summary>
+        /// Stores the valid audio file endings the application is able to play and find.
+        /// </summary>
+        public static List<string> ValidAudioFileEndings { get; } = new List<string>() 
+        {
+            "mp3",
+        };
     }
     /// <summary>
     /// Represents the available Styles in an Typesafe manner.
@@ -27,7 +35,7 @@ namespace MusicPlayerBackend
         /// <summary>
         /// Represents the dark theme value/option.
         /// </summary>
-         DARK = 0,
+        DARK = 0,
         /// <summary>
         /// Represents the light theme value/option.
         /// </summary>
@@ -252,8 +260,8 @@ namespace MusicPlayerBackend
         public override string ToString()
         {
             string str = "Title: " + Title + 
-                " | Duration: " + Duration.ToString() + 
-                " | Path: " + AudioFilePath;
+                " | Duration: " + Duration.ToString() +
+                " | AudioFilePath: " + AudioFilePath;
 
             return str;
         }
@@ -327,9 +335,9 @@ namespace MusicPlayerBackend
         /// <returns><see cref="string"/></returns>
         public override string ToString()
         {
-            string str = "Style: " + AppStyle +
-                " | Device: " + AudioDevice +
-                " | Path: " + MediaPath + " | Devices: ";
+            string str = "AppStyle: " + AppStyle +
+                " | AudioDevice: " + AudioDevice +
+                " | MediaPath: " + MediaPath + " | AudioDevices: ";
             foreach (var dev in AudioDevices)
                 str += dev + ", ";
 

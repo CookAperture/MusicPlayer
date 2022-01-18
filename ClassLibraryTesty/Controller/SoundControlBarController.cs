@@ -2,15 +2,20 @@ using MusicPlayerBackend.Contracts;
 
 namespace MusicPlayerBackend
 {
+
+    /// <summary>
+    /// Implements <see cref="ISoundControlBarController"/>.
+    /// </summary>
     public class SoundControlBarController : ISoundControlBarController
     {
-        public event ISoundControlBarController.OnPlay onPlay;
-        public event ISoundControlBarController.OnSkipForward onSkipForward;
-        public event ISoundControlBarController.OnSkipBackward onSkipBackward;
-        public event ISoundControlBarController.ScrubTo onScrubTo;
-
         ISoundControlBar SoundControlBar { get; set; }
         IAudioFileInteractor AudioFileInteractor { get; set; }
+
+        /// <summary>
+        /// Connects <paramref name="audioFileInteractor"/> with <paramref name="soundControlBar"/>.
+        /// </summary>
+        /// <param name="soundControlBar"></param>
+        /// <param name="audioFileInteractor"></param>
         public SoundControlBarController(ISoundControlBar soundControlBar, IAudioFileInteractor audioFileInteractor)
         {
             SoundControlBar = soundControlBar;
@@ -18,12 +23,17 @@ namespace MusicPlayerBackend
 
             SoundControlBar.onPlay += () => AudioFileInteractor.StartPlaying();
             SoundControlBar.onPause += () => AudioFileInteractor.StopPlaying();
+
+            AudioFileInteractor.onUpdatePlayProgress += (TimeSpan curr) => { /*TODO*/ };
         }
 
-        public void UpdateInformation()
+        /// <summary>
+        /// Updates the replay info.
+        /// </summary>
+        public void UpdateInformation(AudioMetaData audioMetaData)
         {
-            var data = AudioFileInteractor.ReadMetaDataFromActualAudio();
-            SoundControlBar.SetAudioMetaData(data);
+            SoundControlBar.SetAudioMetaData(audioMetaData);
+            AudioFileInteractor.SetActualAudioFile(audioMetaData.AudioFilePath);
         }
     }
 }

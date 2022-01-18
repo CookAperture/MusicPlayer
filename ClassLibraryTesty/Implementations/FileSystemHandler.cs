@@ -1,0 +1,61 @@
+﻿using MusicPlayerBackend.Contracts;
+using System.IO;
+
+namespace MusicPlayerBackend
+{
+
+    /// <summary>
+    /// Implements the interface <see cref="IFileSystemHandler"/>.
+    /// </summary>
+    public class FileSystemHandler : IFileSystemHandler
+    {
+        /// <summary>
+        /// Acquires all neccessary resources to go through a file system.
+        /// </summary>
+        public FileSystemHandler()
+        { }
+
+        private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
+        private TaskFactory _taskFactory = new TaskFactory();
+
+        /// <summary>
+        /// Gets called when <see cref="FindAudioFilesFromRootPathAsync(string, List{string})"/> is used for every found media file.
+        /// </summary>
+        public event IFileSystemHandler.OnMediaFound onMediaFound;
+
+        /// <summary>
+        /// Finds all audio files from the given root <paramref name="rootPath"/>.
+        /// </summary>
+        /// <param name="rootPath">The root path.</param>
+        /// <param name="validAudioFiles">The valid file endings.</param>
+        /// <returns>All valid audio files in a List of paths.</returns>
+        public List<string> FindAudioFilesFromRootPath(string rootPath, List<string> validAudioFiles)
+        {
+            List<string> audioFiles = new List<string>();
+
+            foreach (string audioFile in validAudioFiles)
+                audioFiles.AddRange(Directory.EnumerateFiles(rootPath, "*." + audioFile, SearchOption.AllDirectories));
+
+            return audioFiles;
+        }
+
+        void FindAudioFilesPathAsync(string rootPath, List<string> validAudioFiles)
+        {
+            foreach (string audioFile in validAudioFiles)
+                foreach (var onf in Directory.EnumerateFiles(rootPath, "*." + audioFile, SearchOption.AllDirectories))
+                    onMediaFound.Invoke(onf);
+        }
+
+        /// <summary>
+        /// Finds all audio files from the given root <paramref name="rootPath"/>.
+        /// </summary>
+        /// <param name="rootPath">The root path.</param>
+        /// <param name="validAudioFiles">The valid file endings.</param>
+        public void FindAudioFilesFromRootPathAsync(string rootPath, List<string> validAudioFiles)
+        {
+            _cancellationTokenSource.Cancel();
+            _cancellationTokenSource = new CancellationTokenSource();
+            _taskFactory.StartNew(() => FindAudioFilesPathAsync(rootPath, validAudioFiles), _cancellationTokenSource.Token);
+        }
+    }
+}

@@ -60,22 +60,33 @@ namespace MusicPlayer
             {
                 case APPLICATION_STYLE.DARK:
                     {
-                        //Styles[0] = FluentDark;
                         if(Styles.Count > 0)
                             Styles.RemoveAt(0);
-                        //Styles.Remove(FluentDark);
                         Styles.Insert(0, FluentDark);
                         break;
                     }
                 case APPLICATION_STYLE.LIGHT:
                     {
-                        //Styles[0] = FluentLight;
                         if (Styles.Count > 0)
                             Styles.RemoveAt(0);
-                        //Styles.Remove(FluentLight);
                         Styles.Insert(0, FluentLight);
                         break;
                     }
+            }
+        }
+
+        public APPLICATION_STYLE GetCurrentApplicationStyle()
+        {
+            var t = Styles[0].GetType();
+
+            switch (t.Name)
+            {
+                case "FluentDark":
+                    return APPLICATION_STYLE.DARK;
+                case "FluentLight":
+                    return APPLICATION_STYLE.LIGHT;
+                default:
+                    return APPLICATION_STYLE.DARK;
             }
         }
     }
