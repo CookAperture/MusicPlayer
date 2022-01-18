@@ -27,7 +27,22 @@ namespace MusicPlayerBackend
             MediaList = mediaList;
             MediaListInteractor = mediaListInteractor;
 
-            MediaList.onSelection += (AudioMetaData sel) => { onAudioSelected.Invoke(sel); };
+            MediaList.onSelection += (AudioMetaData sel) => { InvokeAudioSelection(sel); };
+            MediaListInteractor.onMediaFound += (AudioMetaData found) => { InvokeAddSongToList(found); };
+        }
+
+        List<AudioMetaData> AudioMetaDatas { get; set; } = new List<AudioMetaData> { };
+
+        void InvokeAudioSelection(AudioMetaData sel)
+        {
+           var f = AudioMetaDatas.Find(pred => pred.Title == sel.Title && pred.Duration == sel.Duration);
+            onAudioSelected.Invoke(f);
+        }
+
+        void InvokeAddSongToList(AudioMetaData found)
+        {
+            AudioMetaDatas.Add(found);
+            MediaList.AddSongToList(found);
         }
 
         /// <summary>
@@ -36,8 +51,7 @@ namespace MusicPlayerBackend
         /// <param name="rootpath"></param>
         public void SetMediaList(string rootpath)
         {
-            var files = MediaListInteractor.GetMediaList(rootpath);
-            MediaList.SetList(files);
+            MediaListInteractor.GetMediaListAsync(rootpath);
         }
 
         /// <summary>

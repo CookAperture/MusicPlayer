@@ -26,14 +26,23 @@ namespace MusicPlayerBackend
         /// <returns>Returns an <see cref="AudioMetaData"/> struct with all fileds filled if info was available.</returns>
         public AudioMetaData ReadMetaDataFromFile(string path)
         {
-            AudioMetaData audioMetaData = new AudioMetaData();
+            try
+            {
+                AudioMetaData audioMetaData = new AudioMetaData();
 
-            TagLib.File tfile = TagLib.File.Create(path);
-            audioMetaData.Duration = tfile.Properties.Duration;
-            audioMetaData.Title = tfile.Tag.Title;
-            audioMetaData.AudioFilePath = path;
+                TagLib.File tfile = TagLib.File.Create(path);
+                audioMetaData.Duration = tfile.Properties.Duration;
+                audioMetaData.Title = tfile.Tag.Title;
+                audioMetaData.AudioFilePath = path;
 
-            return audioMetaData;
+                return audioMetaData;
+            }
+            catch (Exception)
+            {
+                //handle bit more + log
+                AudioMetaData audioMetaData = new AudioMetaData();
+                return audioMetaData;
+            }   
         }
     }
 }

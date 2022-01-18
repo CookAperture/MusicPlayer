@@ -35,13 +35,9 @@ namespace MusicPlayerBackend
         /// </summary>
         /// <param name="rootPath"></param>
         /// <returns>List of <see cref="AudioMetaData"/> of all found filepaths.</returns>
-        public List<AudioMetaData> GetMediaList(string rootPath)
+        public void GetMediaListAsync(string rootPath)
         {
-            var files = FileSystemHandler.FindAudioFilesFromRootPath(rootPath, Globals.ValidAudioFileEndings);
-            List<AudioMetaData> list = new List<AudioMetaData>();
-            foreach (var file in files)
-                list.Add(MetaDataReader.ReadMetaDataFromFile(file));
-            return list;
+            FileSystemHandler.FindAudioFilesFromRootPathAsync(rootPath, Globals.ValidAudioFileEndings);
         }
     }
 }

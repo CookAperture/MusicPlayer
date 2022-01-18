@@ -16,6 +16,12 @@ namespace MusicPlayerBackend
             /// </summary>
             /// <param name="appStyle"></param>
             public void SetStyle(APPLICATION_STYLE appStyle);
+
+            /// <summary>
+            /// Contracts to fetch the current set style.
+            /// </summary>
+            /// <returns></returns>
+            public APPLICATION_STYLE GetCurrentApplicationStyle();
         }
 
         //Logic Contracts
@@ -82,49 +88,7 @@ namespace MusicPlayerBackend
             /// <summary>
             /// Contracts to set audio meta data to the ui.
             /// </summary>
-            public void UpdateInformation();
-
-            /// <summary>
-            /// To be triggered from the ui. Sends the file path of selected song.
-            /// </summary>
-            /// <param name="name"></param>
-            public delegate void OnPlay(string name);
-
-            /// <summary>
-            /// To be triggered from the ui. Next song.
-            /// </summary>
-            public delegate void OnSkipForward();
-
-            /// <summary>
-            /// To be triggered from the ui. Previous song.
-            /// </summary>
-            public delegate void OnSkipBackward();
-
-            /// <summary>
-            /// To be triggered from the ui. Set playback to specific time.
-            /// </summary>
-            /// <param name="time"></param>
-            public delegate void ScrubTo(TimeSpan time);
-
-            /// <summary>
-            /// <see cref="OnPlay"/>
-            /// </summary>
-            public event OnPlay onPlay;
-
-            /// <summary>
-            /// <see cref="OnSkipForward"/>
-            /// </summary>
-            public event OnSkipForward onSkipForward;
-
-            /// <summary>
-            /// <see cref="OnSkipBackward"/>
-            /// </summary>
-            public event OnSkipBackward onSkipBackward;
-
-            /// <summary>
-            /// <see cref="ScrubTo"/>
-            /// </summary>
-            public event ScrubTo onScrubTo;
+            public void UpdateInformation(AudioMetaData audioMetaData);
         }
 
         /// <summary>
@@ -152,6 +116,11 @@ namespace MusicPlayerBackend
             public delegate void OnSettingsLoaded(AppSettings appSettings);
 
             /// <summary>
+            /// To be invoked when current theme set is needed.
+            /// </summary>
+            public delegate void OnRequestCurrentThemeSet();
+
+            /// <summary>
             /// <see cref="OnChangeTheme"/>.
             /// </summary>
             public event OnChangeTheme onChangeTheme;
@@ -162,6 +131,11 @@ namespace MusicPlayerBackend
             public event OnSettingsLoaded onSettingsLoaded;
 
             /// <summary>
+            /// <see cref="OnRequestCurrentThemeSet"/>.
+            /// </summary>
+            public event OnRequestCurrentThemeSet onRequestCurrentThemeSet;
+
+            /// <summary>
             /// Contracts to load the settings. To the settings ui.
             /// </summary>
             public void LoadSettings();
@@ -170,7 +144,12 @@ namespace MusicPlayerBackend
             /// Loads the settings to return it to the caller.
             /// </summary>
             /// <returns><see cref="AppSettings"/> from settings.</returns>
-            public AppSettings LoadAppSettings();
+            public AppSettings GetSettings();
+
+            /// <summary>
+            /// Sets the current theme to the AppSettings.
+            /// </summary>
+            public void SetCurrentTheme(APPLICATION_STYLE appStyle);
         }
 
         /// <summary>
@@ -304,6 +283,12 @@ namespace MusicPlayerBackend
             /// </summary>
             /// <returns><see cref="AppSettings"/> saved in settings file.</returns>
             public AppSettings ReadSettings();
+
+            /// <summary>
+            /// Contracts to fetch audio devices.
+            /// </summary>
+            /// <returns></returns>
+            public List<string> GetAudioDevices();
         }
 
         /// <summary>
@@ -328,7 +313,7 @@ namespace MusicPlayerBackend
             /// </summary>
             /// <param name="rootPath"></param>
             /// <returns>List of <see cref="AudioMetaData"/> from all found media files.</returns>
-            public List<AudioMetaData> GetMediaList(string rootPath);
+            public void GetMediaListAsync(string rootPath);
         }
 
         /// <summary>
@@ -764,8 +749,8 @@ namespace MusicPlayerBackend
             /// <summary>
             /// Sets the media list content.
             /// </summary>
-            /// <param name="mediaList"></param>
-            public void SetList(List<AudioMetaData> mediaList);
+            /// <param name="song"></param>
+            public void AddSongToList(AudioMetaData song);
 
             /// <summary>
             /// Marks the actually playing file.

@@ -18,10 +18,9 @@ namespace MusicPlayerTests
 
             fsh.FindAudioFilesFromRootPath(@"C://", Globals.ValidAudioFileEndings).Returns(new List<string>() { "F1", "F2" });
 
-            mediaListInteractor.GetMediaList(@"C://");
+            mediaListInteractor.GetMediaListAsync(@"C://");
 
-            fsh.Received().FindAudioFilesFromRootPath(@"C://", Globals.ValidAudioFileEndings);
-            mdr.Received().ReadMetaDataFromFile(Arg.Is((string path) => path == "F1" || path == "F2"));
+            fsh.Received().FindAudioFilesFromRootPathAsync(@"C://", Globals.ValidAudioFileEndings);
         }
     }
 }

@@ -17,7 +17,8 @@ namespace MusicPlayerTests
             var freader = Substitute.For<IFileReader>();
             var deserializer = Substitute.For<IJSONDeserializer>();
             var converter = Substitute.For<IDataConverter>();
-            var settingsInteractor = Substitute.For<SettingsInteractor>(converter, deserializer, serializer, freader, fwriter);
+            var se = Substitute.For<ISoundEngine>();
+            var settingsInteractor = Substitute.For<SettingsInteractor>(converter, deserializer, serializer, freader, fwriter, se);
             AppSettings settings = new AppSettings()
             {
                 AppStyle = APPLICATION_STYLE.LIGHT,
@@ -41,7 +42,8 @@ namespace MusicPlayerTests
             var freader = Substitute.For<IFileReader>();
             var deserializer = Substitute.For<IJSONDeserializer>();
             var converter = Substitute.For<IDataConverter>();
-            var settingsInteractor = Substitute.For<SettingsInteractor>(converter, deserializer, serializer, freader, fwriter);
+            var se = Substitute.For<ISoundEngine>();
+            var settingsInteractor = Substitute.For<SettingsInteractor>(converter, deserializer, serializer, freader, fwriter, se);
             freader.ReadWhole(Arg.Any<string>()).Returns("Testy");
 
             settingsInteractor.ReadSettings();

@@ -15,6 +15,9 @@ namespace MusicPlayerBackend
         public FileSystemHandler()
         { }
 
+        private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
+        private TaskFactory _taskFactory = new TaskFactory();
+
         /// <summary>
         /// Gets called when <see cref="FindAudioFilesFromRootPathAsync(string, List{string})"/> is used for every found media file.
         /// </summary>
@@ -36,6 +39,13 @@ namespace MusicPlayerBackend
             return audioFiles;
         }
 
+        void FindAudioFilesPathAsync(string rootPath, List<string> validAudioFiles)
+        {
+            foreach (string audioFile in validAudioFiles)
+                foreach (var onf in Directory.EnumerateFiles(rootPath, "*." + audioFile, SearchOption.AllDirectories))
+                    onMediaFound.Invoke(onf);
+        }
+
         /// <summary>
         /// Finds all audio files from the given root <paramref name="rootPath"/>.
         /// </summary>
@@ -43,9 +53,9 @@ namespace MusicPlayerBackend
         /// <param name="validAudioFiles">The valid file endings.</param>
         public void FindAudioFilesFromRootPathAsync(string rootPath, List<string> validAudioFiles)
         {
-            foreach (string audioFile in validAudioFiles)
-                foreach (var mediafile in Directory.EnumerateFiles(rootPath, "*." + audioFile, SearchOption.AllDirectories))
-                    onMediaFound.Invoke(mediafile);
+            _cancellationTokenSource.Cancel();
+            _cancellationTokenSource = new CancellationTokenSource();
+            _taskFactory.StartNew(() => FindAudioFilesPathAsync(rootPath, validAudioFiles), _cancellationTokenSource.Token);
         }
     }
 }

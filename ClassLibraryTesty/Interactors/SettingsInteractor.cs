@@ -14,6 +14,7 @@ namespace MusicPlayerBackend
         IJSONSerializer JSONSerializer { get; set; }
         IFileReader FileReader { get; set; }
         IFileWriter FileWriter { get; set; }
+        ISoundEngine SoundEngine { get; set; }
 
         /// <summary>
         /// Connects <paramref name="dataConverter"/>, <paramref name="fileReader"/>, <paramref name="fileWriter"/>
@@ -24,13 +25,14 @@ namespace MusicPlayerBackend
         /// <param name="jsonSerializer"></param>
         /// <param name="fileReader"></param>
         /// <param name="fileWriter"></param>
-        public SettingsInteractor(IDataConverter dataConverter, IJSONDeserializer jsonDeserializer, IJSONSerializer jsonSerializer, IFileReader fileReader, IFileWriter fileWriter)
+        public SettingsInteractor(IDataConverter dataConverter, IJSONDeserializer jsonDeserializer, IJSONSerializer jsonSerializer, IFileReader fileReader, IFileWriter fileWriter, ISoundEngine soundEngine)
         {
             DataConverter = dataConverter;
             JSONDeserializer = jsonDeserializer;
             JSONSerializer = jsonSerializer;
             FileReader = fileReader;
             FileWriter = fileWriter;
+            SoundEngine = soundEngine;
         }
 
         /// <summary>
@@ -51,6 +53,15 @@ namespace MusicPlayerBackend
         {
             var read = FileReader.ReadWhole(Globals.SettingsPath);
             return JSONDeserializer.Deserialize<AppSettings>(read);
+        }
+
+        /// <summary>
+        /// Fetches the audio devices from sound engine.
+        /// </summary>
+        /// <returns>List of audio devices.</returns>
+        public List<string> GetAudioDevices()
+        {
+            return SoundEngine.GetAudioDevices();
         }
     }
 }

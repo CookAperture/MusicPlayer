@@ -8,27 +8,6 @@ namespace MusicPlayerBackend
     /// </summary>
     public class SoundControlBarController : ISoundControlBarController
     {
-
-        /// <summary>
-        /// Triggered by ui.
-        /// </summary>
-        public event ISoundControlBarController.OnPlay onPlay;
-
-        /// <summary>
-        /// Triggered by ui.
-        /// </summary>
-        public event ISoundControlBarController.OnSkipForward onSkipForward;
-
-        /// <summary>
-        /// Triggered by ui.
-        /// </summary>
-        public event ISoundControlBarController.OnSkipBackward onSkipBackward;
-
-        /// <summary>
-        /// Triggered by ui.
-        /// </summary>
-        public event ISoundControlBarController.ScrubTo onScrubTo;
-
         ISoundControlBar SoundControlBar { get; set; }
         IAudioFileInteractor AudioFileInteractor { get; set; }
 
@@ -51,10 +30,10 @@ namespace MusicPlayerBackend
         /// <summary>
         /// Updates the replay info.
         /// </summary>
-        public void UpdateInformation()
+        public void UpdateInformation(AudioMetaData audioMetaData)
         {
-            var data = AudioFileInteractor.ReadMetaDataFromActualAudio();
-            SoundControlBar.SetAudioMetaData(data);
+            SoundControlBar.SetAudioMetaData(audioMetaData);
+            AudioFileInteractor.SetActualAudioFile(audioMetaData.AudioFilePath);
         }
     }
 }

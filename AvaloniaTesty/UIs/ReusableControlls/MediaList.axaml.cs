@@ -36,11 +36,13 @@ namespace MusicPlayer
             DataContext = this;
         }
 
-        public void SetList(List<AudioMetaData> mediaList)
+        public void AddSongToList(AudioMetaData song)
         {
-            Songs.Clear();
-            foreach (var song in mediaList)
-                Songs.Add(new AudioDataModel() { Title = song.Title, Duration = song.Duration.ToString() });
+            songs.Add(new AudioDataModel() 
+            { 
+                Title = song.Title,
+                Duration = song.Duration.ToString()
+            });
         }
 
         public void SetPlaying(AudioMetaData selection)
@@ -50,8 +52,13 @@ namespace MusicPlayer
 
         private void PropertyChangedHandler(object sender, PropertyChangedEventArgs e)
         {
-            //if (e.PropertyName == "SelectedPath")
-            //    onSingleFilePathSelection?.Invoke(SelectedPath.Path);
+            if (e.PropertyName == "SelectedSong")
+                onSelection.Invoke(new AudioMetaData() 
+                { 
+                    AudioFilePath = "", 
+                    Duration = TimeSpan.Parse(SelectedSong.Duration), 
+                    Title = SelectedSong.Title
+                });
         }
 
         protected bool RaiseAndSetIfChanged<T>(ref T field, T value, [CallerMemberName] string propertyName = null)

@@ -23,10 +23,12 @@ namespace MusicPlayer
         public static ISoundControlBarController SoundControlBarController { get; set; }
         public static ICustomDecorationController CustomDecorationController { get; set; }
         public static IContentPresenterController ContentPresenterController { get; set; }
+        public static IMediaListController MediaListController { get; set; }
         public static ISettingsController SettingsController { get; set; }
         public static ISongCoverController SongCoverController { get; set; }
         public static IAudioFileInteractor AudioFileInteractor { get; set; }
         public static ISettingsInteractor SettingsInteractor { get; set; }
+        public static IMediaListInteractor MediaListInteractor { get; set; }
         public static IDataConverter DataConverter { get; set; }
         public static IFileReader FileReader { get; set; }
         public static IFileWriter FileWriter { get; set; }
@@ -34,6 +36,7 @@ namespace MusicPlayer
         public static IJSONDeserializer JSONDeserializer { get; set; }
         public static IMetaDataReader MetaDataReader { get; set; }
         public static ISoundEngine SoundEngine { get; set; }
+        public static IFileSystemHandler FileSystemHandler { get; set; }
 
         public static void Main(string[] args)
         {
@@ -51,16 +54,28 @@ namespace MusicPlayer
             JSONDeserializer = new JSONDeserializer();
             MetaDataReader = new MetaDataReader();
             SoundEngine = new SoundEngine();
+            FileSystemHandler = new FileSystemHandler();
             AudioFileInteractor = new AudioFileInteractor(SoundEngine, DataConverter, MetaDataReader);
-            SettingsInteractor = new SettingsInteractor(DataConverter, JSONDeserializer, JSONSerializer, FileReader, FileWriter);
+            SettingsInteractor = new SettingsInteractor(DataConverter, JSONDeserializer, JSONSerializer, FileReader, FileWriter, SoundEngine);
+            MediaListInteractor = new MediaListInteractor(FileSystemHandler, MetaDataReader);
             SoundControlBarController = new SoundControlBarController(mainUI.SoundControlBar, AudioFileInteractor);
             CustomDecorationController = new CustomDecorationController(mainUI.CustomDecoration);
             ContentPresenterController = new ContentPresenterController(mainUI.ContentPresenter);
             SettingsController = new SettingsController(mainUI.ContentPresenter.Settings, SettingsInteractor);
             SongCoverController = new SongCoverController(mainUI.ContentPresenter.SongCover, AudioFileInteractor);
+            MediaListController = new MediaListController(mainUI.ContentPresenter.MediaList, MediaListInteractor);
             MainController = new MainController(ref mainUI, ref app);
 
+            //connect controller here
             SettingsController.onChangeTheme += (APPLICATION_STYLE appStyle) => MainController.ChangeTheme(appStyle);
+            SettingsController.onSettingsLoaded += (AppSettings appSetting) => { MediaListController.SetMediaList(appSetting.MediaPath); }; //clear the list or diff from cache
+            SettingsController.onRequestCurrentThemeSet += () => { SettingsController.SetCurrentTheme(app.GetCurrentApplicationStyle()); };
+
+            CustomDecorationController.onSwitchedToSettings += () => { SettingsController.LoadSettings(); };
+            CustomDecorationController.onSwitchedToCover += () => { SongCoverController.SetCover(); };
+            CustomDecorationController.onSwitchedToMediaList += () => { MediaListController.SetMediaList(SettingsController.GetSettings().MediaPath); }; //remember if was loaded -> cache in file
+
+            MediaListController.onAudioSelected += (AudioMetaData selected) => { SoundControlBarController.UpdateInformation(selected); };
 
             return (MainUI)mainUI;
         }

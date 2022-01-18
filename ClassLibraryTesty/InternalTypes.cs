@@ -35,7 +35,7 @@ namespace MusicPlayerBackend
         /// <summary>
         /// Represents the dark theme value/option.
         /// </summary>
-         DARK = 0,
+        DARK = 0,
         /// <summary>
         /// Represents the light theme value/option.
         /// </summary>

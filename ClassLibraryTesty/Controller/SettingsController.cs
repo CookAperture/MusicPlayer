@@ -19,10 +19,15 @@ namespace MusicPlayerBackend
         /// </summary>
         public event ISettingsController.OnSettingsLoaded onSettingsLoaded;
 
+        /// <summary>
+        /// Send when current theme set is fetched.
+        /// </summary>
+        public event ISettingsController.OnRequestCurrentThemeSet onRequestCurrentThemeSet;
+
         ISettings Settings { get; set; }
         ISettingsInteractor SettingsInteractor { get; set; }
 
-        AppSettings _appSettings;
+        AppSettings _appSettings = new AppSettings();
 
         /// <summary>
         /// Connects <paramref name="settings"/> with <paramref name="settingsInteractor"/>.
@@ -42,8 +47,31 @@ namespace MusicPlayerBackend
             };
 
             Settings.onChangeTheme += (APPLICATION_STYLE appStyle) => onChangeTheme.Invoke(appStyle);
+        }
 
-            _appSettings = SettingsInteractor.ReadSettings();
+        AppSettings GetLatestSettings()
+        {
+            try
+            {
+                var appSettings = SettingsInteractor.ReadSettings();
+                onRequestCurrentThemeSet.Invoke();
+                var devices = SettingsInteractor.GetAudioDevices();
+
+                appSettings.AudioDevices = devices;
+                appSettings.AppStyle = _appSettings.AppStyle;
+
+                _appSettings = appSettings;
+                return _appSettings;
+            }
+            catch (FileNotFoundException f)
+            {
+                //log away the err + invoke event
+
+                onRequestCurrentThemeSet.Invoke();
+                var devices = SettingsInteractor.GetAudioDevices();
+                _appSettings.AudioDevices = devices;
+                return _appSettings;
+            }
         }
 
         /// <summary>
@@ -51,7 +79,7 @@ namespace MusicPlayerBackend
         /// </summary>
         public void LoadSettings()
         {
-            var appSettings = SettingsInteractor.ReadSettings();
+            var appSettings = GetLatestSettings();
             Settings.LoadSettings(appSettings);
         }
 
@@ -59,10 +87,20 @@ namespace MusicPlayerBackend
         /// Loads the settings from the settings file.
         /// </summary>
         /// <returns><see cref="AppSettings"/> loaded.</returns>
-        public AppSettings LoadAppSettings()
+        public AppSettings GetSettings()
         {
+            _appSettings = GetLatestSettings();
             onSettingsLoaded.Invoke(_appSettings);
             return _appSettings;
+        }
+
+        /// <summary>
+        /// Sets the current theme to the current settings.
+        /// </summary>
+        /// <param name="appStyle"></param>
+        public void SetCurrentTheme(APPLICATION_STYLE appStyle)
+        {
+            _appSettings.AppStyle = appStyle;
         }
     }
 }
