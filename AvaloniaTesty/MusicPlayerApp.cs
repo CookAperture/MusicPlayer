@@ -21,7 +21,7 @@ namespace MusicPlayer
         {
             // Do you startup code here
             Application = app;
-            Program.app = (IApplication)app;
+            Program.App = (IApplication)app;
             MainUI = onReady?.Invoke();
             MainUI.Show();
 

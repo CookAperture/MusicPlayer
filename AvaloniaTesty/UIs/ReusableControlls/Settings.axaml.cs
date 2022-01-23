@@ -15,7 +15,7 @@ namespace MusicPlayer
         new public event PropertyChangedEventHandler PropertyChanged;
 
         public event ISettings.OnSettingsChanged onSettingsChanged = (AppSettings settings) => {};
-        public event ISettings.OnChangeTheme onChangeTheme = (APPLICATION_STYLE style) => {};
+        public event ISettings.OnLoadSettings onLoadSettings = () => { };
 
         int themeSelection = -1;
         public int ThemeSelection
@@ -71,7 +71,6 @@ namespace MusicPlayer
             appSettings.AppStyle = style;
 
             onSettingsChanged?.Invoke(appSettings);
-            onChangeTheme?.Invoke(style);
         }
 
         public void LoadSettings(AppSettings appSettings)
@@ -103,5 +102,9 @@ namespace MusicPlayer
         protected void RaisePropertyChanged([CallerMemberName] string propertyName = null)
             => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
+        public void LoadSettings()
+        {
+            onLoadSettings.Invoke();
+        }
     }
 }

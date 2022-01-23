@@ -58,6 +58,7 @@ namespace MusicPlayerBackend
         public Dictionary<string, int> Devices { get; set; } = new Dictionary<string, int>();
 
         private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
+        private CancellationToken _token = new CancellationToken();
         private TaskFactory _taskFactory = new TaskFactory();
         private Timer _timer;
         private bool _playing = false;
@@ -77,6 +78,7 @@ namespace MusicPlayerBackend
                         ActualDevice = i;
                 }
             }
+            onAudioFileFinished += () => { StopPlaying(); };
         }
 
         /// <summary>
@@ -141,18 +143,22 @@ namespace MusicPlayerBackend
         /// <param name="audioMetaData"></param>
         public void StartPlaying(AudioMetaData audioMetaData)
         {
-            Debug.Assert(CurrentAudioMetaData != new AudioMetaData());
+            Debug.Assert(audioMetaData != new AudioMetaData() { });
 
             CurrentAudioMetaData = audioMetaData;
             ActualStream = Bass.CreateStream(CurrentAudioMetaData.AudioFilePath);
             if(ActualStream != 0)
             {
+                CurrentMaxPlayDuration = audioMetaData.Duration.TotalMilliseconds;
+                _cancellationTokenSource = new CancellationTokenSource();
+                _token = _cancellationTokenSource.Token;
                 _timer = new Timer((object state) => { OnUpdate(); }, null, Convert.ToInt32(CurrentMaxPlayDuration - CurrentProgress), 1000);
-                _taskFactory.StartNew(() => Play(CurrentAudioMetaData), _cancellationTokenSource.Token);
+                _taskFactory.StartNew(() => Play(CurrentAudioMetaData), _token);
             }
             else
             {
                 //throw create stream failed - last error data?
+                var lasterr = Bass.LastError;
             }
         }
 
@@ -161,8 +167,13 @@ namespace MusicPlayerBackend
         /// </summary>
         public void StopPlaying()
         {
+            _cancellationTokenSource.Cancel();
             _timer.Dispose();
-            _cancellationTokenSource.Cancel(); 
+            _cancellationTokenSource.Dispose();
+            if (ActualStream != 0)
+            {
+                Bass.ChannelStop(ActualStream);
+            }
         }
 
         /// <summary>
@@ -175,14 +186,15 @@ namespace MusicPlayerBackend
             Debug.Assert(CurrentMaxPlayDuration != 0);
             Debug.Assert(CurrentProgress >= 0);
 
+            _cancellationTokenSource = new CancellationTokenSource();
+            _token = _cancellationTokenSource.Token;
             _timer = new Timer((object state) => { OnUpdate(); }, null, Convert.ToInt32(CurrentMaxPlayDuration - CurrentProgress), 1000);
-            _taskFactory.StartNew(() => Play(CurrentAudioMetaData), _cancellationTokenSource.Token);
+            _taskFactory.StartNew(() => Play(CurrentAudioMetaData), _token);
         }
 
         private void Play(AudioMetaData audioMetaData)
         {
             Bass.ChannelPlay(ActualStream);
-            Thread.Sleep(audioMetaData.Duration);
         }
 
         private void SkipTo(TimeSpan time)

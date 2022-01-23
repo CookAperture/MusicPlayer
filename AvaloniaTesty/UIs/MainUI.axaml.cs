@@ -34,6 +34,9 @@ namespace MusicPlayer
             CustomDecoration.onSettingsButtonClick += delegate { ContentPresenter.ShowSettingsPage(); };
             CustomDecoration.onMediaListButtonClick += delegate { ContentPresenter.ShowMediaListPage(); };
 
+            ContentPresenter.MediaList.onSelection += (AudioMetaData data) => { SoundControlBar.SetAudioMetaData(data); };
+            ContentPresenter.Settings.onSettingsChanged += (AppSettings data) => { onThemeChange.Invoke(data.AppStyle); };
+
             Title = "MusicPlayer";
             DataContext = this;
 
@@ -46,6 +49,7 @@ namespace MusicPlayer
         }
 
         new public event PropertyChangedEventHandler PropertyChanged;
+        public event IMainUI.OnThemeChange onThemeChange;
 
         protected bool RaiseAndSetIfChanged<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
         {

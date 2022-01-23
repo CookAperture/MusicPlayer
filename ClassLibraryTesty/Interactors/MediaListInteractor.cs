@@ -11,6 +11,7 @@ namespace MusicPlayerBackend
     {
         IFileSystemHandler FileSystemHandler { get; set; }
         IMetaDataReader MetaDataReader { get; set; }
+        ISoundEngine SoundEngine { get; set; }
 
         /// <summary>
         /// Gets called when media file gets found in the async call.

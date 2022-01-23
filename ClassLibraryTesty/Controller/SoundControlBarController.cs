@@ -21,10 +21,11 @@ namespace MusicPlayerBackend
             SoundControlBar = soundControlBar;
             AudioFileInteractor = audioFileInteractor;
 
-            SoundControlBar.onPlay += () => AudioFileInteractor.StartPlaying();
+            SoundControlBar.onPlay += (AudioMetaData data) => AudioFileInteractor.StartPlaying(data);
             SoundControlBar.onPause += () => AudioFileInteractor.StopPlaying();
 
             AudioFileInteractor.onUpdatePlayProgress += (TimeSpan curr) => { /*TODO*/ };
+            AudioFileInteractor.onAudioFileFinished += () => { };
         }
 
         /// <summary>
@@ -33,7 +34,6 @@ namespace MusicPlayerBackend
         public void UpdateInformation(AudioMetaData audioMetaData)
         {
             SoundControlBar.SetAudioMetaData(audioMetaData);
-            AudioFileInteractor.SetActualAudioFile(audioMetaData.AudioFilePath);
         }
     }
 }

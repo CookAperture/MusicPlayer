@@ -16,21 +16,14 @@ namespace MusicPlayerBackend
         /// </summary>
         /// <param name="mainUI"></param>
         /// <param name="app"></param>
-        public MainController(ref IMainUI mainUI, ref IApplication app)
+        public MainController(IMainUI mainUI, IApplication app)
         {
             MainUI = mainUI;
             Application = app;
 
             Application.SetStyle(APPLICATION_STYLE.DARK);
-        }
 
-        /// <summary>
-        /// Sets the theme of the app.
-        /// </summary>
-        /// <param name="appStyle"></param>
-        public void ChangeTheme(APPLICATION_STYLE appStyle)
-        {
-            Application.SetStyle(appStyle);
+            MainUI.onThemeChange += (APPLICATION_STYLE aps) => { Application.SetStyle(aps); };
         }
     }
 }

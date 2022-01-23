@@ -14,7 +14,7 @@ namespace MusicPlayer
 
         public void LoadCover()
         {
-            throw new System.NotImplementedException();
+            //TODO
         }
     }
 }

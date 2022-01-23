@@ -8,22 +8,6 @@ namespace MusicPlayerBackend
     /// </summary>
     public class CustomDecorationController : ICustomDecorationController
     {
-
-        /// <summary>
-        /// Triggered by ui.
-        /// </summary>
-        public event ICustomDecorationController.OnSwitchedToSettings onSwitchedToSettings = () => { };
-
-        /// <summary>
-        /// Triggered by ui.
-        /// </summary>
-        public event ICustomDecorationController.OnSwitchedToCover onSwitchedToCover = () => { };
-
-        /// <summary>
-        /// Triggered by ui.
-        /// </summary>
-        public event ICustomDecorationController.OnSwitchedToMediaList onSwitchedToMediaList = () => { };
-
         ICustomDecoration CustomDecoration { get; set; }
 
         /// <summary>
@@ -33,9 +17,6 @@ namespace MusicPlayerBackend
         public CustomDecorationController(ICustomDecoration customDecoration)
         {
             CustomDecoration = customDecoration;
-            CustomDecoration.onSettingsButtonClick += () => onSwitchedToSettings.Invoke();
-            CustomDecoration.onCoverButtonClick += () => onSwitchedToCover.Invoke();
-            CustomDecoration.onMediaListButtonClick += () => onSwitchedToMediaList.Invoke();
         }
 
     }

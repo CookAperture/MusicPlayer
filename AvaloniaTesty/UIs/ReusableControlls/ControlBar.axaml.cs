@@ -10,21 +10,51 @@ namespace MusicPlayer
     {
         public event ISoundControlBar.OnPlay onPlay;
         public event ISoundControlBar.OnPause onPause;
+        public event ISoundControlBar.OnNext onNext;
+
+        AudioMetaData ActualAudio;
+        bool Playing = false;
+        bool Paused = false;
 
         public SoundControlBar()
         {
             AvaloniaXamlLoader.Load(this);
+            DataContext = this;
         }
 
         private void OnPlayPause(object sender, RoutedEventArgs args)
         {
-            //onPlay?.Invoke();
-            //TODO
+            if (!Playing)
+            {
+                Playing = true;
+                onPlay.Invoke(ActualAudio);
+            }
+            else if(!Paused)
+            {
+                onPause.Invoke();
+                Paused = true;
+            }
+            else
+            {
+                //resume
+                Paused = false;
+            }
         }
 
         public void SetAudioMetaData(AudioMetaData audioMetaData)
         {
-            throw new System.NotImplementedException();
+            ActualAudio = audioMetaData;
+        }
+
+        public void UpdateProgress(TimeSpan curr)
+        {
+            //TODO
+        }
+
+        public void IsFinished()
+        {
+            Playing = false;
+            //onNext.Invoke();
         }
     }
 }
