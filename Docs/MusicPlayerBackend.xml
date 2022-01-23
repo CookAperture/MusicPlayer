@@ -415,6 +415,11 @@
             No return on pause and without parameters.
             </summary>
         </member>
+        <member name="T:MusicPlayerBackend.Contracts.ISoundControlBar.OnResume">
+            <summary>
+            No return and without parameters.
+            </summary>
+        </member>
         <member name="T:MusicPlayerBackend.Contracts.ISoundControlBar.OnNext">
             <summary>
             No return next from media list.
@@ -428,6 +433,11 @@
         <member name="E:MusicPlayerBackend.Contracts.ISoundControlBar.onPause">
             <summary>
             To be invoked when user triggers pause.
+            </summary>
+        </member>
+        <member name="E:MusicPlayerBackend.Contracts.ISoundControlBar.onResume">
+            <summary>
+            To be invoked when user triggers resume.
             </summary>
         </member>
         <member name="E:MusicPlayerBackend.Contracts.ISoundControlBar.onNext">

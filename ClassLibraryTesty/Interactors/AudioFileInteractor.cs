@@ -78,7 +78,7 @@ namespace MusicPlayerBackend
         /// </summary>
         public void ResumePlaying()
         {
-            SoundEngine?.ResumePlaying();
+            SoundEngine.ResumePlaying();
         }
     }
 }

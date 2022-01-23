@@ -39,7 +39,7 @@ namespace MusicPlayerBackend
         /// <summary>
         /// Represents the current progress of replay in Milliseconds. 
         /// </summary>
-        public double CurrentProgress { get; set; }
+        public double CurrentProgress { get; set; } = 0;
 
         /// <summary>
         /// Represents the actual maximal replay duration for the current stream in Milliseconds.
@@ -152,7 +152,7 @@ namespace MusicPlayerBackend
                 CurrentMaxPlayDuration = audioMetaData.Duration.TotalMilliseconds;
                 _cancellationTokenSource = new CancellationTokenSource();
                 _token = _cancellationTokenSource.Token;
-                _timer = new Timer((object state) => { OnUpdate(); }, null, Convert.ToInt32(CurrentMaxPlayDuration - CurrentProgress), 1000);
+                _timer = new Timer(new TimerCallback(OnUpdate), this, 0, 1000);
                 _taskFactory.StartNew(() => Play(CurrentAudioMetaData), _token);
             }
             else
@@ -186,9 +186,9 @@ namespace MusicPlayerBackend
             Debug.Assert(CurrentMaxPlayDuration != 0);
             Debug.Assert(CurrentProgress >= 0);
 
+            _timer = new Timer(new TimerCallback(OnUpdate), this, 0, 1000);
             _cancellationTokenSource = new CancellationTokenSource();
             _token = _cancellationTokenSource.Token;
-            _timer = new Timer((object state) => { OnUpdate(); }, null, Convert.ToInt32(CurrentMaxPlayDuration - CurrentProgress), 1000);
             _taskFactory.StartNew(() => Play(CurrentAudioMetaData), _token);
         }
 
@@ -202,7 +202,7 @@ namespace MusicPlayerBackend
             Bass.ChannelSetPosition(ActualStream, Bass.ChannelSeconds2Bytes(ActualStream, time.TotalSeconds));
         }
 
-        private void OnUpdate()
+        private void OnUpdate(object state)
         {
             var pos = Bass.ChannelGetPosition(ActualStream);
             var currTimeInSecond = Bass.ChannelBytes2Seconds(ActualStream, pos);

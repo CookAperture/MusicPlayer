@@ -11,6 +11,7 @@ namespace MusicPlayer
         public event ISoundControlBar.OnPlay onPlay;
         public event ISoundControlBar.OnPause onPause;
         public event ISoundControlBar.OnNext onNext;
+        public event ISoundControlBar.OnResume onResume;
 
         AudioMetaData ActualAudio;
         bool Playing = false;
@@ -36,7 +37,7 @@ namespace MusicPlayer
             }
             else
             {
-                //resume
+                onResume.Invoke();
                 Paused = false;
             }
         }

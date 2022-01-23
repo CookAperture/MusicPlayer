@@ -23,6 +23,7 @@ namespace MusicPlayerBackend
 
             SoundControlBar.onPlay += (AudioMetaData data) => AudioFileInteractor.StartPlaying(data);
             SoundControlBar.onPause += () => AudioFileInteractor.StopPlaying();
+            SoundControlBar.onResume += () => AudioFileInteractor.ResumePlaying();
 
             AudioFileInteractor.onUpdatePlayProgress += (TimeSpan curr) => { /*TODO*/ };
             AudioFileInteractor.onAudioFileFinished += () => { };

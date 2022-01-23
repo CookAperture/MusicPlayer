@@ -458,6 +458,11 @@ namespace MusicPlayerBackend
             public delegate void OnPause();
 
             /// <summary>
+            /// No return and without parameters.
+            /// </summary>
+            public delegate void OnResume();
+
+            /// <summary>
             /// No return next from media list.
             /// </summary>
             public delegate void OnNext();
@@ -471,6 +476,11 @@ namespace MusicPlayerBackend
             /// To be invoked when user triggers pause.
             /// </summary>
             public event OnPause onPause;
+
+            /// <summary>
+            /// To be invoked when user triggers resume.
+            /// </summary>
+            public event OnResume onResume;
 
             /// <summary>
             /// To be invoked when finished or manually pressed.
