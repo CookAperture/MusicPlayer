@@ -44,5 +44,17 @@ namespace MusicPlayerBackend
                 return audioMetaData;
             }   
         }
+
+        public ImageContainer ReadImageFromAudioFile(string path)
+        {
+            TagLib.File tfile = TagLib.File.Create(path);
+            var img = tfile.Tag.Pictures;
+            ImageContainer imageContainer = new ImageContainer()
+            {
+                FilePath = path,
+                ImageStream = new MemoryStream(img[0].Data.Data),
+            };
+            return imageContainer;
+        }
     }
 }

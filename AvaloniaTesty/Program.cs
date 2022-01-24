@@ -9,12 +9,20 @@ namespace MusicPlayer
     static class Program
     {
         public static AppBuilder BuildAvaloniaApp() => 
-            AppBuilder.Configure<App>().UsePlatformDetect()
+            AppBuilder.Configure<App>()
+                .UsePlatformDetect()
                 .UseSkia()
                 .UseReactiveUI()
-                .With(new X11PlatformOptions() { UseDeferredRendering = true })
+                .With(new X11PlatformOptions() { UseDeferredRendering = false })
                 .With(new MacOSPlatformOptions() { ShowInDock = true })
-                .With(new Win32PlatformOptions() { AllowEglInitialization = true, UseDeferredRendering = true, UseWindowsUIComposition = true, UseWgl = true })
+                .With(new Win32PlatformOptions() { 
+                    AllowEglInitialization = true, 
+                    UseDeferredRendering = false, 
+                    UseWindowsUIComposition = true, 
+                    UseWgl = false,
+                    OverlayPopups = true
+                })
+                .With(new AvaloniaNativePlatformOptions() { OverlayPopups = true, UseDeferredRendering = false, UseGpu = true})
                 .LogToTrace();
 
         public static IApplication App { get; set; }
@@ -29,6 +37,7 @@ namespace MusicPlayer
         public static IAudioFileInteractor AudioFileInteractor { get; set; }
         public static ISettingsInteractor SettingsInteractor { get; set; }
         public static IMediaListInteractor MediaListInteractor { get; set; }
+        public static ISongCoverInteractor SongCoverInteractor { get; set; }
         public static IDataConverter DataConverter { get; set; }
         public static IFileReader FileReader { get; set; }
         public static IFileWriter FileWriter { get; set; }
@@ -58,10 +67,11 @@ namespace MusicPlayer
             AudioFileInteractor = new AudioFileInteractor(SoundEngine, DataConverter, MetaDataReader);
             SettingsInteractor = new SettingsInteractor(DataConverter, JSONDeserializer, JSONSerializer, FileReader, FileWriter, SoundEngine);
             MediaListInteractor = new MediaListInteractor(FileSystemHandler, MetaDataReader);
+            SongCoverInteractor = new SongCoverInteractor(MetaDataReader);
             SoundControlBarController = new SoundControlBarController(MainUI.SoundControlBar, AudioFileInteractor);
             CustomDecorationController = new CustomDecorationController(MainUI.CustomDecoration);
             SettingsController = new SettingsController(MainUI.ContentPresenter.Settings, SettingsInteractor, App);
-            SongCoverController = new SongCoverController(MainUI.ContentPresenter.SongCover, AudioFileInteractor);
+            SongCoverController = new SongCoverController(MainUI.ContentPresenter.SongCover, SongCoverInteractor);
             MediaListController = new MediaListController(MainUI.ContentPresenter.MediaList, MediaListInteractor, SettingsInteractor);
             ContentPresenterController = new ContentPresenterController(MainUI.ContentPresenter, SongCoverController, MediaListController, SettingsController);
             MainController = new MainController(MainUI, App);

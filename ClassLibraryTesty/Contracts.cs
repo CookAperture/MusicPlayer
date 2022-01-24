@@ -71,15 +71,15 @@ namespace MusicPlayerBackend
         }
 
         /// <summary>
-        /// Contract to connect the <see cref="ISongCover"/> with <see cref="IAudioFileInteractor"/>.
+        /// Contract to connect the <see cref="ISongCover"/> with <see cref="ISongCoverInteractor"/>.
         /// </summary>
         public interface ISongCoverController
         {
 
             /// <summary>
-            /// Contracts to load the sover, is delegated to ui.
+            /// Contracts to load the cover, is delegated to ui.
             /// </summary>
-            public void SetCover(/*Image*/);
+            public void SetCover(AudioMetaData imageContainer);
         }
 
         /// <summary>
@@ -216,6 +216,20 @@ namespace MusicPlayerBackend
         }
 
         /// <summary>
+        /// Contracts to connect <see cref="IMetaDataReader"/>.
+        /// </summary>
+        public interface ISongCoverInteractor
+        {
+
+            /// <summary>
+            /// Contracts to read potential img file from meta data.
+            /// </summary>
+            /// <param name="path"></param>
+            /// <returns></returns>
+            public ImageContainer GetCoverFromAudio(string path);
+        }
+
+        /// <summary>
         /// Contracts the neccessary functions to handle a file system.
         /// </summary>
         public interface IFileSystemHandler
@@ -260,6 +274,8 @@ namespace MusicPlayerBackend
             /// <param name="path"></param>
             /// <returns>Should return an correctly filled <see cref="AudioMetaData"/> struct.</returns>
             public AudioMetaData ReadMetaDataFromFile(string path);
+
+            public ImageContainer ReadImageFromAudioFile(string path);
         }
 
         /// <summary>
@@ -591,10 +607,17 @@ namespace MusicPlayerBackend
         public interface ISongCover
         {
 
+            public delegate void OnLoad(AudioMetaData audioMetaData);
+
+            public event OnLoad onLoad;
+
             /// <summary>
             /// Should pass an image of the audio file cover.
             /// </summary>
-            public void LoadCover(/*Image*/);
+            public void LoadCover(AudioMetaData audioMetaData);
+
+
+            public void LoadCover(ImageContainer imageContainer);
         }
 
         /// <summary>

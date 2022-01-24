@@ -1,4 +1,5 @@
 ﻿using Avalonia.Controls;
+using Avalonia.Controls.Primitives;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using MusicPlayerBackend;
@@ -16,11 +17,14 @@ namespace MusicPlayer
         AudioMetaData ActualAudio;
         bool Playing = false;
         bool Paused = false;
+        ToggleButton PlayPauseButton { get; set; }
 
         public SoundControlBar()
         {
             AvaloniaXamlLoader.Load(this);
             DataContext = this;
+
+            PlayPauseButton = this.FindControl<ToggleButton>("PlayPauseButton");
         }
 
         private void OnPlayPause(object sender, RoutedEventArgs args)
@@ -44,6 +48,12 @@ namespace MusicPlayer
 
         public void SetAudioMetaData(AudioMetaData audioMetaData)
         {
+            if(Playing)
+            {
+                Playing = false;
+                onPause.Invoke();
+                PlayPauseButton.IsChecked = false;
+            }
             ActualAudio = audioMetaData;
         }
 

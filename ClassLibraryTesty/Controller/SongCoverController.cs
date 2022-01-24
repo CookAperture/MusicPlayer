@@ -9,25 +9,28 @@ namespace MusicPlayerBackend
     public class SongCoverController : ISongCoverController
     {
         ISongCover SongCover { get; set; }
-        IAudioFileInteractor AudioFileInteractor { get; set; }
+        ISongCoverInteractor SongCoverInteractor { get; set; }
 
         /// <summary>
-        /// Connects <paramref name="audioFileInteractor"/> with <paramref name="songCover"/>.
+        /// Connects <paramref name="songCoverInteractor"/> with <paramref name="songCover"/>.
         /// </summary>
         /// <param name="songCover">A reference to the song cover ui.</param>
-        /// <param name="audioFileInteractor">A reference to the audio file interactor.</param>
-        public SongCoverController(ISongCover songCover, IAudioFileInteractor audioFileInteractor)
+        /// <param name="songCoverInteractor">A reference to the audio file interactor.</param>
+        public SongCoverController(ISongCover songCover, ISongCoverInteractor songCoverInteractor)
         {
             SongCover = songCover;
-            AudioFileInteractor = audioFileInteractor;
+            SongCoverInteractor = songCoverInteractor;
+
+            SongCover.onLoad += (AudioMetaData data) => SetCover(data);
         }
 
         /// <summary>
         /// Loads the cover image from the actual audio file.
         /// </summary>
-        public void SetCover(/*Image*/)
+        public void SetCover(AudioMetaData data)
         {
-            SongCover.LoadCover(/*Image*/);
+            ImageContainer imageContainer = SongCoverInteractor.GetCoverFromAudio(data.AudioFilePath);
+            SongCover.LoadCover(imageContainer);
         }
     }
 }

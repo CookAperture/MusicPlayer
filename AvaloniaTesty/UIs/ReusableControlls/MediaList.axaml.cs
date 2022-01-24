@@ -62,7 +62,8 @@ namespace MusicPlayer
             if (e.PropertyName == "SelectedSong")
             {
                 var song = AudioMetaDataState.Find( s => s.Title == SelectedSong.Title);
-                onSelection.Invoke(song);
+                if(song != new AudioMetaData())
+                    onSelection.Invoke(song);
             }
         }
 

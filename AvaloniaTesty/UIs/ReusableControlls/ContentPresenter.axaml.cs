@@ -21,7 +21,7 @@ namespace MusicPlayer
             MediaList = new MediaList();
 
             Settings.onSettingsChanged += (AppSettings aps) => { MediaList.LoadMediaListFromNewMediaPath(aps.MediaPath); };
-            MediaList.onSelection += (AudioMetaData data) => { SongCover.LoadCover(); };
+            MediaList.onSelection += (AudioMetaData data) => { SongCover.LoadCover(data); };
 
             DataContext = this;
             Content = SongCover;

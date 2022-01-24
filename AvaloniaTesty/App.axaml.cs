@@ -37,7 +37,7 @@ namespace MusicPlayer
 
         public override void Initialize()
         {
-            SetStyle(APPLICATION_STYLE.DARK);
+            //SetStyle(APPLICATION_STYLE.DARK);
             DataContext = this;
             AvaloniaXamlLoader.Load(this);
         }

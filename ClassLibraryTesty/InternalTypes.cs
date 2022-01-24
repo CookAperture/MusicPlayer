@@ -198,6 +198,12 @@ namespace MusicPlayerBackend
         }
     }
 
+    public record struct ImageContainer
+    {
+        public string FilePath { get; set; }
+        public Stream ImageStream { get; set; } 
+    }
+
     /// <summary>
     /// Holds an abstracted unified set of properties to carry the needed meta data of an audio file.
     /// Implements <see cref="IEquatable{T}"/> for equality checking. 
@@ -223,7 +229,7 @@ namespace MusicPlayerBackend
 
         /// <summary>
         /// Overrides the Equals Method of <see langword="object"/>.
-        /// If is <see cref="AudioDataModel"/>, the call is delegated to <seealso cref="Equals(AudioMetaData)"/>
+        /// If is <see cref="AudioMetaData"/>, the call is delegated to <seealso cref="Equals(AudioMetaData)"/>
         /// </summary>
         /// <param name="other"></param>
         /// <returns>

@@ -58,12 +58,12 @@
         </member>
         <member name="T:MusicPlayerBackend.Contracts.ISongCoverController">
             <summary>
-            Contract to connect the <see cref="T:MusicPlayerBackend.Contracts.ISongCover"/> with <see cref="T:MusicPlayerBackend.Contracts.IAudioFileInteractor"/>.
+            Contract to connect the <see cref="T:MusicPlayerBackend.Contracts.ISongCover"/> with <see cref="T:MusicPlayerBackend.Contracts.ISongCoverInteractor"/>.
             </summary>
         </member>
-        <member name="M:MusicPlayerBackend.Contracts.ISongCoverController.SetCover">
+        <member name="M:MusicPlayerBackend.Contracts.ISongCoverController.SetCover(MusicPlayerBackend.AudioMetaData)">
             <summary>
-            Contracts to load the sover, is delegated to ui.
+            Contracts to load the cover, is delegated to ui.
             </summary>
         </member>
         <member name="T:MusicPlayerBackend.Contracts.IMediaListController">
@@ -191,6 +191,18 @@
             </summary>
             <param name="rootPath"></param>
             <returns>List of <see cref="T:MusicPlayerBackend.AudioMetaData"/> from all found media files.</returns>
+        </member>
+        <member name="T:MusicPlayerBackend.Contracts.ISongCoverInteractor">
+            <summary>
+            Contracts to connect <see cref="T:MusicPlayerBackend.Contracts.IMetaDataReader"/>.
+            </summary>
+        </member>
+        <member name="M:MusicPlayerBackend.Contracts.ISongCoverInteractor.GetCoverFromAudio(System.String)">
+            <summary>
+            Contracts to read potential img file from meta data.
+            </summary>
+            <param name="path"></param>
+            <returns></returns>
         </member>
         <member name="T:MusicPlayerBackend.Contracts.IFileSystemHandler">
             <summary>
@@ -546,7 +558,7 @@
             Contracts the neccessary functions to communicate with SongCover.
             </summary>
         </member>
-        <member name="M:MusicPlayerBackend.Contracts.ISongCover.LoadCover">
+        <member name="M:MusicPlayerBackend.Contracts.ISongCover.LoadCover(MusicPlayerBackend.AudioMetaData)">
             <summary>
             Should pass an image of the audio file cover.
             </summary>
@@ -767,14 +779,14 @@
             Implements <see cref="T:MusicPlayerBackend.Contracts.ISongCoverController"/>.
             </summary>
         </member>
-        <member name="M:MusicPlayerBackend.SongCoverController.#ctor(MusicPlayerBackend.Contracts.ISongCover,MusicPlayerBackend.Contracts.IAudioFileInteractor)">
+        <member name="M:MusicPlayerBackend.SongCoverController.#ctor(MusicPlayerBackend.Contracts.ISongCover,MusicPlayerBackend.Contracts.ISongCoverInteractor)">
             <summary>
-            Connects <paramref name="audioFileInteractor"/> with <paramref name="songCover"/>.
+            Connects <paramref name="songCoverInteractor"/> with <paramref name="songCover"/>.
             </summary>
             <param name="songCover">A reference to the song cover ui.</param>
-            <param name="audioFileInteractor">A reference to the audio file interactor.</param>
+            <param name="songCoverInteractor">A reference to the audio file interactor.</param>
         </member>
-        <member name="M:MusicPlayerBackend.SongCoverController.SetCover">
+        <member name="M:MusicPlayerBackend.SongCoverController.SetCover(MusicPlayerBackend.AudioMetaData)">
             <summary>
             Loads the cover image from the actual audio file.
             </summary>
@@ -1150,6 +1162,24 @@
             <param name="audiodevice"></param>
             <exception cref="T:System.NotImplementedException"></exception>
         </member>
+        <member name="T:MusicPlayerBackend.SongCoverInteractor">
+            <summary>
+            Implements <see cref="T:MusicPlayerBackend.Contracts.IAudioFileInteractor"/>
+            </summary>
+        </member>
+        <member name="M:MusicPlayerBackend.SongCoverInteractor.#ctor(MusicPlayerBackend.Contracts.IMetaDataReader)">
+            <summary>
+            Connects to <see cref="T:MusicPlayerBackend.Contracts.IMetaDataReader"/>.
+            </summary>
+            <param name="metaDataReader"></param>
+        </member>
+        <member name="M:MusicPlayerBackend.SongCoverInteractor.GetCoverFromAudio(System.String)">
+            <summary>
+            Reads image from meta data.
+            </summary>
+            <param name="path"></param>
+            <returns></returns>
+        </member>
         <member name="T:MusicPlayerBackend.Globals">
             <summary>
             Holds the global variables.
@@ -1311,7 +1341,7 @@
         <member name="M:MusicPlayerBackend.AudioMetaData.Equals(MusicPlayerBackend.AudioMetaData)">
             <summary>
             Overrides the Equals Method of <see langword="object"/>.
-            If is <see cref="T:MusicPlayerBackend.AudioDataModel"/>, the call is delegated to <seealso cref="M:MusicPlayerBackend.AudioMetaData.Equals(MusicPlayerBackend.AudioMetaData)"/>
+            If is <see cref="T:MusicPlayerBackend.AudioMetaData"/>, the call is delegated to <seealso cref="M:MusicPlayerBackend.AudioMetaData.Equals(MusicPlayerBackend.AudioMetaData)"/>
             </summary>
             <param name="other"></param>
             <returns>
