@@ -946,6 +946,13 @@
             <param name="path"></param>
             <returns>Returns an <see cref="T:MusicPlayerBackend.AudioMetaData"/> struct with all fileds filled if info was available.</returns>
         </member>
+        <member name="M:MusicPlayerBackend.MetaDataReader.ReadImageFromAudioFile(System.String)">
+            <summary>
+            Reads image from audio file.
+            </summary>
+            <param name="path"></param>
+            <returns></returns>
+        </member>
         <member name="T:MusicPlayerBackend.SoundEngine">
             <summary>
             Implements <see cref="T:MusicPlayerBackend.Contracts.ISoundEngine"/> for handling of audiofiles and communication to audiodevices.

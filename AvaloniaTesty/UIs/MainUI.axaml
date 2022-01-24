@@ -6,24 +6,26 @@
 				mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="400"
 				x:Class="MusicPlayer.MainUI"
 				Title="MusicPlayer"
-				ExtendClientAreaToDecorationsHint="True"
-				ExtendClientAreaChromeHints="NoChrome"
 				Name="Window"
 				MinHeight="250"
-				MinWidth="250">
-	
+				MinWidth="250"
+				ExtendClientAreaToDecorationsHint="True"
+				ExtendClientAreaChromeHints="NoChrome">
+		   <!-- TransparencyLevelHint="AcrylicBlur"
+				Background="Transparent" -->
+
 	<DockPanel	Name="ContentWrapper"
 				LastChildFill="True"
 				HorizontalAlignment="Stretch"
 				VerticalAlignment="Stretch">
-		<uc:SoundControlBar DockPanel.Dock="Bottom" 
-							VerticalAlignment="Stretch" 
+		<uc:SoundControlBar DockPanel.Dock="Bottom"
+							VerticalAlignment="Stretch"
 							HorizontalAlignment="Stretch"/>
-		<uc:CustomDecoration DockPanel.Dock="Top" 
-							 HorizontalAlignment="Stretch" 
+		<uc:CustomDecoration DockPanel.Dock="Top"
+							 HorizontalAlignment="Stretch"
 							 VerticalAlignment="Top"/>
 		<uc:ContentPage VerticalAlignment="Stretch"
 						HorizontalAlignment="Stretch"/>
-</DockPanel>
-	
+	</DockPanel>
+
 </Window>

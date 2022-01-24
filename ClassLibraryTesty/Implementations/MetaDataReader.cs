@@ -45,6 +45,11 @@ namespace MusicPlayerBackend
             }   
         }
 
+        /// <summary>
+        /// Reads image from audio file.
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         public ImageContainer ReadImageFromAudioFile(string path)
         {
             TagLib.File tfile = TagLib.File.Create(path);
