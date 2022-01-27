@@ -37,7 +37,6 @@ namespace MusicPlayer
 
         public override void Initialize()
         {
-            SetStyle(APPLICATION_STYLE.DARK);
             DataContext = this;
             AvaloniaXamlLoader.Load(this);
         }
@@ -86,7 +85,7 @@ namespace MusicPlayer
                 case "FluentLight":
                     return APPLICATION_STYLE.LIGHT;
                 default:
-                    return APPLICATION_STYLE.DARK;
+                    return APPLICATION_STYLE.LIGHT;
             }
         }
     }

@@ -9,16 +9,24 @@ namespace MusicPlayer
     static class Program
     {
         public static AppBuilder BuildAvaloniaApp() => 
-            AppBuilder.Configure<App>().UsePlatformDetect()
+            AppBuilder.Configure<App>()
+                .UsePlatformDetect()
                 .UseSkia()
                 .UseReactiveUI()
-                .With(new X11PlatformOptions() { UseDeferredRendering = true })
+                .With(new X11PlatformOptions() { UseDeferredRendering = false })
                 .With(new MacOSPlatformOptions() { ShowInDock = true })
-                .With(new Win32PlatformOptions() { AllowEglInitialization = true, UseDeferredRendering = true, UseWindowsUIComposition = true, UseWgl = true })
+                .With(new Win32PlatformOptions() { 
+                    AllowEglInitialization = true, 
+                    UseDeferredRendering = false, 
+                    UseWindowsUIComposition = true, 
+                    UseWgl = false,
+                    OverlayPopups = true
+                })
+                .With(new AvaloniaNativePlatformOptions() { OverlayPopups = true, UseDeferredRendering = false, UseGpu = true})
                 .LogToTrace();
 
-        public static IApplication app;
-        public static IMainUI mainUI;
+        public static IApplication App { get; set; }
+        public static IMainUI MainUI { get; set; }
         public static IMainController MainController { get; set; }
         public static ISoundControlBarController SoundControlBarController { get; set; }
         public static ICustomDecorationController CustomDecorationController { get; set; }
@@ -29,6 +37,7 @@ namespace MusicPlayer
         public static IAudioFileInteractor AudioFileInteractor { get; set; }
         public static ISettingsInteractor SettingsInteractor { get; set; }
         public static IMediaListInteractor MediaListInteractor { get; set; }
+        public static ISongCoverInteractor SongCoverInteractor { get; set; }
         public static IDataConverter DataConverter { get; set; }
         public static IFileReader FileReader { get; set; }
         public static IFileWriter FileWriter { get; set; }
@@ -46,7 +55,7 @@ namespace MusicPlayer
         private static MainUI MusicPlayerAppInit()
         {
             //init controller here
-            mainUI = new MainUI();
+            MainUI = new MainUI();
             DataConverter = new DataConverter();
             FileReader = new FileReader();
             FileWriter = new FileWriter();
@@ -58,26 +67,16 @@ namespace MusicPlayer
             AudioFileInteractor = new AudioFileInteractor(SoundEngine, DataConverter, MetaDataReader);
             SettingsInteractor = new SettingsInteractor(DataConverter, JSONDeserializer, JSONSerializer, FileReader, FileWriter, SoundEngine);
             MediaListInteractor = new MediaListInteractor(FileSystemHandler, MetaDataReader);
-            SoundControlBarController = new SoundControlBarController(mainUI.SoundControlBar, AudioFileInteractor);
-            CustomDecorationController = new CustomDecorationController(mainUI.CustomDecoration);
-            ContentPresenterController = new ContentPresenterController(mainUI.ContentPresenter);
-            SettingsController = new SettingsController(mainUI.ContentPresenter.Settings, SettingsInteractor);
-            SongCoverController = new SongCoverController(mainUI.ContentPresenter.SongCover, AudioFileInteractor);
-            MediaListController = new MediaListController(mainUI.ContentPresenter.MediaList, MediaListInteractor);
-            MainController = new MainController(ref mainUI, ref app);
+            SongCoverInteractor = new SongCoverInteractor(MetaDataReader);
+            SoundControlBarController = new SoundControlBarController(MainUI.SoundControlBar, AudioFileInteractor);
+            CustomDecorationController = new CustomDecorationController(MainUI.CustomDecoration);
+            SettingsController = new SettingsController(MainUI.ContentPresenter.Settings, SettingsInteractor, App);
+            SongCoverController = new SongCoverController(MainUI.ContentPresenter.SongCover, SongCoverInteractor);
+            MediaListController = new MediaListController(MainUI.ContentPresenter.MediaList, MediaListInteractor, SettingsInteractor);
+            ContentPresenterController = new ContentPresenterController(MainUI.ContentPresenter, SongCoverController, MediaListController, SettingsController);
+            MainController = new MainController(MainUI, App, SettingsInteractor);
 
-            //connect controller here
-            SettingsController.onChangeTheme += (APPLICATION_STYLE appStyle) => MainController.ChangeTheme(appStyle);
-            SettingsController.onSettingsLoaded += (AppSettings appSetting) => { MediaListController.SetMediaList(appSetting.MediaPath); }; //clear the list or diff from cache
-            SettingsController.onRequestCurrentThemeSet += () => { SettingsController.SetCurrentTheme(app.GetCurrentApplicationStyle()); };
-
-            CustomDecorationController.onSwitchedToSettings += () => { SettingsController.LoadSettings(); };
-            CustomDecorationController.onSwitchedToCover += () => { SongCoverController.SetCover(); };
-            CustomDecorationController.onSwitchedToMediaList += () => { MediaListController.SetMediaList(SettingsController.GetSettings().MediaPath); }; //remember if was loaded -> cache in file
-
-            MediaListController.onAudioSelected += (AudioMetaData selected) => { SoundControlBarController.UpdateInformation(selected); };
-
-            return (MainUI)mainUI;
+            return (MainUI)MainUI;
         }
     }
 }

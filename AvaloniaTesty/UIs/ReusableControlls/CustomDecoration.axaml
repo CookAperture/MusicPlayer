@@ -13,108 +13,51 @@
                VerticalAlignment="Center" 
                Margin="10,0,0,0" 
                Text="{Binding $parent[Window].Title}"></TextBlock>
-    <TabStrip Grid.Column="1"
-              Padding="5">
-    <TabStrip.Styles>
-      <Styles>
-          <Style Selector="TabStripItem">
-            <Setter Property="Padding" Value="0"/>
-          </Style>
-      </Styles>
-    </TabStrip.Styles>
-      <Button Name="CoverButton"
-              Height="30"
-              Width="50">
-        <Path Margin="0,0,0,0"
-              Stretch="Uniform"
-              Data="{StaticResource img_icon}"></Path>
-      </Button>
-      <Button Name="MediaListButton"
-        Height="30"
-        Width="50">
-        <Path Margin="0,0,0,0"
-              Stretch="Uniform"
-              Data="{StaticResource list_icon}"></Path>
-      </Button>
-      <Button Name="SettingsButton"
-              Height="30"
-              Width="50">
-        <Path Margin="0,0,0,0"
-              Stretch="Uniform"
-              Data="{StaticResource settings_icon}"></Path>
-      </Button>
-    </TabStrip>
     <StackPanel Grid.Column="2" 
                 HorizontalAlignment="Right" 
                 Orientation="Horizontal">
-      <Button Width="47"
+      <Button Width="30"
               Height="30"
-              VerticalAlignment="Stretch"
-              HorizontalContentAlignment="Center"
-              VerticalContentAlignment="Center"
-              BorderThickness="0"
-              Name="MinimizeButton"
-              ToolTip.Tip="Minimize">
-        <Button.Resources>
-          <CornerRadius x:Key="ControlCornerRadius">0</CornerRadius>
-        </Button.Resources>
-        <Path Margin="0,0,0,0"
-              Stretch="Uniform"
-              Fill="{DynamicResource SystemControlForegroundBaseHighBrush}"
-              Data="{StaticResource minimize_icon}"></Path>
+              Name="MinimizeButton">
+		  <PathIcon Margin="0,0,0,0"
+				Data="{StaticResource minimize_icon}"/>
       </Button>
       <ToggleButton 
         Name="MaximizeButton"
-        ToolTip.Tip="Maximize"
-        Background="Transparent"
         HorizontalContentAlignment="Center"
         VerticalContentAlignment="Center">
         <ToggleButton.Resources>
           <CornerRadius x:Key="ControlCornerRadius">0</CornerRadius>
         </ToggleButton.Resources>
         <ToggleButton.Styles>
-          <Style Selector="ToggleButton:checked > Path">
+          <Style Selector="ToggleButton:checked > PathIcon">
             <Setter Property="Data" Value="{StaticResource exitfullscreen_icon}"/>
             <Setter Property="Margin" Value="0,0,0,0"/>
           </Style>
-          <Style Selector="ToggleButton:unchecked > Path">
+          <Style Selector="ToggleButton:unchecked > PathIcon">
             <Setter Property="Data" Value="{StaticResource fullscreen_icon}"/>
             <Setter Property="Margin" Value="0,0,0,0"/>
           </Style>
           <Style Selector="ToggleButton:checked ContentPresenter">
-            <Setter Property="Width" Value="47"/>
+            <Setter Property="Width" Value="30"/>
             <Setter Property="Height" Value="30"/>
-            <Setter Property="VerticalAlignment" Value="Stretch"/>
           </Style>
           <Style Selector="ToggleButton:unchecked ContentPresenter">
-            <Setter Property="Width" Value="47"/>
+            <Setter Property="Width" Value="30"/>
             <Setter Property="Height" Value="30"/>
-            <Setter Property="VerticalAlignment" Value="Stretch"/>
           </Style>
         </ToggleButton.Styles>
-        <Path Name="MaximizeIcon"></Path>
+		  <PathIcon Name="MaximizeIcon"></PathIcon>
       </ToggleButton>
-      <Button Width="47"
-              VerticalAlignment="Stretch"
-              VerticalContentAlignment="Center"
-              HorizontalContentAlignment="Center"
-              BorderThickness="0"
-              Name="CloseButton"
-              ToolTip.Tip="Close">
-        <Button.Resources>
-          <CornerRadius x:Key="ControlCornerRadius">0</CornerRadius>
-        </Button.Resources>
+      <Button Width="30"
+              Name="CloseButton">
         <Button.Styles>
           <Style Selector="Button:pointerover ContentPresenter">
             <Setter Property="Background" Value="Red"/>
           </Style>
-          <Style Selector="Button:not(:pointerover)> Path">
-            <Setter Property="Fill" Value="{DynamicResource SystemControlForegroundBaseHighBrush}"/>
-          </Style>
         </Button.Styles>
-        <Path Margin="0,0,0,0"
-              Stretch="Uniform"
-              Data="{StaticResource close_icon}"></Path>
+		  <PathIcon Margin="0,0,0,0"
+				    Data="{StaticResource close_icon}"/>
       </Button>
     </StackPanel>
   </Grid>

@@ -8,59 +8,49 @@ namespace MusicPlayerBackend
     /// </summary>
     public class MediaListController : IMediaListController
     {
-
         IMediaList MediaList { get; set; }
         IMediaListInteractor MediaListInteractor { get; set; }
-
-        /// <summary>
-        /// Routes the selection from the ui.
-        /// </summary>
-        public event IMediaListController.OnAudioSelected onAudioSelected;
+        ISettingsInteractor SettingsInteractor { get; set; }
 
         /// <summary>
         /// Connects <paramref name="mediaList"/> with <paramref name="mediaListInteractor"/>.
         /// </summary>
         /// <param name="mediaList">A reference to the media list ui.</param>
         /// <param name="mediaListInteractor">A reference to the media list interactor.</param>
-        public MediaListController(IMediaList mediaList, IMediaListInteractor mediaListInteractor)
+        /// <param name="settingsInteractor"></param>
+        public MediaListController(IMediaList mediaList, IMediaListInteractor mediaListInteractor, ISettingsInteractor settingsInteractor)
         {
             MediaList = mediaList;
             MediaListInteractor = mediaListInteractor;
+            SettingsInteractor = settingsInteractor;
 
-            MediaList.onSelection += (AudioMetaData sel) => { InvokeAudioSelection(sel); };
             MediaListInteractor.onMediaFound += (AudioMetaData found) => { InvokeAddSongToList(found); };
-        }
-
-        List<AudioMetaData> AudioMetaDatas { get; set; } = new List<AudioMetaData> { };
-
-        void InvokeAudioSelection(AudioMetaData sel)
-        {
-           var f = AudioMetaDatas.Find(pred => pred.Title == sel.Title && pred.Duration == sel.Duration);
-            onAudioSelected.Invoke(f);
+            MediaList.onLoadMediaList += () => { SetMediaList(); };
+            MediaList.onLoadMediaListFromNewPath += (string path) => { SetMediaListCustomMediaPath(path); };
+            MediaList.onSelection += (AudioMetaData data) => { }; //TODO
         }
 
         void InvokeAddSongToList(AudioMetaData found)
         {
-            AudioMetaDatas.Add(found);
             MediaList.AddSongToList(found);
         }
 
         /// <summary>
         /// Sets the found media files to the ui.
         /// </summary>
-        /// <param name="rootpath"></param>
-        public void SetMediaList(string rootpath)
+        public void SetMediaList()
         {
+            var rootpath = SettingsInteractor.ReadSettings().MediaPath;
             MediaListInteractor.GetMediaListAsync(rootpath);
         }
 
         /// <summary>
-        /// Sets the currently playing song.
+        /// Loads from path media files.
         /// </summary>
-        /// <param name="audioMetaData"></param>
-        public void SetPlaying(AudioMetaData audioMetaData)
+        /// <param name="path"></param>
+        public void SetMediaListCustomMediaPath(string path)
         {
-            MediaList.SetPlaying(audioMetaData);
+            MediaListInteractor.GetMediaListAsync(path);
         }
     }
 }

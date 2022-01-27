@@ -10,27 +10,23 @@ namespace MusicPlayerBackend
     {
         IMainUI MainUI { get; set; }
         IApplication Application { get; set; }
+        ISettingsInteractor SettingsInteractor { get; set; }
 
         /// <summary>
         /// Connects the <paramref name="mainUI"/> with the <paramref name="app"/>.
         /// </summary>
         /// <param name="mainUI"></param>
         /// <param name="app"></param>
-        public MainController(ref IMainUI mainUI, ref IApplication app)
+        /// <param name="settingsInteractor"></param>
+        public MainController(IMainUI mainUI, IApplication app, ISettingsInteractor settingsInteractor)
         {
             MainUI = mainUI;
             Application = app;
+            SettingsInteractor = settingsInteractor;
 
-            Application.SetStyle(APPLICATION_STYLE.DARK);
-        }
+            Application.SetStyle(SettingsInteractor.ReadSettings().AppStyle);
 
-        /// <summary>
-        /// Sets the theme of the app.
-        /// </summary>
-        /// <param name="appStyle"></param>
-        public void ChangeTheme(APPLICATION_STYLE appStyle)
-        {
-            Application.SetStyle(appStyle);
+            MainUI.onThemeChange += (APPLICATION_STYLE aps) => { Application.SetStyle(aps); };
         }
     }
 }

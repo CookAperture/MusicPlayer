@@ -11,12 +11,13 @@
 				  VerticalScrollBarVisibility="Visible"
 				  AllowAutoHide="False">
       <ListBox Items="{Binding Songs}"
-               SelectionMode="Toggle" 
+               SelectionMode="Single"
                SelectedItem="{Binding SelectedSong}">
         <ListBox.ItemTemplate>
           <DataTemplate>
             <StackPanel Orientation="Horizontal" Spacing="5">
               <TextBlock Text="{Binding Title}"/>
+              <TextBlock Text=" | "/>
               <TextBlock Text="{Binding Duration}"/>
             </StackPanel>
           </DataTemplate>

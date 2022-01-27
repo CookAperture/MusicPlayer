@@ -1,29 +1,95 @@
-<Window xmlns="https://github.com/avaloniaui"
-				xmlns:uc="clr-namespace:MusicPlayer"
-				xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-				xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-				xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="400"
-				x:Class="MusicPlayer.MainUI"
-				Title="MusicPlayer"
-				ExtendClientAreaToDecorationsHint="True"
-				ExtendClientAreaChromeHints="NoChrome"
-				Name="Window"
-				MinHeight="250"
-				MinWidth="250">
+<Window	xmlns="https://github.com/avaloniaui"
+		xmlns:uc="clr-namespace:MusicPlayer"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="400"
+		x:Class="MusicPlayer.MainUI"
+		Title="MusicPlayer"
+		Name="Window"
+		MinHeight="200"
+		MinWidth="350"
+		ExtendClientAreaToDecorationsHint="True"
+		ExtendClientAreaChromeHints="NoChrome">
 	
-	<DockPanel Name="ContentWrapper"
-						 LastChildFill="True"
-						 HorizontalAlignment="Stretch"
-						 VerticalAlignment="Stretch">
-		<uc:SoundControlBar DockPanel.Dock="Bottom" 
-												VerticalAlignment="Stretch" 
-												HorizontalAlignment="Stretch"/>
-		<uc:CustomDecoration DockPanel.Dock="Top" 
-												 HorizontalAlignment="Stretch" 
-												 VerticalAlignment="Top"/>
-		<uc:ContentPage VerticalAlignment="Stretch"
-										HorizontalAlignment="Stretch"/>
-</DockPanel>
-	
+	<DockPanel	Name="ContentWrapper"
+				LastChildFill="True"
+				HorizontalAlignment="Stretch"
+				VerticalAlignment="Stretch">
+		<uc:SoundControlBar DockPanel.Dock="Bottom"
+							VerticalAlignment="Stretch"
+							HorizontalAlignment="Stretch"/>
+
+		<SplitView  IsPaneOpen="{Binding PaneState}"
+					DisplayMode="CompactInline"
+					OpenPaneLength="150"
+					CompactPaneLength="38"
+					HorizontalAlignment="Stretch"
+					VerticalAlignment="Stretch"
+					Name="SplitViewMenu">
+			<SplitView.Pane>
+				<Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+					<Grid.RowDefinitions>
+						<RowDefinition Height="30"/>
+						<RowDefinition Height="Auto"/>
+						<RowDefinition Height="Auto"/>
+						<RowDefinition Height="Auto"/>
+					</Grid.RowDefinitions>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*" MinWidth="30" MaxWidth="150"/>
+					</Grid.ColumnDefinitions>
+					<Button Name="PaneButton"
+							VerticalAlignment="Stretch"
+							HorizontalAlignment="Stretch"
+							Grid.Row="0" Grid.Column="1">
+						<PathIcon Margin="0,0,0,0"
+								  Data="{StaticResource hamburger_icon}"
+								  HorizontalAlignment="Left">
+						</PathIcon>
+					</Button>
+					<Button Name="CoverButton"
+							VerticalAlignment="Stretch"
+							HorizontalAlignment="Stretch"
+							Grid.Row="1" Grid.Column="1">
+					<StackPanel Orientation="Horizontal" Spacing="10">
+						<PathIcon Margin="0,0,0,0"
+							  Data="{StaticResource img_icon}">
+						</PathIcon>
+						<TextBlock IsVisible="{Binding PaneState}">Cover</TextBlock>
+					</StackPanel>
+					</Button>
+					<Button Name="MediaListButton"
+							VerticalAlignment="Stretch"
+							HorizontalAlignment="Stretch"
+							Grid.Row="2" Grid.Column="1">
+						<StackPanel Orientation="Horizontal" Spacing="10">
+							<PathIcon Margin="0,0,0,0"
+								  Data="{StaticResource list_icon}">
+							</PathIcon>
+						<TextBlock IsVisible="{Binding PaneState}">MediaList</TextBlock>
+						</StackPanel>
+					</Button>
+					<Button Name="SettingsButton"
+							VerticalAlignment="Stretch"
+							HorizontalAlignment="Stretch"
+							Grid.Row="3" Grid.Column="1">
+						<StackPanel Orientation="Horizontal" Spacing="10">
+						<PathIcon Margin="0,0,0,0"
+								  Data="{StaticResource settings_icon}">							
+						</PathIcon>
+						<TextBlock IsVisible="{Binding PaneState}">Settings</TextBlock>
+						</StackPanel>
+					</Button>
+				</Grid>
+			</SplitView.Pane>
+			<DockPanel LastChildFill="True">
+				<uc:CustomDecoration DockPanel.Dock="Top"
+					 HorizontalAlignment="Stretch"
+					 VerticalAlignment="Top"/>
+				<uc:ContentPage VerticalAlignment="Stretch"
+								HorizontalAlignment="Stretch"/>
+			</DockPanel>
+		</SplitView>
+	</DockPanel>
+
 </Window>

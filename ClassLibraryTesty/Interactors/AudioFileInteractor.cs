@@ -13,8 +13,6 @@ namespace MusicPlayerBackend
         IMetaDataReader MetaDataReader { get; set; }
         IDataConverter DataConverter { get; set; }
 
-        string _actualAudioFile;
-
         /// <summary>
         /// Routes from the <see cref="ISoundEngine"/>.
         /// </summary>
@@ -44,9 +42,8 @@ namespace MusicPlayerBackend
         /// <summary>
         /// Starts playing actual song selected.
         /// </summary>
-        public void StartPlaying()
+        public void StartPlaying(AudioMetaData data)
         {
-            var data = MetaDataReader.ReadMetaDataFromFile(_actualAudioFile);
             SoundEngine.StartPlaying(data);
         }
 
@@ -81,25 +78,7 @@ namespace MusicPlayerBackend
         /// </summary>
         public void ResumePlaying()
         {
-            SoundEngine?.ResumePlaying();
-        }
-
-        /// <summary>
-        /// Sets the actual audio file.
-        /// </summary>
-        /// <param name="path"></param>
-        public void SetActualAudioFile(string path)
-        {
-            _actualAudioFile = path;
-        }
-
-        /// <summary>
-        /// Fetches <see cref="AudioMetaData"/> from actual auio file.
-        /// </summary>
-        /// <returns><see cref="AudioMetaData"/></returns>
-        public AudioMetaData ReadMetaDataFromActualAudio()
-        {
-            return MetaDataReader.ReadMetaDataFromFile(_actualAudioFile);
+            SoundEngine.ResumePlaying();
         }
     }
 }

@@ -1,42 +1,33 @@
 ﻿<UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="150"
              x:Class="MusicPlayer.SoundControlBar"
              Name="SoundControlBar">
-
-  <Panel Height="75">
-    <ToggleButton DockPanel.Dock="Bottom"
-                  HorizontalAlignment="Center"
-                  VerticalAlignment="Center"
-                  Width="46"
-                  Height="46"
-                  Click="OnPlayPause"
-                  BorderThickness="0"
-                  Background="Transparent">
-      <ToggleButton.Resources>
-        <CornerRadius x:Key="ControlCornerRadius">0</CornerRadius>
-      </ToggleButton.Resources>
-      <ToggleButton.Styles>
-        <Style Selector="ToggleButton:checked > Path">
-          <Setter Property="Data" Value="{StaticResource pause_icon}"/>
-          <Setter Property="Stretch" Value="Fill"/>
-        </Style>
-        <Style Selector="ToggleButton:unchecked > Path">
-          <Setter Property="Data" Value="{StaticResource play_icon}"/>
-          <Setter Property="Stretch" Value="Fill"/>
-        </Style>
-        <Style Selector="ToggleButton:checked ContentPresenter">
-          <Setter Property="DockPanel.Dock" Value="Bottom"/>
-        </Style>
-        <Style Selector="ToggleButton:unchecked ContentPresenter">
-          <Setter Property="DockPanel.Dock" Value="Bottom"/>
-        </Style>
-      </ToggleButton.Styles>
-      <Path Name ="PlayPause"></Path>
-    </ToggleButton>
-  </Panel>
-
-
+	<Grid Height="75">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*"/>
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="*"/>
+		</Grid.ColumnDefinitions>
+		<ToggleButton Name="PlayPauseButton"
+					  Width="30"
+					  Height="30"
+					  VerticalAlignment="Center"
+					  HorizontalAlignment="Center"
+					  Click="OnPlayPause"
+					  Grid.Row="0" Grid.Column="0">
+			<ToggleButton.Styles>
+				<Style Selector="ToggleButton:checked > PathIcon">
+					<Setter Property="Data" Value="{StaticResource pause_icon}"/>
+				</Style>
+				<Style Selector="ToggleButton:unchecked > PathIcon">
+					<Setter Property="Data" Value="{StaticResource play_icon}"/>
+				</Style>
+			</ToggleButton.Styles>
+			<PathIcon Name ="PlayPause"/>
+		</ToggleButton>
+	</Grid>
 </UserControl>

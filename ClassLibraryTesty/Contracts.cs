@@ -31,51 +31,13 @@ namespace MusicPlayerBackend
         /// Contracts the neccessary functions to connect and handle all sub-controller with the ui.
         /// </summary>
         public interface IMainController
-        {
-
-            /// <summary>
-            /// Contracts to change the theme on top level.
-            /// </summary>
-            /// <param name="appStyle"></param>
-            public void ChangeTheme(APPLICATION_STYLE appStyle);
-        }
+        { }
 
         /// <summary>
         /// Contracts the neccessary functions to commmunicate to another controller and ui and connect with interactor.
         /// </summary>
         public interface ICustomDecorationController
         {
-
-            /// <summary>
-            /// Interfaces no event args.
-            /// </summary>
-            public delegate void OnSwitchedToSettings();
-
-            /// <summary>
-            /// Interfaces no event args.
-            /// </summary>
-            public delegate void OnSwitchedToCover();
-
-            /// <summary>
-            /// Interfaces no event args.
-            /// </summary>
-            public delegate void OnSwitchedToMediaList();
-
-            /// <summary>
-            /// To be called when ui has been triggert. Shall be connected to show settings.
-            /// </summary>
-            public event OnSwitchedToSettings onSwitchedToSettings;
-
-            /// <summary>
-            /// To be called when ui has been triggert. Shall be connected to show the cover.
-            /// </summary>
-            public event OnSwitchedToCover onSwitchedToCover;
-
-            /// <summary>
-            /// To be called when ui has been triggert. Shall be connected to show media list.
-            /// </summary>
-            public event OnSwitchedToMediaList onSwitchedToMediaList;
-
             //SafeActualSongOnExit -> OnExit event
         }
 
@@ -102,66 +64,22 @@ namespace MusicPlayerBackend
         /// </summary>
         public interface ISettingsController
         {
-
-            /// <summary>
-            /// To be invoked by settings ui. 
-            /// </summary>
-            /// <param name="appStyle"></param>
-            public delegate void OnChangeTheme(APPLICATION_STYLE appStyle);
-
-            /// <summary>
-            /// To be invoked by settings, when settings are loaded.
-            /// </summary>
-            /// <param name="appSettings"></param>
-            public delegate void OnSettingsLoaded(AppSettings appSettings);
-
-            /// <summary>
-            /// To be invoked when current theme set is needed.
-            /// </summary>
-            public delegate void OnRequestCurrentThemeSet();
-
-            /// <summary>
-            /// <see cref="OnChangeTheme"/>.
-            /// </summary>
-            public event OnChangeTheme onChangeTheme;
-
-            /// <summary>
-            /// <see cref="OnSettingsLoaded"/>.
-            /// </summary>
-            public event OnSettingsLoaded onSettingsLoaded;
-
-            /// <summary>
-            /// <see cref="OnRequestCurrentThemeSet"/>.
-            /// </summary>
-            public event OnRequestCurrentThemeSet onRequestCurrentThemeSet;
-
             /// <summary>
             /// Contracts to load the settings. To the settings ui.
             /// </summary>
             public void LoadSettings();
-
-            /// <summary>
-            /// Loads the settings to return it to the caller.
-            /// </summary>
-            /// <returns><see cref="AppSettings"/> from settings.</returns>
-            public AppSettings GetSettings();
-
-            /// <summary>
-            /// Sets the current theme to the AppSettings.
-            /// </summary>
-            public void SetCurrentTheme(APPLICATION_STYLE appStyle);
         }
 
         /// <summary>
-        /// Contract to connect the <see cref="ISongCover"/> with <see cref="IAudioFileInteractor"/>.
+        /// Contract to connect the <see cref="ISongCover"/> with <see cref="ISongCoverInteractor"/>.
         /// </summary>
         public interface ISongCoverController
         {
 
             /// <summary>
-            /// Contracts to load the sover, is delegated to ui.
+            /// Contracts to load the cover, is delegated to ui.
             /// </summary>
-            public void SetCover(/*Image*/);
+            public void SetCover(AudioMetaData imageContainer);
         }
 
         /// <summary>
@@ -169,29 +87,16 @@ namespace MusicPlayerBackend
         /// </summary>
         public interface IMediaListController
         {
-
-            /// <summary>
-            /// To be called from ui. Sends back the data package of selected audio file.
-            /// </summary>
-            /// <param name="selected"></param>
-            public delegate void OnAudioSelected(AudioMetaData selected);
-
-            /// <summary>
-            /// <see cref="OnAudioSelected"/>
-            /// </summary>
-            public event OnAudioSelected onAudioSelected;
-
             /// <summary>
             /// Contracts to load media files into the ui.
             /// </summary>
-            /// <param name="rootPath"></param>
-            public void SetMediaList(string rootPath);
+            public void SetMediaList();
 
             /// <summary>
-            /// Contracts to mark the currently playing song.
+            /// Contracts to laod media files into ui from new path.
             /// </summary>
-            /// <param name="audioMetaData"></param>
-            public void SetPlaying(AudioMetaData audioMetaData);
+            /// <param name="path"></param>
+            public void SetMediaListCustomMediaPath(string path);
         }
 
         /// <summary>
@@ -228,7 +133,7 @@ namespace MusicPlayerBackend
             /// <summary>
             /// Contracts to play actual audio file.
             /// </summary>
-            public void StartPlaying();
+            public void StartPlaying(AudioMetaData data);
 
             /// <summary>
             /// Contracts to start actual audio file at given time.
@@ -251,18 +156,6 @@ namespace MusicPlayerBackend
             /// Contracts to resume playing the actual song.
             /// </summary>
             public void ResumePlaying();
-
-            /// <summary>
-            /// Contracts to set the actual audio file.
-            /// </summary>
-            /// <param name="path"></param>
-            public void SetActualAudioFile(string path);
-
-            /// <summary>
-            /// Contracts to fetch the MetaData from the actual audio file.
-            /// </summary>
-            /// <returns>MetaData from actual audio file.</returns>
-            public AudioMetaData ReadMetaDataFromActualAudio();
         }
 
         /// <summary>
@@ -289,6 +182,12 @@ namespace MusicPlayerBackend
             /// </summary>
             /// <returns></returns>
             public List<string> GetAudioDevices();
+
+            /// <summary>
+            /// Contracts to set the audio output device to the sound engine.
+            /// </summary>
+            /// <param name="audiodevice"></param>
+            public void SetAudioDevice(string audiodevice);
         }
 
         /// <summary>
@@ -314,6 +213,20 @@ namespace MusicPlayerBackend
             /// <param name="rootPath"></param>
             /// <returns>List of <see cref="AudioMetaData"/> from all found media files.</returns>
             public void GetMediaListAsync(string rootPath);
+        }
+
+        /// <summary>
+        /// Contracts to connect <see cref="IMetaDataReader"/>.
+        /// </summary>
+        public interface ISongCoverInteractor
+        {
+
+            /// <summary>
+            /// Contracts to read potential img file from meta data.
+            /// </summary>
+            /// <param name="path"></param>
+            /// <returns></returns>
+            public ImageContainer GetCoverFromAudio(string path);
         }
 
         /// <summary>
@@ -361,6 +274,13 @@ namespace MusicPlayerBackend
             /// <param name="path"></param>
             /// <returns>Should return an correctly filled <see cref="AudioMetaData"/> struct.</returns>
             public AudioMetaData ReadMetaDataFromFile(string path);
+
+            /// <summary>
+            /// Contracts to read the cover image from a audi file if available.
+            /// </summary>
+            /// <param name="path"></param>
+            /// <returns></returns>
+            public ImageContainer ReadImageFromAudioFile(string path);
         }
 
         /// <summary>
@@ -510,6 +430,16 @@ namespace MusicPlayerBackend
         /// </summary>
         public interface IMainUI
         {
+            /// <summary>
+            /// Interfaces to change theme.
+            /// </summary>
+            /// <param name="appStyle"></param>
+            public delegate void OnThemeChange(APPLICATION_STYLE appStyle);
+
+            /// <summary>
+            /// To be invoked by settings.
+            /// </summary>
+            public event OnThemeChange onThemeChange;
 
             /// <summary>
             /// Represents a custom subwindow, it replaces the os decoration. 
@@ -541,12 +471,22 @@ namespace MusicPlayerBackend
             /// <summary>
             /// No return on play and without parameters.
             /// </summary>
-            public delegate void OnPlay();
+            public delegate void OnPlay(AudioMetaData data);
 
             /// <summary>
             /// No return on pause and without parameters.
             /// </summary>
             public delegate void OnPause();
+
+            /// <summary>
+            /// No return and without parameters.
+            /// </summary>
+            public delegate void OnResume();
+
+            /// <summary>
+            /// No return next from media list.
+            /// </summary>
+            public delegate void OnNext();
 
             /// <summary>
             /// To be invoked when user triggers play.
@@ -559,10 +499,30 @@ namespace MusicPlayerBackend
             public event OnPause onPause;
 
             /// <summary>
+            /// To be invoked when user triggers resume.
+            /// </summary>
+            public event OnResume onResume;
+
+            /// <summary>
+            /// To be invoked when finished or manually pressed.
+            /// </summary>
+            public event OnNext onNext;
+
+            /// <summary>
             /// Contracts that the meta data from an audio file fills the content fields of this controll.
             /// </summary>
             /// <param name="audioMetaData"></param>
             public void SetAudioMetaData(AudioMetaData audioMetaData);
+
+            /// <summary>
+            /// Fetch progress.
+            /// </summary>
+            public void UpdateProgress(TimeSpan curr);
+
+            /// <summary>
+            /// Handles finished.
+            /// </summary>
+            public void IsFinished();
         }
 
         /// <summary>
@@ -596,21 +556,6 @@ namespace MusicPlayerBackend
             public delegate void OnDrag(object sender, EventArgs args);
 
             /// <summary>
-            /// Interfaces no event data.
-            /// </summary>
-            public delegate void OnCoverButtonClick();
-
-            /// <summary>
-            /// Interfaces no event data.
-            /// </summary>
-            public delegate void OnSettingsButtonClick();
-
-            /// <summary>
-            /// Interfaces no event data.
-            /// </summary>
-            public delegate void OnMediaListButtonClick();
-
-            /// <summary>
             /// To be invoked when minimize is triggered.
             /// </summary>
             public event OnMinimize onMinimize;
@@ -629,21 +574,6 @@ namespace MusicPlayerBackend
             /// To be invoked when drag is triggered.
             /// </summary>
             public event OnDrag onDrag;
-
-            /// <summary>
-            /// To be invoked when cover button is triggered.
-            /// </summary>
-            public event OnCoverButtonClick onCoverButtonClick;
-
-            /// <summary>
-            /// To be invoked when settings button is triggered.
-            /// </summary>
-            public event OnSettingsButtonClick onSettingsButtonClick;
-
-            /// <summary>
-            /// To be invoked when medialist button is triggered.
-            /// </summary>
-            public event OnMediaListButtonClick onMediaListButtonClick;
         }
 
         /// <summary>
@@ -653,9 +583,26 @@ namespace MusicPlayerBackend
         {
 
             /// <summary>
+            /// Contracts the OnLoad event interface.
+            /// </summary>
+            /// <param name="audioMetaData"></param>
+            public delegate void OnLoad(AudioMetaData audioMetaData);
+
+            /// <summary>
+            /// Contracts availability of onLoad event for ISongCover.
+            /// </summary>
+            public event OnLoad onLoad;
+
+            /// <summary>
             /// Should pass an image of the audio file cover.
             /// </summary>
-            public void LoadCover(/*Image*/);
+            public void LoadCover(AudioMetaData audioMetaData);
+
+            /// <summary>
+            /// Contracts to load the cover image to the ui.
+            /// </summary>
+            /// <param name="imageContainer"></param>
+            public void LoadCover(ImageContainer imageContainer);
         }
 
         /// <summary>
@@ -671,10 +618,9 @@ namespace MusicPlayerBackend
             public delegate void OnSettingsChanged(AppSettings appSettings);
 
             /// <summary>
-            /// Interfaces theme changed event data.
+            /// Interfaces to load settings.
             /// </summary>
-            /// <param name="theme"></param>
-            public delegate void OnChangeTheme(APPLICATION_STYLE theme);
+            public delegate void OnLoadSettings();
 
             /// <summary>
             /// To be invoked when settings are changed.
@@ -682,15 +628,20 @@ namespace MusicPlayerBackend
             public event OnSettingsChanged onSettingsChanged;
 
             /// <summary>
-            /// To be invoked when theme is changed.
+            /// To be invoked by content presenter.
             /// </summary>
-            public event OnChangeTheme onChangeTheme;
+            public event OnLoadSettings onLoadSettings;
 
             /// <summary>
             /// 
             /// </summary>
             /// <param name="appSettings"></param>
             public void LoadSettings(AppSettings appSettings);
+
+            /// <summary>
+            /// Contracts to load settings data.
+            /// </summary>
+            public void LoadSettings();
         }
 
         /// <summary>
@@ -742,9 +693,30 @@ namespace MusicPlayerBackend
             public delegate void OnSelection(AudioMetaData selection);
 
             /// <summary>
+            /// Interfaces to load the medialist.
+            /// </summary>
+            public delegate void OnLoadMediaList();
+
+            /// <summary>
+            /// Interfaces to fetch from a new path.
+            /// </summary>
+            /// <param name="path"></param>
+            public delegate void OnLoadMediaListFromNewPath(string path);
+
+            /// <summary>
             /// To be invoked upon selection and selection changes.
             /// </summary>
             public event OnSelection onSelection;
+
+            /// <summary>
+            /// To be invoked by content presenter.
+            /// </summary>
+            public event OnLoadMediaList onLoadMediaList;
+
+            /// <summary>
+            /// To be invoked on changed settings.
+            /// </summary>
+            public event OnLoadMediaListFromNewPath onLoadMediaListFromNewPath;
 
             /// <summary>
             /// Sets the media list content.
@@ -757,6 +729,17 @@ namespace MusicPlayerBackend
             /// </summary>
             /// <param name="selection"></param>
             public void SetPlaying(AudioMetaData selection);
+
+            /// <summary>
+            /// Contracts to load the media list data.
+            /// </summary>
+            public void LoadMediaList();
+
+            /// <summary>
+            /// Contracts to fetch a new media path.
+            /// </summary>
+            /// <param name="path"></param>
+            public void LoadMediaListFromNewMediaPath(string path);
         }
         #endregion
     }

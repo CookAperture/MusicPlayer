@@ -16,6 +16,8 @@ namespace MusicPlayer
         new public event PropertyChangedEventHandler PropertyChanged;
 
         public event IMediaList.OnSelection onSelection = (AudioMetaData selection) => { };
+        public event IMediaList.OnLoadMediaList onLoadMediaList;
+        public event IMediaList.OnLoadMediaListFromNewPath onLoadMediaListFromNewPath;
 
         ObservableCollection<AudioDataModel> songs = new ObservableCollection<AudioDataModel>();
         public ObservableCollection<AudioDataModel> Songs
@@ -30,10 +32,14 @@ namespace MusicPlayer
             set => RaiseAndSetIfChanged(ref selectedSong, value);
         }
 
+        List<AudioMetaData> AudioMetaDataState { get; set; } = new List<AudioMetaData>();
+
         public MediaList()
         {
             AvaloniaXamlLoader.Load(this);
             DataContext = this;
+
+            PropertyChanged += (object e, PropertyChangedEventArgs args) => PropertyChangedHandler(e, args);
         }
 
         public void AddSongToList(AudioMetaData song)
@@ -43,6 +49,7 @@ namespace MusicPlayer
                 Title = song.Title,
                 Duration = song.Duration.ToString()
             });
+            AudioMetaDataState.Add(song);
         }
 
         public void SetPlaying(AudioMetaData selection)
@@ -53,12 +60,11 @@ namespace MusicPlayer
         private void PropertyChangedHandler(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "SelectedSong")
-                onSelection.Invoke(new AudioMetaData() 
-                { 
-                    AudioFilePath = "", 
-                    Duration = TimeSpan.Parse(SelectedSong.Duration), 
-                    Title = SelectedSong.Title
-                });
+            {
+                var song = AudioMetaDataState.Find( s => s.Title == SelectedSong.Title);
+                if(song != new AudioMetaData())
+                    onSelection.Invoke(song);
+            }
         }
 
         protected bool RaiseAndSetIfChanged<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
@@ -74,5 +80,19 @@ namespace MusicPlayer
 
         protected void RaisePropertyChanged([CallerMemberName] string propertyName = null)
             => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+
+        public void LoadMediaList()
+        {
+            Songs.Clear();
+            AudioMetaDataState.Clear();
+            onLoadMediaList.Invoke();
+        }
+
+        public void LoadMediaListFromNewMediaPath(string path)
+        {
+            Songs.Clear();
+            AudioMetaDataState.Clear();
+            onLoadMediaListFromNewPath.Invoke(path);
+        }
     }
 }

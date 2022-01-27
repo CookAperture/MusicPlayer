@@ -76,9 +76,17 @@
     <None Remove="Dlgs\**" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="config.json" />
+  </ItemGroup>
+  <ItemGroup>
     <AvaloniaResource Include="Icons.axaml">
       <Generator>MSBuild:Compile</Generator>
     </AvaloniaResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="config.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Avalonia" Version="0.10.11" />

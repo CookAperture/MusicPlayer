@@ -25,6 +25,7 @@ namespace MusicPlayerBackend
         /// <param name="jsonSerializer"></param>
         /// <param name="fileReader"></param>
         /// <param name="fileWriter"></param>
+        /// <param name="soundEngine"></param>
         public SettingsInteractor(IDataConverter dataConverter, IJSONDeserializer jsonDeserializer, IJSONSerializer jsonSerializer, IFileReader fileReader, IFileWriter fileWriter, ISoundEngine soundEngine)
         {
             DataConverter = dataConverter;
@@ -62,6 +63,16 @@ namespace MusicPlayerBackend
         public List<string> GetAudioDevices()
         {
             return SoundEngine.GetAudioDevices();
+        }
+
+        /// <summary>
+        /// Sets the audio device.
+        /// </summary>
+        /// <param name="audiodevice"></param>
+        /// <exception cref="NotImplementedException"></exception>
+        public void SetAudioDevice(string audiodevice)
+        {
+            SoundEngine.SetAudioDevice(audiodevice);
         }
     }
 }
