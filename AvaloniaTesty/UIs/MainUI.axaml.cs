@@ -14,9 +14,20 @@ namespace MusicPlayer
 {
     public class MainUI : Window, IMainUI, INotifyPropertyChanged
     {
+        new public event PropertyChangedEventHandler PropertyChanged;
+        public event IMainUI.OnThemeChange onThemeChange;
+
         public ICustomDecoration CustomDecoration { get; set; }
         public ISoundControlBar SoundControlBar { get; set; }
         public IContentPresenter ContentPresenter { get; set; }
+
+        bool paneOpen = false;
+
+        public bool PaneState
+        {            
+            get => paneOpen;
+            set => RaiseAndSetIfChanged(ref paneOpen, value);
+        }
 
         public MainUI()
         {
@@ -30,12 +41,14 @@ namespace MusicPlayer
             CustomDecoration.onMinimize += delegate { WindowState = WindowState.Minimized; };
             CustomDecoration.onMaximize += delegate { WindowState = WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized; };
             CustomDecoration.onClose += delegate { Close(); };
-            CustomDecoration.onCoverButtonClick += delegate { ContentPresenter.ShowCoverPage(); };
-            CustomDecoration.onSettingsButtonClick += delegate { ContentPresenter.ShowSettingsPage(); };
-            CustomDecoration.onMediaListButtonClick += delegate { ContentPresenter.ShowMediaListPage(); };
 
             ContentPresenter.MediaList.onSelection += (AudioMetaData data) => { SoundControlBar.SetAudioMetaData(data); };
             ContentPresenter.Settings.onSettingsChanged += (AppSettings data) => { onThemeChange.Invoke(data.AppStyle); };
+
+            this.FindControl<Button>("PaneButton").Click += (i, e) => { if (PaneState) PaneState = false; else PaneState = true; };
+            this.FindControl<Button>("CoverButton").Click += (i, e) => ContentPresenter.ShowCoverPage();
+            this.FindControl<Button>("SettingsButton").Click += (i, e) => ContentPresenter.ShowSettingsPage();
+            this.FindControl<Button>("MediaListButton").Click += (i, e) => ContentPresenter.ShowMediaListPage();
 
             Title = "MusicPlayer";
             DataContext = this;
@@ -48,8 +61,6 @@ namespace MusicPlayer
             base.Show();
         }
 
-        new public event PropertyChangedEventHandler PropertyChanged;
-        public event IMainUI.OnThemeChange onThemeChange;
 
         protected bool RaiseAndSetIfChanged<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
         {

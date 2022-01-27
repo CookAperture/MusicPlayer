@@ -2,54 +2,37 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              x:Class="MusicPlayer.App">
   <Application.Styles>
-    <StyleInclude Source="/Icons.axaml"></StyleInclude>
+	  <StyleInclude Source="/Icons.axaml"></StyleInclude>
     
-    <!-- Add Custom Controll Styles here -->
-    <Style Selector="ToolTip">
-      <Setter Property="BorderThickness" Value="0"/>
-      <Setter Property="Background" Value="Transparent"/>
-      <Setter Property="VerticalContentAlignment" Value="Center"/>
-      <Setter Property="HorizontalContentAlignment" Value="Center"/>
-      <Setter Property="Margin" Value="0"/>
-      <Setter Property="Padding" Value="0"/>
-    </Style>
-    
-    <Style Selector="Button:pointerover ContentPresenter">
-      <Setter Property="Background" Value="#333333"/>
-    </Style>
-    <Style Selector="Button:not(:pointerover) ContentPresenter">
-      <Setter Property="Background" Value="Transparent"/>
-    </Style>
+	  <!-- Add Custom Controll Styles here -->
 
-    <Style Selector="Path">
-      <Setter Property="VerticalAlignment" Value="Center"/>
-      <Setter Property="HorizontalAlignment" Value="Center"/>
-      <Setter Property="Fill" Value="{DynamicResource SystemControlForegroundBaseHighBrush}"/>
-      <Setter Property="Margin" Value="0, 0, 0, 0"/>
-      <Setter Property="Stretch" Value="Uniform"/>
-    </Style>
+	  <Style Selector="Button">
+	   <Setter Property="BorderThickness" Value="0"/>
+	   <Setter Property="Background" Value="Transparent"/>
+	   <Setter Property="CornerRadius" Value="0"/>
+	  </Style>
 
-    <Style Selector="ToggleButton:checked ContentPresenter">
-      <Setter Property="HorizontalAlignment" Value="Center"/>
-      <Setter Property="VerticalAlignment" Value="Center"/>
-      <Setter Property="BorderThickness" Value="0"/>
-      <Setter Property="Background" Value="Transparent"/>
-    </Style>
+	  <Style Selector="ToggleButton:checked">
+	    <Setter Property="BorderThickness" Value="0"/>
+	    <Setter Property="Background" Value="Transparent"/>
+	    <Setter Property="CornerRadius" Value="0"/>
+	  </Style>
     
-    <Style Selector="ToggleButton:unchecked ContentPresenter">
-      <Setter Property="HorizontalAlignment" Value="Center"/>
-      <Setter Property="VerticalAlignment" Value="Center"/>
-      <Setter Property="BorderThickness" Value="0"/>
-      <Setter Property="Background" Value="Transparent"/>
-    </Style>
+	  <Style Selector="ToggleButton:unchecked">
+	    <Setter Property="BorderThickness" Value="0"/>
+	    <Setter Property="Background" Value="Transparent"/>
+	    <Setter Property="CornerRadius" Value="0"/>
+	  </Style>
 
-    <Style Selector="ToggleButton:pointerover ContentPresenter">
-      <Setter Property="Background" Value="#333333"/>
-    </Style>
-    
-    <Style Selector="ToggleButton:not(:pointerover) ContentPresenter">
-      <Setter Property="Background" Value="Transparent"/>
-    </Style>
-  </Application.Styles>
+	  <Style Selector="ComboBox">
+		  <Setter Property="Background" Value="Transparent"/>
+		  <Setter Property="CornerRadius" Value="0"/>
+	  </Style>
+
+	  <Style Selector="TextBox">
+		  <Setter Property="Background" Value="Transparent"/>
+		  <Setter Property="CornerRadius" Value="0"/>
+	  </Style>
+	</Application.Styles>
 
 </Application>

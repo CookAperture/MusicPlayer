@@ -2,6 +2,7 @@
 using Xunit;
 using MusicPlayerBackend;
 using System.Collections.Generic;
+using System.IO;
 
 namespace MusicPlayerTests
 {
@@ -293,6 +294,80 @@ namespace MusicPlayerTests
                 AudioDevice = "Klingel",
                 AudioDevices = new List<string>() { "Klingel", "Woover" },
                 MediaPath = "C://"
+            };
+
+            int expected = i.GetHashCode();
+            int actual = ii.GetHashCode();
+
+            Assert.Equal(expected, actual);
+        }
+    }
+
+    public class ImageContainer_UnitTests
+    {
+        [Fact]
+        public void Equals_EqualStruct_True()
+        {
+            var memy = new MemoryStream(new byte[] { 1, 2, 3, 4 });
+            ImageContainer expected = new ImageContainer()
+            {
+                FilePath = "C://",
+                ImageStream = memy,
+            };
+            ImageContainer actual = new ImageContainer()
+            {
+                FilePath = "C://",
+                ImageStream = memy,
+            };
+
+            Assert.True(expected.Equals(actual));
+        }
+
+        [Fact]
+        public void Equals_NotEqualStruct_False()
+        {
+            ImageContainer expected = new ImageContainer()
+            {
+                FilePath = "C://",
+                ImageStream = new MemoryStream(new byte[] { 4, 2, 3, 4 }),
+            };
+            ImageContainer actual = new ImageContainer()
+            {
+                FilePath = "C://",
+                ImageStream = new MemoryStream(new byte[] { 1, 2, 3, 4 }),
+            };
+
+            Assert.False(expected.Equals(actual));
+        }
+
+        [Fact]
+        public void ToString_Filled_CorrectlyFormattedString()
+        {
+            ImageContainer testy = new ImageContainer()
+            {
+                FilePath = "C://",
+                ImageStream = new MemoryStream(new byte[] { 1, 2, 3, 4 }),
+            };
+            string expected = "FilePath: C:// | ImageStream: System.IO.MemoryStream";
+
+            string actual = testy.ToString();
+
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void GetHashCode_FromFilled_SameAsAnEqual()
+        {
+            var memy = new MemoryStream(new byte[] { 1, 2, 3, 4 });
+            ImageContainer i = new ImageContainer()
+            {
+                FilePath = "C://",
+                ImageStream = memy,
+            };
+            ImageContainer ii = new ImageContainer()
+            {
+                FilePath = "C://",
+                ImageStream = memy,
             };
 
             int expected = i.GetHashCode();

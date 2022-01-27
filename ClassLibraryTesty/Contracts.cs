@@ -275,6 +275,11 @@ namespace MusicPlayerBackend
             /// <returns>Should return an correctly filled <see cref="AudioMetaData"/> struct.</returns>
             public AudioMetaData ReadMetaDataFromFile(string path);
 
+            /// <summary>
+            /// Contracts to read the cover image from a audi file if available.
+            /// </summary>
+            /// <param name="path"></param>
+            /// <returns></returns>
             public ImageContainer ReadImageFromAudioFile(string path);
         }
 
@@ -551,21 +556,6 @@ namespace MusicPlayerBackend
             public delegate void OnDrag(object sender, EventArgs args);
 
             /// <summary>
-            /// Interfaces no event data.
-            /// </summary>
-            public delegate void OnCoverButtonClick();
-
-            /// <summary>
-            /// Interfaces no event data.
-            /// </summary>
-            public delegate void OnSettingsButtonClick();
-
-            /// <summary>
-            /// Interfaces no event data.
-            /// </summary>
-            public delegate void OnMediaListButtonClick();
-
-            /// <summary>
             /// To be invoked when minimize is triggered.
             /// </summary>
             public event OnMinimize onMinimize;
@@ -584,21 +574,6 @@ namespace MusicPlayerBackend
             /// To be invoked when drag is triggered.
             /// </summary>
             public event OnDrag onDrag;
-
-            /// <summary>
-            /// To be invoked when cover button is triggered.
-            /// </summary>
-            public event OnCoverButtonClick onCoverButtonClick;
-
-            /// <summary>
-            /// To be invoked when settings button is triggered.
-            /// </summary>
-            public event OnSettingsButtonClick onSettingsButtonClick;
-
-            /// <summary>
-            /// To be invoked when medialist button is triggered.
-            /// </summary>
-            public event OnMediaListButtonClick onMediaListButtonClick;
         }
 
         /// <summary>
@@ -607,8 +582,15 @@ namespace MusicPlayerBackend
         public interface ISongCover
         {
 
+            /// <summary>
+            /// Contracts the OnLoad event interface.
+            /// </summary>
+            /// <param name="audioMetaData"></param>
             public delegate void OnLoad(AudioMetaData audioMetaData);
 
+            /// <summary>
+            /// Contracts availability of onLoad event for ISongCover.
+            /// </summary>
             public event OnLoad onLoad;
 
             /// <summary>
@@ -616,7 +598,10 @@ namespace MusicPlayerBackend
             /// </summary>
             public void LoadCover(AudioMetaData audioMetaData);
 
-
+            /// <summary>
+            /// Contracts to load the cover image to the ui.
+            /// </summary>
+            /// <param name="imageContainer"></param>
             public void LoadCover(ImageContainer imageContainer);
         }
 

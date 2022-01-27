@@ -247,6 +247,13 @@
             <param name="path"></param>
             <returns>Should return an correctly filled <see cref="T:MusicPlayerBackend.AudioMetaData"/> struct.</returns>
         </member>
+        <member name="M:MusicPlayerBackend.Contracts.IMetaDataReader.ReadImageFromAudioFile(System.String)">
+            <summary>
+            Contracts to read the cover image from a audi file if available.
+            </summary>
+            <param name="path"></param>
+            <returns></returns>
+        </member>
         <member name="T:MusicPlayerBackend.Contracts.ISoundEngine">
             <summary>
             Contracts the neccessary functions and events
@@ -503,21 +510,6 @@
             <param name="sender"></param>
             <param name="args"></param>
         </member>
-        <member name="T:MusicPlayerBackend.Contracts.ICustomDecoration.OnCoverButtonClick">
-            <summary>
-            Interfaces no event data.
-            </summary>
-        </member>
-        <member name="T:MusicPlayerBackend.Contracts.ICustomDecoration.OnSettingsButtonClick">
-            <summary>
-            Interfaces no event data.
-            </summary>
-        </member>
-        <member name="T:MusicPlayerBackend.Contracts.ICustomDecoration.OnMediaListButtonClick">
-            <summary>
-            Interfaces no event data.
-            </summary>
-        </member>
         <member name="E:MusicPlayerBackend.Contracts.ICustomDecoration.onMinimize">
             <summary>
             To be invoked when minimize is triggered.
@@ -538,30 +530,32 @@
             To be invoked when drag is triggered.
             </summary>
         </member>
-        <member name="E:MusicPlayerBackend.Contracts.ICustomDecoration.onCoverButtonClick">
-            <summary>
-            To be invoked when cover button is triggered.
-            </summary>
-        </member>
-        <member name="E:MusicPlayerBackend.Contracts.ICustomDecoration.onSettingsButtonClick">
-            <summary>
-            To be invoked when settings button is triggered.
-            </summary>
-        </member>
-        <member name="E:MusicPlayerBackend.Contracts.ICustomDecoration.onMediaListButtonClick">
-            <summary>
-            To be invoked when medialist button is triggered.
-            </summary>
-        </member>
         <member name="T:MusicPlayerBackend.Contracts.ISongCover">
             <summary>
             Contracts the neccessary functions to communicate with SongCover.
+            </summary>
+        </member>
+        <member name="T:MusicPlayerBackend.Contracts.ISongCover.OnLoad">
+            <summary>
+            Contracts the OnLoad event interface.
+            </summary>
+            <param name="audioMetaData"></param>
+        </member>
+        <member name="E:MusicPlayerBackend.Contracts.ISongCover.onLoad">
+            <summary>
+            Contracts availability of onLoad event for ISongCover.
             </summary>
         </member>
         <member name="M:MusicPlayerBackend.Contracts.ISongCover.LoadCover(MusicPlayerBackend.AudioMetaData)">
             <summary>
             Should pass an image of the audio file cover.
             </summary>
+        </member>
+        <member name="M:MusicPlayerBackend.Contracts.ISongCover.LoadCover(MusicPlayerBackend.ImageContainer)">
+            <summary>
+            Contracts to load the cover image to the ui.
+            </summary>
+            <param name="imageContainer"></param>
         </member>
         <member name="T:MusicPlayerBackend.Contracts.ISettings">
             <summary>
@@ -725,12 +719,13 @@
             Implements <see cref="T:MusicPlayerBackend.Contracts.IMainController"/>.
             </summary>
         </member>
-        <member name="M:MusicPlayerBackend.MainController.#ctor(MusicPlayerBackend.Contracts.IMainUI,MusicPlayerBackend.Contracts.IApplication)">
+        <member name="M:MusicPlayerBackend.MainController.#ctor(MusicPlayerBackend.Contracts.IMainUI,MusicPlayerBackend.Contracts.IApplication,MusicPlayerBackend.Contracts.ISettingsInteractor)">
             <summary>
             Connects the <paramref name="mainUI"/> with the <paramref name="app"/>.
             </summary>
             <param name="mainUI"></param>
             <param name="app"></param>
+            <param name="settingsInteractor"></param>
         </member>
         <member name="T:MusicPlayerBackend.MediaListController">
             <summary>
@@ -1321,6 +1316,45 @@
             <summary>
             Adds every property formatted by name and value seperated by a pipe to a string.
             Uses subsequent <see cref="M:MusicPlayerBackend.AudioDataModel.ToString"/> calls.
+            </summary>
+            <returns><see cref="T:System.String"/></returns>
+        </member>
+        <member name="T:MusicPlayerBackend.ImageContainer">
+            <summary>
+            Holds neccessary data to hold and load an Image.
+            </summary>
+        </member>
+        <member name="P:MusicPlayerBackend.ImageContainer.FilePath">
+            <summary>
+            Contains the Path to either lazy load or debug.
+            </summary>
+        </member>
+        <member name="P:MusicPlayerBackend.ImageContainer.ImageStream">
+            <summary>
+            Contains an Image Byte Stream.
+            </summary>
+        </member>
+        <member name="M:MusicPlayerBackend.ImageContainer.Equals(MusicPlayerBackend.ImageContainer)">
+            <summary>
+            Overrides the Equals Method of <see langword="object"/>.
+            If is <see cref="T:MusicPlayerBackend.AudioMetaData"/>, the call is delegated to <seealso cref="M:MusicPlayerBackend.ImageContainer.Equals(MusicPlayerBackend.ImageContainer)"/>
+            </summary>
+            <param name="other"></param>
+            <returns>
+            <see langword="true"/> if equal.
+            <see langword="false"/> if not equal.
+            </returns>
+        </member>
+        <member name="M:MusicPlayerBackend.ImageContainer.GetHashCode">
+            <summary>
+            Summs hash codes of every field. Calls subsequent <see cref="M:MusicPlayerBackend.ImageContainer.GetHashCode"/> of the fields.
+            </summary>
+            <returns>Summed hash code as <see langword="int"/>.</returns>
+        </member>
+        <member name="M:MusicPlayerBackend.ImageContainer.ToString">
+            <summary>
+            Adds every property formatted by name and value seperated by a pipe to a string.
+            Uses subsequent <see cref="M:MusicPlayerBackend.ImageContainer.ToString"/> calls.
             </summary>
             <returns><see cref="T:System.String"/></returns>
         </member>

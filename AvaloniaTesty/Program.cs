@@ -74,7 +74,7 @@ namespace MusicPlayer
             SongCoverController = new SongCoverController(MainUI.ContentPresenter.SongCover, SongCoverInteractor);
             MediaListController = new MediaListController(MainUI.ContentPresenter.MediaList, MediaListInteractor, SettingsInteractor);
             ContentPresenterController = new ContentPresenterController(MainUI.ContentPresenter, SongCoverController, MediaListController, SettingsController);
-            MainController = new MainController(MainUI, App);
+            MainController = new MainController(MainUI, App, SettingsInteractor);
 
             return (MainUI)MainUI;
         }
