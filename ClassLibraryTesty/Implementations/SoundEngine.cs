@@ -68,6 +68,8 @@ namespace MusicPlayerBackend
         /// </summary>
         public SoundEngine()
         {
+            Logger.Log(LogSeverity.Debug, this, "Initialized!");
+
             for (int i = 1; i < Bass.DeviceCount; ++i)
             {
                 var deviceInfo = Bass.GetDeviceInfo(i);
@@ -87,6 +89,8 @@ namespace MusicPlayerBackend
         ~SoundEngine()
         {
             Bass.Free();
+
+            Logger.Log(LogSeverity.Debug, this, "Destructed!");
         }
 
         /// <summary>
@@ -107,6 +111,8 @@ namespace MusicPlayerBackend
             {
                 Init(Devices[device]);
             }
+
+            Logger.Log(LogSeverity.Informative, this, device + " was set!");
         }
 
         /// <summary>
@@ -115,6 +121,8 @@ namespace MusicPlayerBackend
         /// <returns>List of device names that the <see cref="SoundEngine"/> can find.</returns>
         public List<string> GetAudioDevices()
         {
+            Logger.Log(LogSeverity.Informative, this, Devices.Keys.ToList().ToString() + " returned!");
+
             return Devices.Keys.ToList();
         }
 
@@ -127,13 +135,17 @@ namespace MusicPlayerBackend
         /// </returns>
         public string GetCurrentAudioDevice()
         {
-            return Devices.ToList().Find((keyval) => 
+            var currDevices = Devices.ToList().Find((keyval) =>
             {
-                if (keyval.Value == ActualDevice) 
+                if (keyval.Value == ActualDevice)
                     return true;
                 else
                     return false;
             }).Key;
+
+            Logger.Log(LogSeverity.Informative, this, currDevices + " returned!");
+
+            return currDevices;
         }
 
         /// <summary>
@@ -154,11 +166,15 @@ namespace MusicPlayerBackend
                 _token = _cancellationTokenSource.Token;
                 _timer = new Timer(new TimerCallback(OnUpdate), this, 0, 1000);
                 _taskFactory.StartNew(() => Play(CurrentAudioMetaData), _token);
+
+                Logger.Log(LogSeverity.Success, this, audioMetaData.ToString() + " started!");
             }
             else
             {
                 //throw create stream failed - last error data?
                 var lasterr = Bass.LastError;
+
+                Logger.Log(LogSeverity.Error, this, audioMetaData.ToString() + " failed due to " + lasterr.ToString());
             }
         }
 
@@ -174,6 +190,8 @@ namespace MusicPlayerBackend
             {
                 Bass.ChannelStop(ActualStream);
             }
+
+            Logger.Log(LogSeverity.Success, this, "Stopped!");
         }
 
         /// <summary>
@@ -190,6 +208,10 @@ namespace MusicPlayerBackend
             _cancellationTokenSource = new CancellationTokenSource();
             _token = _cancellationTokenSource.Token;
             _taskFactory.StartNew(() => Play(CurrentAudioMetaData), _token);
+
+            Debug.Print("SoundEngine.ResumePlaying: at " + CurrentProgress.ToString() + " resumed!");
+
+            Logger.Log(LogSeverity.Success, this, CurrentProgress.ToString() + " resumed!");
         }
 
         private void Play(AudioMetaData audioMetaData)
@@ -220,6 +242,8 @@ namespace MusicPlayerBackend
             {
                 //throw
             }
+
+            Logger.Log(LogSeverity.Success, this, "At " + pos + " as " + currTimeInSecond + " seconds!");
         }
 
         private void Init(int dev)

@@ -25,8 +25,8 @@ namespace MusicPlayerBackend
             SettingsInteractor = settingsInteractor;
 
             MediaListInteractor.onMediaFound += (AudioMetaData found) => { InvokeAddSongToList(found); };
-            MediaList.onLoadMediaList += () => { SetMediaList(); };
-            MediaList.onLoadMediaListFromNewPath += (string path) => { SetMediaListCustomMediaPath(path); };
+            MediaList.onLoadMediaList += () => Task.Run(() => { SetMediaList(); });
+            MediaList.onLoadMediaListFromNewPath += (string path) => Task.Run( () => { SetMediaListCustomMediaPath(path); });
             MediaList.onSelection += (AudioMetaData data) => { }; //TODO
         }
 
@@ -38,19 +38,21 @@ namespace MusicPlayerBackend
         /// <summary>
         /// Sets the found media files to the ui.
         /// </summary>
-        public void SetMediaList()
+        public async void SetMediaList()
         {
-            var rootpath = SettingsInteractor.ReadSettings().MediaPath;
-            MediaListInteractor.GetMediaListAsync(rootpath);
+            await Task.Run(() => {
+                var rootpath = SettingsInteractor.ReadSettings().MediaPath;
+                MediaListInteractor.GetMediaListAsync(rootpath);
+            });
         }
 
         /// <summary>
         /// Loads from path media files.
         /// </summary>
         /// <param name="path"></param>
-        public void SetMediaListCustomMediaPath(string path)
+        public async void SetMediaListCustomMediaPath(string path)
         {
-            MediaListInteractor.GetMediaListAsync(path);
+            await Task.Run(() => MediaListInteractor.GetMediaListAsync(path));
         }
     }
 }

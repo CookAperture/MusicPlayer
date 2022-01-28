@@ -20,6 +20,11 @@ namespace MusicPlayerBackend
         public static string SettingsPath { get; } = "config.json";
 
         /// <summary>
+        /// Holds the path to the programms log file.
+        /// </summary>
+        public static string LogPath { get; } = "log.log";
+
+        /// <summary>
         /// Stores the valid audio file endings the application is able to play and find.
         /// </summary>
         public static List<string> ValidAudioFileEndings { get; } = new List<string>() 
@@ -39,7 +44,17 @@ namespace MusicPlayerBackend
         /// <summary>
         /// Represents the light theme value/option.
         /// </summary>
-        LIGHT = 1
+        LIGHT = 1,
+
+        /// <summary>
+        /// Represents the default light theme.
+        /// </summary>
+        DEFAULT = 2,
+
+        /// <summary>
+        /// Represents the default dark theme.
+        /// </summary>
+        DEFAULTDARK = 3,
     }
 
     /// <summary>
@@ -250,7 +265,7 @@ namespace MusicPlayerBackend
         public override string ToString()
         {
             string str = "FilePath: " + FilePath +
-                " | ImageStream: " + ImageStream.ToString();
+                " | ImageStream: " + ImageStream == null ? ImageStream.ToString() : "empty";
 
             return str;
         }
@@ -396,8 +411,9 @@ namespace MusicPlayerBackend
             string str = "AppStyle: " + AppStyle +
                 " | AudioDevice: " + AudioDevice +
                 " | MediaPath: " + MediaPath + " | AudioDevices: ";
-            foreach (var dev in AudioDevices)
-                str += dev + ", ";
+            if(AudioDevices != null)
+                foreach (var dev in AudioDevices)
+                    str += dev + ", ";
 
             return str;
         }

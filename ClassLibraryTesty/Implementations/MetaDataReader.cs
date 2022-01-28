@@ -1,5 +1,6 @@
 ﻿using MusicPlayerBackend.Contracts;
 using System;
+using System.Diagnostics;
 using TagLib;
 
 namespace MusicPlayerBackend
@@ -16,7 +17,7 @@ namespace MusicPlayerBackend
         /// </summary>
         public MetaDataReader()
         {
-
+            Logger.Log(LogSeverity.Debug, this, "Initialized!");
         }
 
         /// <summary>
@@ -35,11 +36,15 @@ namespace MusicPlayerBackend
                 audioMetaData.Title = tfile.Tag.Title;
                 audioMetaData.AudioFilePath = path;
 
+                Logger.Log(LogSeverity.Success, this, audioMetaData.ToString() + " returned!");
+
                 return audioMetaData;
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 //handle bit more + log
+                Logger.Log(LogSeverity.Error, this, e.Message + " while reading metadata!");
+
                 AudioMetaData audioMetaData = new AudioMetaData();
                 return audioMetaData;
             }   
@@ -57,8 +62,11 @@ namespace MusicPlayerBackend
             ImageContainer imageContainer = new ImageContainer()
             {
                 FilePath = path,
-                ImageStream = new MemoryStream(img[0].Data.Data),
+                ImageStream = img.Length > 0 ? new MemoryStream(img[0].Data.Data) : null,
             };
+
+            Logger.Log(LogSeverity.Success, this, imageContainer.ToString() + " returned!");
+
             return imageContainer;
         }
     }

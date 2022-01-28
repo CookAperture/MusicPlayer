@@ -19,7 +19,7 @@ namespace MusicPlayerBackend
         /// </summary>
         public JSONDeserializer()
         {
-
+            Logger.Log(LogSeverity.Debug, this, "Initialized!");
         }
 
         /// <summary>
@@ -31,6 +31,9 @@ namespace MusicPlayerBackend
         public T Deserialize<T>(string deserializable)
         {
             T result = JsonSerializer.Deserialize<T>(deserializable);
+
+            Logger.Log(LogSeverity.Success, this, "String deserialized: " + result.ToString());
+
             return result;
         }
     }

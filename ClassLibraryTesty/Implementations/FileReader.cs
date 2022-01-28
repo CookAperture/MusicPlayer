@@ -16,7 +16,7 @@ namespace MusicPlayerBackend
         /// </summary>
         public FileReader()
         {
-
+            Logger.Log(LogSeverity.Debug, this, "Initialized!");
         }
 
         /// <summary>
@@ -26,6 +26,8 @@ namespace MusicPlayerBackend
         /// <returns>List of <see cref="string"/> representing the files contents.</returns>
         public List<string> ReadAllLines(string path)
         {
+            Logger.Log(LogSeverity.Debug, this, "Called with path " + path);
+
             return File.ReadAllLines(path).ToList();
         }
 
@@ -36,6 +38,8 @@ namespace MusicPlayerBackend
         /// <returns>Single <see cref="string"/> representing the files contents.</returns>
         public string ReadWhole(string path)
         {
+            Logger.Log(LogSeverity.Debug, this, "Called with path " + path);
+
             return File.ReadAllText(path);
         }
     }

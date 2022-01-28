@@ -38,14 +38,14 @@ namespace MusicPlayer
             set => RaiseAndSetIfChanged(ref mediaPath, value);
         }
 
-        ObservableCollection<ThemesModel> themes = new ObservableCollection<ThemesModel>() { new ThemesModel() { Text = "Dark Theme" }, new ThemesModel() { Text = "Light Theme" } };
+        ObservableCollection<ThemesModel> themes = new ObservableCollection<ThemesModel>() { new ThemesModel() { Text = "Dark Theme" }, new ThemesModel() { Text = "Light Theme" }, new ThemesModel() { Text = "Default Light Theme" }, new ThemesModel() { Text = "Default Dark Theme" } };
         public ObservableCollection<ThemesModel> Themes
         {
             get => themes;
             set => RaiseAndSetIfChanged(ref themes, value);
         }
 
-        ObservableCollection<AudioDeviceModel> devices = new ObservableCollection<AudioDeviceModel>() { new AudioDeviceModel() { Text = "Lautsprecher" }, new AudioDeviceModel() { Text = "Lautsprecher" } };
+        ObservableCollection<AudioDeviceModel> devices = new ObservableCollection<AudioDeviceModel>() { new AudioDeviceModel() { Text = "Default" } };
         public ObservableCollection<AudioDeviceModel> Devices
         {
             get => devices;
@@ -67,6 +67,10 @@ namespace MusicPlayer
                 style = APPLICATION_STYLE.DARK;
             else if (Themes[ThemeSelection].Text == "Light Theme")
                 style = APPLICATION_STYLE.LIGHT;
+            else if (Themes[ThemeSelection].Text == "Default Light Theme")
+                style = APPLICATION_STYLE.DEFAULT;
+            else if (Themes[ThemeSelection].Text == "Default Dark Theme")
+                style = APPLICATION_STYLE.DEFAULTDARK;
 
             appSettings.AppStyle = style;
 
@@ -84,6 +88,10 @@ namespace MusicPlayer
                 theme = "Dark Theme";
             else if (appSettings.AppStyle == APPLICATION_STYLE.LIGHT)
                 theme = "Light Theme";
+            else if (appSettings.AppStyle == APPLICATION_STYLE.DEFAULT)
+                theme = "Default Light Theme";
+            else if (appSettings.AppStyle == APPLICATION_STYLE.DEFAULTDARK)
+                theme = "Default Dark Theme";
             ThemeSelection = Themes.IndexOf(new ThemesModel() { Text = theme });
             DeviceSelection = Devices.IndexOf(new AudioDeviceModel() { Text = appSettings.AudioDevice });
         }

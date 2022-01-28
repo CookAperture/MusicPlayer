@@ -1,5 +1,6 @@
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Controls.Notifications;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
@@ -21,17 +22,20 @@ namespace MusicPlayer
         public ISoundControlBar SoundControlBar { get; set; }
         public IContentPresenter ContentPresenter { get; set; }
 
-        bool paneOpen = false;
+        IManagedNotificationManager ManagedNotificationManager { get; set; }
 
+        bool _paneOpen = false;
         public bool PaneState
         {            
-            get => paneOpen;
-            set => RaiseAndSetIfChanged(ref paneOpen, value);
+            get => _paneOpen;
+            set => RaiseAndSetIfChanged(ref _paneOpen, value);
         }
 
         public MainUI()
         {
             AvaloniaXamlLoader.Load(this);
+
+            ManagedNotificationManager = new WindowNotificationManager(this) { Position = NotificationPosition.BottomRight, MaxItems = 5 };
 
             CustomDecoration = (ICustomDecoration)WindowHelperFunctions.FindUserControl<UserControl>(LogicalChildren, "CustomDecoration");
             SoundControlBar = (ISoundControlBar)WindowHelperFunctions.FindUserControl<UserControl>(LogicalChildren, "SoundControlBar");

@@ -17,7 +17,7 @@ namespace MusicPlayerBackend
         /// </summary>
         public JSONSerializer()
         {
-
+            Logger.Log(LogSeverity.Debug, this, "Initialized!");
         }
 
         /// <summary>
@@ -29,6 +29,9 @@ namespace MusicPlayerBackend
         public string Serialize<T>(T serializable)
         {
             string result = JsonSerializer.Serialize(serializable);
+
+            Logger.Log(LogSeverity.Success, this, "Object serialized: " + result);
+
             return result;
         }
     }

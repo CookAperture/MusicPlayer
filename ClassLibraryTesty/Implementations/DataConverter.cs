@@ -15,7 +15,7 @@ namespace MusicPlayerBackend
         /// </summary>
         public DataConverter()
         {
-
+            Logger.Log(LogSeverity.Debug, this, "Initialized!");
         }
     }
 }

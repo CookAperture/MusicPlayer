@@ -12,6 +12,8 @@ namespace MusicPlayer
     public class App : Application, IApplication
     {
 
+        APPLICATION_STYLE _currStyle = APPLICATION_STYLE.DEFAULTDARK;
+
         private static readonly StyleInclude DataGridFluent = new (new Uri("avares://MusicPlayer/Styles"))
         {
             Source = new Uri("avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml")
@@ -26,6 +28,18 @@ namespace MusicPlayer
             DataGridFluent
         };
 
+        public static Styles DefaultDark = new Styles
+        {
+            new StyleInclude(new Uri("avares://MusicPlayer/Styles"))
+            {
+                Source = new Uri("avares://Avalonia.Themes.Default/DefaultTheme.xaml")
+            },
+            new StyleInclude(new Uri("avares://MusicPlayer/Styles"))
+            {
+                Source = new Uri("avares://Avalonia.Themes.Default/Accents/BaseDark.xaml")
+            }
+        };
+
         public static readonly Styles FluentLight = new()
         {
             new StyleInclude(new Uri("avares://MusicPlayer/Styles"))
@@ -35,10 +49,22 @@ namespace MusicPlayer
             DataGridFluent
         };
 
+        public static Styles DefaultLight = new Styles
+        {
+            new StyleInclude(new Uri("avares://MusicPlayer/Styles"))
+            {
+                Source = new Uri("avares://Avalonia.Themes.Default/DefaultTheme.xaml")
+            },
+            new StyleInclude(new Uri("avares://MusicPlayer/Styles"))
+            {
+                Source = new Uri("avares://Avalonia.Themes.Default/Accents/BaseLight.xaml")
+            }
+        };
+
         public override void Initialize()
         {
-            DataContext = this;
             AvaloniaXamlLoader.Load(this);
+            DataContext = this;
         }
 
         public override void OnFrameworkInitializationCompleted()
@@ -55,6 +81,7 @@ namespace MusicPlayer
 
         public void SetStyle(APPLICATION_STYLE appStyle)
         {
+            _currStyle = appStyle;
             switch (appStyle)
             {
                 case APPLICATION_STYLE.DARK:
@@ -71,6 +98,20 @@ namespace MusicPlayer
                         Styles.Insert(0, FluentLight);
                         break;
                     }
+                case APPLICATION_STYLE.DEFAULT:
+                    {
+                        if (Styles.Count > 0)
+                            Styles.RemoveAt(0);
+                        Styles.Insert(0, DefaultLight);
+                        break;
+                    }
+                case APPLICATION_STYLE.DEFAULTDARK:
+                    {
+                        if (Styles.Count > 0)
+                            Styles.RemoveAt(0);
+                        Styles.Insert(0, DefaultDark);
+                        break;
+                    }
             }
         }
 
@@ -85,7 +126,7 @@ namespace MusicPlayer
                 case "FluentLight":
                     return APPLICATION_STYLE.LIGHT;
                 default:
-                    return APPLICATION_STYLE.LIGHT;
+                    return _currStyle;
             }
         }
     }

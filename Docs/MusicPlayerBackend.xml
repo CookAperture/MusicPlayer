@@ -1196,6 +1196,11 @@
             Holds the path to the programms config file.
             </summary>
         </member>
+        <member name="P:MusicPlayerBackend.Globals.LogPath">
+            <summary>
+            Holds the path to the programms log file.
+            </summary>
+        </member>
         <member name="P:MusicPlayerBackend.Globals.ValidAudioFileEndings">
             <summary>
             Stores the valid audio file endings the application is able to play and find.
@@ -1214,6 +1219,16 @@
         <member name="F:MusicPlayerBackend.APPLICATION_STYLE.LIGHT">
             <summary>
             Represents the light theme value/option.
+            </summary>
+        </member>
+        <member name="F:MusicPlayerBackend.APPLICATION_STYLE.DEFAULT">
+            <summary>
+            Represents the default light theme.
+            </summary>
+        </member>
+        <member name="F:MusicPlayerBackend.APPLICATION_STYLE.DEFAULTDARK">
+            <summary>
+            Represents the default dark theme.
             </summary>
         </member>
         <member name="T:MusicPlayerBackend.AudioDeviceModel">
@@ -1452,6 +1467,60 @@
             Uses subsequent <see cref="M:MusicPlayerBackend.AppSettings.ToString"/> calls.
             </summary>
             <returns><see cref="T:System.String"/></returns>
+        </member>
+        <member name="T:MusicPlayerBackend.LogSeverity">
+            <summary>
+            Capsulates the LogLvl.
+            </summary>
+        </member>
+        <member name="F:MusicPlayerBackend.LogSeverity.Debug">
+            <summary>
+            Debugging level.
+            </summary>
+        </member>
+        <member name="F:MusicPlayerBackend.LogSeverity.Informative">
+            <summary>
+            Information level.
+            </summary>
+        </member>
+        <member name="F:MusicPlayerBackend.LogSeverity.Warning">
+            <summary>
+            Warning level.
+            </summary>
+        </member>
+        <member name="F:MusicPlayerBackend.LogSeverity.Error">
+            <summary>
+            Error level.
+            </summary>
+        </member>
+        <member name="F:MusicPlayerBackend.LogSeverity.Success">
+            <summary>
+            Success level.
+            </summary>
+        </member>
+        <member name="T:MusicPlayerBackend.Logger">
+            <summary>
+            Enables controlled logging. Using Trace/Debug with custom Listeners.
+            </summary>
+        </member>
+        <member name="P:MusicPlayerBackend.Logger.LogFile">
+            <summary>
+            Represents the logfile as stream.
+            </summary>
+        </member>
+        <member name="P:MusicPlayerBackend.Logger.LogLevelStr">
+            <summary>
+            Translates the <see cref="T:MusicPlayerBackend.LogSeverity"/> into neat strings.
+            </summary>
+        </member>
+        <member name="M:MusicPlayerBackend.Logger.Log(MusicPlayerBackend.LogSeverity,System.Object,System.String)">
+            <summary>
+            Logs away threaded.
+            </summary>
+            <param name="severity"></param>
+            <param name="caller"></param>
+            <param name="msg"></param>
+            <returns></returns>
         </member>
     </members>
 </doc>

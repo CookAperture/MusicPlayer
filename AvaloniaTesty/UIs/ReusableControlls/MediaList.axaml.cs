@@ -32,7 +32,8 @@ namespace MusicPlayer
             set => RaiseAndSetIfChanged(ref selectedSong, value);
         }
 
-        List<AudioMetaData> AudioMetaDataState { get; set; } = new List<AudioMetaData>();
+        private List<AudioMetaData> AudioMetaDataState { get; set; } = new List<AudioMetaData>();
+        private bool _isLoaded = false;
 
         public MediaList()
         {
@@ -42,14 +43,16 @@ namespace MusicPlayer
             PropertyChanged += (object e, PropertyChangedEventArgs args) => PropertyChangedHandler(e, args);
         }
 
-        public void AddSongToList(AudioMetaData song)
+        public async void AddSongToList(AudioMetaData song)
         {
-            songs.Add(new AudioDataModel() 
-            { 
-                Title = song.Title,
-                Duration = song.Duration.ToString()
+            await Task.Run(() => {
+                songs.Add(new AudioDataModel()
+                {
+                    Title = song.Title,
+                    Duration = song.Duration.ToString()
+                });
+                AudioMetaDataState.Add(song);
             });
-            AudioMetaDataState.Add(song);
         }
 
         public void SetPlaying(AudioMetaData selection)
@@ -81,18 +84,28 @@ namespace MusicPlayer
         protected void RaisePropertyChanged([CallerMemberName] string propertyName = null)
             => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
-        public void LoadMediaList()
+        public async void LoadMediaList()
         {
-            Songs.Clear();
-            AudioMetaDataState.Clear();
-            onLoadMediaList.Invoke();
+            if(!_isLoaded)
+            {
+                await Task.Run(async () =>
+                {
+                    Songs.Clear();
+                    AudioMetaDataState.Clear();
+                    await onLoadMediaList.Invoke();
+                });
+                _isLoaded = true;
+            }
         }
 
-        public void LoadMediaListFromNewMediaPath(string path)
+        public async void LoadMediaListFromNewMediaPath(string path)
         {
-            Songs.Clear();
-            AudioMetaDataState.Clear();
-            onLoadMediaListFromNewPath.Invoke(path);
+            await Task.Run(async () => {
+                Songs.Clear();
+                AudioMetaDataState.Clear();
+                await onLoadMediaListFromNewPath.Invoke(path);
+            });
+            _isLoaded = true;
         }
     }
 }

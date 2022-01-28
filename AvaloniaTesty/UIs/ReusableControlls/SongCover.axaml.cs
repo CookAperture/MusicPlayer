@@ -30,9 +30,12 @@ namespace MusicPlayer
 
         public event ISongCover.OnLoad onLoad;
 
-        public void LoadCover(ImageContainer imageContainer)
+        public async Task LoadCover(ImageContainer imageContainer)
         {
-            Cover = Bitmap.DecodeToWidth(imageContainer.ImageStream, 400);
+            if(imageContainer.ImageStream != null)
+                Cover = await Task.Run( () => Bitmap.DecodeToWidth(imageContainer.ImageStream, 400));
+            else
+                Cover = null;
         }
 
         public void LoadCover(AudioMetaData audioMetaData)

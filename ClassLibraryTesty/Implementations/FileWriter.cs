@@ -16,7 +16,7 @@ namespace MusicPlayerBackend
         /// </summary>
         public FileWriter()
         {
-
+            Logger.Log(LogSeverity.Debug, this, "Initialized!");
         }
 
         /// <summary>
@@ -27,6 +27,8 @@ namespace MusicPlayerBackend
         public void Write(string text, string path)
         {
             File.WriteAllText(path, text);
+
+            Logger.Log(LogSeverity.Success, this, "File written to " + path + " with " + text);
         }
     }
 }

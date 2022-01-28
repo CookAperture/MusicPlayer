@@ -602,7 +602,7 @@ namespace MusicPlayerBackend
             /// Contracts to load the cover image to the ui.
             /// </summary>
             /// <param name="imageContainer"></param>
-            public void LoadCover(ImageContainer imageContainer);
+            public Task LoadCover(ImageContainer imageContainer);
         }
 
         /// <summary>
@@ -695,13 +695,13 @@ namespace MusicPlayerBackend
             /// <summary>
             /// Interfaces to load the medialist.
             /// </summary>
-            public delegate void OnLoadMediaList();
+            public delegate Task OnLoadMediaList();
 
             /// <summary>
             /// Interfaces to fetch from a new path.
             /// </summary>
             /// <param name="path"></param>
-            public delegate void OnLoadMediaListFromNewPath(string path);
+            public delegate Task OnLoadMediaListFromNewPath(string path);
 
             /// <summary>
             /// To be invoked upon selection and selection changes.
