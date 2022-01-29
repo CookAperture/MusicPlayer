@@ -17,11 +17,11 @@ namespace MusicPlayer
         public event ISettings.OnSettingsChanged onSettingsChanged = (AppSettings settings) => {};
         public event ISettings.OnLoadSettings onLoadSettings = () => { };
 
-        int themeSelection = -1;
+        //int themeSelection = -1;
         public int ThemeSelection
         {
-            get => themeSelection;
-            set => RaiseAndSetIfChanged(ref themeSelection, value);
+            get; // => themeSelection;
+            set; // => RaiseAndSetIfChanged(ref themeSelection, value);
         }
 
         int deviceSelection = -1;

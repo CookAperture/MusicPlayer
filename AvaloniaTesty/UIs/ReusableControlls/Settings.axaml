@@ -13,7 +13,7 @@
                 HorizontalAlignment="Stretch" 
                 VerticalAlignment="Center"
                 Margin="5">
-      <ComboBox SelectedIndex="{Binding ThemeSelection}"
+      <ComboBox SelectedIndex="{Binding ThemeSelection, Mode=TwoWay}"
                 Items="{Binding Themes}"
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Center">

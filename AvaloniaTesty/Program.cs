@@ -1,4 +1,5 @@
 using Avalonia;
+using Avalonia.Logging;
 using Avalonia.ReactiveUI;
 using MusicPlayerBackend;
 using MusicPlayerBackend.Contracts;
@@ -23,7 +24,7 @@ namespace MusicPlayer
                     OverlayPopups = true
                 })
                 .With(new AvaloniaNativePlatformOptions() { OverlayPopups = true, UseDeferredRendering = false, UseGpu = true})
-                .LogToTrace();
+                .LogToTrace(LogEventLevel.Debug, LogArea.Property, LogArea.Layout);
 
         public static IApplication App { get; set; }
         public static IMainUI MainUI { get; set; }
