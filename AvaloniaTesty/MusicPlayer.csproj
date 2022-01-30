@@ -5,7 +5,7 @@
     <Nullable>disable</Nullable>
     <StartupObject>MusicPlayer.Program</StartupObject>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
-    <AnalysisLevel>6.0</AnalysisLevel>
+	<AnalysisLevel>6.0</AnalysisLevel>
     <ErrorReport>send</ErrorReport>
     <DebugType>embedded</DebugType>
     <MinimumPlatformVersion>7.0</MinimumPlatformVersion>
@@ -69,13 +69,6 @@
     </AvaloniaResource>
   </ItemGroup>
   <ItemGroup>
-    <AvaloniaResource Remove="Dlgs\**" />
-    <AvaloniaXaml Remove="Dlgs\**" />
-    <Compile Remove="Dlgs\**" />
-    <EmbeddedResource Remove="Dlgs\**" />
-    <None Remove="Dlgs\**" />
-  </ItemGroup>
-  <ItemGroup>
     <None Remove="config.json" />
   </ItemGroup>
   <ItemGroup>
@@ -92,18 +85,13 @@
     <PackageReference Include="Avalonia" Version="0.10.12" />
     <PackageReference Include="Avalonia.Desktop" Version="0.10.12" />
     <PackageReference Include="Avalonia.Diagnostics" Version="0.10.12" />
-    <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.12" />
+    <PackageReference Include="Avalonia.Remote.Protocol" Version="0.10.12" />
     <PackageReference Include="Avalonia.Skia" Version="0.10.12" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ClassLibraryTesty\MusicPlayerLibrary.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="Properties\Resources.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Update="UIs\MainUI.axaml.cs">
       <DependentUpon>MainUI.axaml</DependentUpon>
     </Compile>
@@ -122,12 +110,6 @@
     <Compile Update="UIs\ReusableControlls\CustomDecoration.axaml.cs">
       <DependentUpon>CustomDecoration.axaml</DependentUpon>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Update="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Update="bass.dll">

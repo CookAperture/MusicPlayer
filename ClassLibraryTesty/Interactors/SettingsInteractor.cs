@@ -34,6 +34,8 @@ namespace MusicPlayerBackend
             FileReader = fileReader;
             FileWriter = fileWriter;
             SoundEngine = soundEngine;
+
+            Logger.Log(LogSeverity.Debug, this, "Initialized!");
         }
 
         /// <summary>
@@ -44,6 +46,8 @@ namespace MusicPlayerBackend
         {
             var serialized = JSONSerializer.Serialize(appSettings);
             FileWriter.Write(serialized, Globals.SettingsPath);
+
+            Logger.Log(LogSeverity.Debug, this, "Settings " + appSettings.ToString() + " written!");
         }
 
         /// <summary>
@@ -53,7 +57,11 @@ namespace MusicPlayerBackend
         public AppSettings ReadSettings()
         {
             var read = FileReader.ReadWhole(Globals.SettingsPath);
-            return JSONDeserializer.Deserialize<AppSettings>(read);
+            var settngs = JSONDeserializer.Deserialize<AppSettings>(read);
+
+            Logger.Log(LogSeverity.Debug, this, "Settings " + settngs.ToString() + " read!");
+
+            return settngs;
         }
 
         /// <summary>
@@ -62,6 +70,7 @@ namespace MusicPlayerBackend
         /// <returns>List of audio devices.</returns>
         public List<string> GetAudioDevices()
         {
+            Logger.Log(LogSeverity.Debug, this, "Get audio devices!");
             return SoundEngine.GetAudioDevices();
         }
 
@@ -73,6 +82,8 @@ namespace MusicPlayerBackend
         public void SetAudioDevice(string audiodevice)
         {
             SoundEngine.SetAudioDevice(audiodevice);
+
+            Logger.Log(LogSeverity.Debug, this, "Set " + audiodevice + " as output!");
         }
     }
 }

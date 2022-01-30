@@ -19,13 +19,45 @@ namespace MusicPlayer
             Source = new Uri("avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml")
         };
 
+        private static readonly StyleInclude FluentBase = new(new Uri("avares://MusicPlayer/Styles"))
+        {
+            Source = new Uri("avares://Avalonia.Themes.Fluent/Accents/Base.xaml")
+        };
+
+        private static readonly StyleInclude BaseDark = new(new Uri("avares://MusicPlayer/Styles"))
+        {
+            Source = new Uri("avares://Avalonia.Themes.Fluent/Accents/BaseDark.xaml")
+        };
+
+        private static readonly StyleInclude BaseLight = new(new Uri("avares://MusicPlayer/Styles"))
+        {
+            Source = new Uri("avares://Avalonia.Themes.Fluent/Accents/BaseLight.xaml")
+        };
+
+        private static readonly StyleInclude FluentControlResourcesDark = new(new Uri("avares://MusicPlayer/Styles"))
+        {
+            Source = new Uri("avares://Avalonia.Themes.Fluent/Accents/FluentControlResourcesDark.xaml")
+        };
+
+        private static readonly StyleInclude FluentControlResourcesLight = new(new Uri("avares://MusicPlayer/Styles"))
+        {
+            Source = new Uri("avares://Avalonia.Themes.Fluent/Accents/FluentControlResourcesLight.xaml")
+        };
+
         public static readonly Styles FluentDark = new()
         {
+            FluentBase,
+            BaseDark,
+            FluentControlResourcesDark,
             new StyleInclude(new Uri("avares://MusicPlayer/Styles"))
             {
                 Source = new Uri("avares://Avalonia.Themes.Fluent/FluentDark.xaml")
             },
-            DataGridFluent
+            new StyleInclude(new Uri("avares://MusicPlayer/Styles"))
+            {
+                Source = new Uri("avares://Avalonia.Themes.Fluent/Accents/BaseDark.xaml")
+            },
+            DataGridFluent,
         };
 
         public static Styles DefaultDark = new Styles
@@ -42,9 +74,16 @@ namespace MusicPlayer
 
         public static readonly Styles FluentLight = new()
         {
+            FluentBase,
+            BaseLight,
+            FluentControlResourcesLight,
             new StyleInclude(new Uri("avares://MusicPlayer/Styles"))
             {
                 Source = new Uri("avares://Avalonia.Themes.Fluent/FluentLight.xaml")
+            },
+            new StyleInclude(new Uri("avares://MusicPlayer/Styles"))
+            {
+                Source = new Uri("avares://Avalonia.Themes.Fluent/Accents/BaseLight.xaml")
             },
             DataGridFluent
         };
@@ -73,8 +112,8 @@ namespace MusicPlayer
             //{
             //    MainUI = new MainUI();
             //    desktop.MainUI = MainUI;
+            //    //replace all uis with platform specifics and set it to the lifetime or toggle a flag
             //}
-            //DoSomethingAppSpecific -> e.g. setup lifetime for various platforms eventually
 
             base.OnFrameworkInitializationCompleted();
         }

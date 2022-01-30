@@ -28,16 +28,22 @@ namespace MusicPlayerBackend
 
             SettingsInteractor.SetAudioDevice(SettingsInteractor.ReadSettings().AudioDevice);
 
-            Settings.onSettingsChanged += (AppSettings appSettings) => 
-            {
-                _appSettings = appSettings; 
-                SettingsInteractor.WriteSettings(appSettings); 
-                SettingsInteractor.SetAudioDevice(appSettings.AudioDevice);
-            };
-            Settings.onLoadSettings += () => { LoadSettings(); };
+            Settings.onSettingsChanged += (AppSettings appSettings) => OnSettingsChanged(appSettings);
+            Settings.onLoadSettings += () => LoadSettings();
+
+            Logger.Log(LogSeverity.Debug, this, "Initialized!");
         }
 
-        AppSettings GetLatestSettings()
+        private void OnSettingsChanged(AppSettings appSettings)
+        {
+            _appSettings = appSettings;
+            SettingsInteractor.WriteSettings(appSettings);
+            SettingsInteractor.SetAudioDevice(appSettings.AudioDevice);
+
+            Logger.Log(LogSeverity.Debug, this, "On Settings Changed to " + appSettings.ToString());
+        }
+
+        private AppSettings GetLatestSettings()
         {
             try
             {
@@ -70,6 +76,8 @@ namespace MusicPlayerBackend
         {
             var appSettings = GetLatestSettings();
             Settings.LoadSettings(appSettings);
+
+            Logger.Log(LogSeverity.Debug, this, "Settings loaded " + appSettings.ToString());
         }
     }
 }

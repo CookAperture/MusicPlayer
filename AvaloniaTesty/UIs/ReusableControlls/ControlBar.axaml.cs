@@ -14,9 +14,9 @@ namespace MusicPlayer
         public event ISoundControlBar.OnNext onNext;
         public event ISoundControlBar.OnResume onResume;
 
-        AudioMetaData ActualAudio;
-        bool Playing = false;
-        bool Paused = false;
+        private AudioMetaData ActualAudio;
+        private bool Playing = false;
+        private bool Paused = false;
         ToggleButton PlayPauseButton { get; set; }
 
         public SoundControlBar()
@@ -65,7 +65,7 @@ namespace MusicPlayer
         public void IsFinished()
         {
             Playing = false;
-            //onNext.Invoke();
+            onNext.Invoke();
         }
     }
 }

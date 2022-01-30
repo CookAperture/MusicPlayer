@@ -13,20 +13,22 @@
                 HorizontalAlignment="Stretch" 
                 VerticalAlignment="Center"
                 Margin="5">
-      <ComboBox SelectedIndex="{Binding ThemeSelection}"
-                Items="{Binding Themes}"
+      <ComboBox SelectedIndex="{Binding ThemeSelectionIndex, Mode=TwoWay}"
+                Items="{Binding Themes, Mode=TwoWay}"
                 HorizontalAlignment="Stretch"
-                VerticalAlignment="Center">
+                VerticalAlignment="Center"
+				Name="ThemeCombo">
         <ComboBox.ItemTemplate>
           <DataTemplate>
             <TextBlock Text="{Binding Text}"/>
           </DataTemplate>
         </ComboBox.ItemTemplate>
       </ComboBox>
-      <ComboBox SelectedIndex="{Binding DeviceSelection}" 
-                Items="{Binding Devices}" 
+      <ComboBox SelectedIndex="{Binding DeviceSelectionIndex, Mode=TwoWay}"
+                Items="{Binding Devices, Mode=TwoWay}" 
                 HorizontalAlignment="Stretch"
-                VerticalAlignment="Center">
+                VerticalAlignment="Center"
+				Name="DeviceCombo">
         <ComboBox.ItemTemplate>
           <DataTemplate>
             <TextBlock Text="{Binding Text}"/>
@@ -34,13 +36,14 @@
         </ComboBox.ItemTemplate>
       </ComboBox>
       <TextBox Watermark="Path to Media..." 
-               Text="{Binding MediaPath}"
-               HorizontalAlignment="Stretch"/>
+               Text="{Binding MediaPath, Mode=TwoWay}"
+               HorizontalAlignment="Stretch"
+			   DoubleTapped="OpenFileChooser"/>
       <Button Content="Save"
               HorizontalAlignment="Stretch"
               Command="{Binding SaveSettings}"
               VerticalAlignment="Center"
-              HorizontalContentAlignment="Center"></Button>
+              HorizontalContentAlignment="Center"/>
     </StackPanel>
   </Panel>
   

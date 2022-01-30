@@ -8,45 +8,45 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Linq;
+using System.Reactive.Subjects;
+using System.Reactive;
 
 namespace MusicPlayer
 {
-    public class MediaList : UserControl, IMediaList, INotifyPropertyChanged
+    public class MediaList : NotifyUserControl, IMediaList
     {
-        new public event PropertyChangedEventHandler PropertyChanged;
-
         public event IMediaList.OnSelection onSelection = (AudioMetaData selection) => { };
         public event IMediaList.OnLoadMediaList onLoadMediaList;
         public event IMediaList.OnLoadMediaListFromNewPath onLoadMediaListFromNewPath;
-
-        ObservableCollection<AudioDataModel> songs = new ObservableCollection<AudioDataModel>();
-        public ObservableCollection<AudioDataModel> Songs
+        public ObservableCollection<AudioDataModel> Songs { get; set; } = new ObservableCollection<AudioDataModel>();
+        public AudioDataModel SelectedSong 
         {
-            get => songs;
-            set => RaiseAndSetIfChanged(ref songs, value);
-        }
-        AudioDataModel selectedSong;
-        public AudioDataModel SelectedSong
-        {
-            get => selectedSong;
-            set => RaiseAndSetIfChanged(ref selectedSong, value);
+            get => _SelectedSong;
+            set => RaiseAndSetIfChanged(ref _SelectedSong, value); 
         }
 
         private List<AudioMetaData> AudioMetaDataState { get; set; } = new List<AudioMetaData>();
         private bool _isLoaded = false;
+        private AudioDataModel _SelectedSong;
 
         public MediaList()
         {
-            AvaloniaXamlLoader.Load(this);
             DataContext = this;
+            AvaloniaXamlLoader.Load(this);
+        }
 
-            PropertyChanged += (object e, PropertyChangedEventArgs args) => PropertyChangedHandler(e, args);
+        private void OnSelectionChanged(object s, SelectionChangedEventArgs args)
+        {
+            var list = args.AddedItems.Cast<AudioDataModel>().ToList();
+            var song = AudioMetaDataState.Find(s => s.Title == list.ElementAt(0).Title);
+            if (song != new AudioMetaData())
+                onSelection.Invoke(song);
         }
 
         public async void AddSongToList(AudioMetaData song)
         {
             await Task.Run(() => {
-                songs.Add(new AudioDataModel()
+                Songs.Add(new AudioDataModel()
                 {
                     Title = song.Title,
                     Duration = song.Duration.ToString()
@@ -57,32 +57,8 @@ namespace MusicPlayer
 
         public void SetPlaying(AudioMetaData selection)
         {
-            SelectedSong = Songs[Songs.IndexOf(new AudioDataModel() { Title = selection.Title, Duration = selection.Duration.ToString() })];
+            SelectedSong = Songs.ToList().Find((AudioDataModel elem) => elem.Title == selection.Title && elem.Duration == selection.Duration.ToString());
         }
-
-        private void PropertyChangedHandler(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == "SelectedSong")
-            {
-                var song = AudioMetaDataState.Find( s => s.Title == SelectedSong.Title);
-                if(song != new AudioMetaData())
-                    onSelection.Invoke(song);
-            }
-        }
-
-        protected bool RaiseAndSetIfChanged<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
-        {
-            if (!EqualityComparer<T>.Default.Equals(field, value))
-            {
-                field = value;
-                RaisePropertyChanged(propertyName);
-                return true;
-            }
-            return false;
-        }
-
-        protected void RaisePropertyChanged([CallerMemberName] string propertyName = null)
-            => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
         public async void LoadMediaList()
         {

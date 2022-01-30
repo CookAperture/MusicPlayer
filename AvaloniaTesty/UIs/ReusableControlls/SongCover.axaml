@@ -7,19 +7,9 @@
              Name="SongCover">
 
   <Panel Name="ImageContainer">
-	  <Image Margin="5"
-		     Stretch="Uniform" 
-			 Source="{Binding Cover}">
+	  <Image Stretch="Uniform" 
+			 Source="{Binding Cover^, Mode=TwoWay}">
 	  </Image>
-	  <Panel Height="200" 
-			 IsVisible="{Binding Cover, Converter={x:Static ObjectConverters.IsNull}}">
-		  <PathIcon Margin="5"
-					Width ="50"
-					Height ="50"
-					Data="{StaticResource img_icon}"
-					Name="MusicImage">
-		  </PathIcon>		  
-	  </Panel>
   </Panel>
 
 </UserControl>

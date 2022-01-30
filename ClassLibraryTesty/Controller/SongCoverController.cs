@@ -22,6 +22,8 @@ namespace MusicPlayerBackend
             SongCoverInteractor = songCoverInteractor;
 
             SongCover.onLoad += (AudioMetaData data) => SetCover(data);
+
+            Logger.Log(LogSeverity.Debug, this, "Initialized!");
         }
 
         /// <summary>
@@ -31,6 +33,8 @@ namespace MusicPlayerBackend
         {
             ImageContainer imageContainer = SongCoverInteractor.GetCoverFromAudio(data.AudioFilePath);
             SongCover.LoadCover(imageContainer);
+
+            Logger.Log(LogSeverity.Debug, this, "Set Cover from " + data.AudioFilePath);
         }
     }
 }

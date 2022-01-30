@@ -1503,11 +1503,6 @@
             Enables controlled logging. Using Trace/Debug with custom Listeners.
             </summary>
         </member>
-        <member name="P:MusicPlayerBackend.Logger.LogFile">
-            <summary>
-            Represents the logfile as stream.
-            </summary>
-        </member>
         <member name="P:MusicPlayerBackend.Logger.LogLevelStr">
             <summary>
             Translates the <see cref="T:MusicPlayerBackend.LogSeverity"/> into neat strings.

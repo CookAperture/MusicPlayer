@@ -27,6 +27,8 @@ namespace MusicPlayerBackend
             SongCoverController = songCoverController;
             MediaListController = mediaListController;
             SettingsController = settingsController;
+
+            Logger.Log(LogSeverity.Debug, this, "Initialized!");
         }
 
     }

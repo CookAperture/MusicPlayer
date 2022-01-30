@@ -1,5 +1,5 @@
 using Avalonia;
-using Avalonia.ReactiveUI;
+using Avalonia.Dialogs;
 using MusicPlayerBackend;
 using MusicPlayerBackend.Contracts;
 using System.Runtime;
@@ -12,7 +12,7 @@ namespace MusicPlayer
             AppBuilder.Configure<App>()
                 .UsePlatformDetect()
                 .UseSkia()
-                .UseReactiveUI()
+                .UseManagedSystemDialogs()
                 .With(new X11PlatformOptions() { UseDeferredRendering = false })
                 .With(new MacOSPlatformOptions() { ShowInDock = true })
                 .With(new Win32PlatformOptions() { 
@@ -54,6 +54,8 @@ namespace MusicPlayer
 
         private static MainUI MusicPlayerAppInit()
         {
+            System.Reactive.PlatformServices.EnlightenmentProvider.EnsureLoaded();
+
             //init controller here
             MainUI = new MainUI();
             DataConverter = new DataConverter();

@@ -5,6 +5,7 @@ using MusicPlayerBackend.Contracts;
 
 namespace MusicPlayerBackend
 {
+
     /// <summary>
     /// Holds the global variables.
     /// </summary>

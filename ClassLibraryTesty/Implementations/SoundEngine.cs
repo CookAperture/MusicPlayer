@@ -165,7 +165,7 @@ namespace MusicPlayerBackend
                 _cancellationTokenSource = new CancellationTokenSource();
                 _token = _cancellationTokenSource.Token;
                 _timer = new Timer(new TimerCallback(OnUpdate), this, 0, 1000);
-                _taskFactory.StartNew(() => Play(CurrentAudioMetaData), _token);
+                _ = _taskFactory.StartNew(() => Play(CurrentAudioMetaData), _token);
 
                 Logger.Log(LogSeverity.Success, this, audioMetaData.ToString() + " started!");
             }
@@ -208,8 +208,6 @@ namespace MusicPlayerBackend
             _cancellationTokenSource = new CancellationTokenSource();
             _token = _cancellationTokenSource.Token;
             _taskFactory.StartNew(() => Play(CurrentAudioMetaData), _token);
-
-            Debug.Print("SoundEngine.ResumePlaying: at " + CurrentProgress.ToString() + " resumed!");
 
             Logger.Log(LogSeverity.Success, this, CurrentProgress.ToString() + " resumed!");
         }

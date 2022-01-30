@@ -21,12 +21,45 @@ namespace MusicPlayerBackend
             SoundControlBar = soundControlBar;
             AudioFileInteractor = audioFileInteractor;
 
-            SoundControlBar.onPlay += (AudioMetaData data) => AudioFileInteractor.StartPlaying(data);
-            SoundControlBar.onPause += () => AudioFileInteractor.StopPlaying();
-            SoundControlBar.onResume += () => AudioFileInteractor.ResumePlaying();
+            SoundControlBar.onPlay += (AudioMetaData data) => OnPlay(data);
+            SoundControlBar.onPause += () => OnPause();
+            SoundControlBar.onResume += () => OnResume();
 
-            AudioFileInteractor.onUpdatePlayProgress += (TimeSpan curr) => { /*TODO*/ };
-            AudioFileInteractor.onAudioFileFinished += () => { };
+            AudioFileInteractor.onUpdatePlayProgress += (TimeSpan curr) => OnUpdatePlayProgress(curr);
+            AudioFileInteractor.onAudioFileFinished += () => OnAudioFileFinished();
+
+            Logger.Log(LogSeverity.Debug, this, "Initialized!");
+        }
+
+        private void OnPlay(AudioMetaData data)
+        {
+            Logger.Log(LogSeverity.Debug, this, "On Play " + data.ToString());
+
+            AudioFileInteractor.StartPlaying(data);
+        }
+
+        private void OnPause()
+        {
+            Logger.Log(LogSeverity.Debug, this, "On Pause!");
+
+            AudioFileInteractor.StopPlaying();
+        }
+
+        private void OnResume()
+        {
+            Logger.Log(LogSeverity.Debug, this, "On Resume!");
+
+            AudioFileInteractor.ResumePlaying();
+        }
+
+        private void OnUpdatePlayProgress(TimeSpan curr)
+        {
+            Logger.Log(LogSeverity.Debug, this, "On Update Play Progress to " + curr.ToString());
+        }
+
+        private void OnAudioFileFinished()
+        {
+            Logger.Log(LogSeverity.Debug, this, "On Audio File Finished!");
         }
 
         /// <summary>

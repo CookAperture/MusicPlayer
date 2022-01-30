@@ -5,9 +5,11 @@
              mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="400"
              x:Class="MusicPlayer.MediaList"
              Name="MediaList">
-      <ListBox Items="{Binding Songs}"
+      <ListBox Items="{Binding Songs, Mode=TwoWay}"
                SelectionMode="Single"
-               SelectedItem="{Binding SelectedSong}">
+               SelectedItem="{Binding SelectedSong^, Mode=TwoWay}"
+			   Name="MediaListBox"
+			   SelectionChanged="OnSelectionChanged">
         <ListBox.ItemTemplate>
           <DataTemplate>
             <StackPanel Orientation="Horizontal" Spacing="5">
