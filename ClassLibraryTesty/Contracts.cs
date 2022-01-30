@@ -6,6 +6,7 @@ namespace MusicPlayerBackend
     namespace Contracts
     {
 
+        #region Globals
         /// <summary>
         /// Contracts the neccesary functions to communicate with it's subcomponents and vice versa.
         /// </summary>
@@ -24,9 +25,17 @@ namespace MusicPlayerBackend
             public APPLICATION_STYLE GetCurrentApplicationStyle();
         }
 
-        //Logic Contracts
-        #region LogicContracts   
-        
+        public interface INotifyError
+        {
+            public delegate void Error(NotificationModel notificationModel);
+
+            public event Error onError;
+        }
+        #endregion
+
+        #region LogicContracts
+
+        #region Controller
         /// <summary>
         /// Contracts the neccessary functions to connect and handle all sub-controller with the ui.
         /// </summary>
@@ -98,7 +107,9 @@ namespace MusicPlayerBackend
             /// <param name="path"></param>
             public void SetMediaListCustomMediaPath(string path);
         }
+        #endregion
 
+        #region Interactor
         /// <summary>
         /// Contracts to connect <see cref="ISoundEngine"/> with <see cref="IMetaDataReader"/> and with <see cref="IDataConverter"/>.
         /// </summary>
@@ -228,6 +239,21 @@ namespace MusicPlayerBackend
             /// <returns></returns>
             public ImageContainer GetCoverFromAudio(string path);
         }
+
+        public interface IExceptionInteractor
+        {
+            public delegate void OnDialog(DialogModel dialogModel);
+            public delegate void OnFatal();
+
+            public event OnDialog onDialog;
+            public event OnFatal onFatal;
+
+            public void HandleException(Exception exception);
+        }
+
+        #endregion
+
+        #region Logic
 
         /// <summary>
         /// Contracts the neccessary functions to handle a file system.
@@ -420,6 +446,19 @@ namespace MusicPlayerBackend
             /// <returns>List of <see cref="string"/> each representing one single line of the file.</returns>
             public List<string> ReadAllLines(string path);
         }
+
+        public interface IExceptionHandler
+        {
+            public delegate void OnDialog(DialogModel dialogModel);
+            public delegate void OnFatal();
+
+            public event OnDialog onDialog;
+            public event OnFatal onFatal;
+
+            public void HandleException(Exception exception);
+        }
+        #endregion
+
         #endregion
 
         #region UIContracts
