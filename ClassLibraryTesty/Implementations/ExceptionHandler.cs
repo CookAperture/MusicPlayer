@@ -1,5 +1,6 @@
 ﻿using MusicPlayerBackend.Contracts;
 using MusicPlayerBackend.Exceptions;
+using System.Diagnostics;
 
 namespace MusicPlayerBackend
 {
@@ -25,6 +26,8 @@ namespace MusicPlayerBackend
 
         public void HandleException(Exception exception)
         {
+            Debug.Assert(exception != null);
+
             switch (exception)
             {
                 case ConfigFileNotFoundException ex:
