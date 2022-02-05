@@ -1,6 +1,7 @@
 ﻿using MusicPlayerBackend.Contracts;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace MusicPlayerBackend
 {
@@ -16,7 +17,6 @@ namespace MusicPlayerBackend
         /// </summary>
         public FileWriter()
         {
-            Logger.Log(LogSeverity.Debug, this, "Initialized!");
         }
 
         /// <summary>
@@ -26,9 +26,10 @@ namespace MusicPlayerBackend
         /// <param name="path"></param>
         public void Write(string text, string path)
         {
-            File.WriteAllText(path, text);
+            Debug.Assert(text != null);
+            Debug.Assert(path != null);
 
-            Logger.Log(LogSeverity.Success, this, "File written to " + path + " with " + text);
+            File.WriteAllText(path, text);
         }
     }
 }
