@@ -395,7 +395,7 @@ namespace MusicPlayerBackend
             /// <typeparam name="T"></typeparam>
             /// <param name="serializable"></param>
             /// <returns>Should be an representation of the object as <see cref="string"/>.</returns>
-            public string Serialize<T>(T serializable); 
+            public string Serialize<T>(T serializable) where T : struct; 
         }
 
         /// <summary>
@@ -410,7 +410,7 @@ namespace MusicPlayerBackend
             /// <typeparam name="T"></typeparam>
             /// <param name="deserializable"></param>
             /// <returns>Should be an representation of the string as <typeparamref name="T"/>.</returns>
-            public T Deserialize<T>(string deserializable);
+            public T Deserialize<T>(string deserializable) where T : struct;
         }
 
         /// <summary>
