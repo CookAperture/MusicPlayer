@@ -65,28 +65,28 @@ namespace MusicPlayerBackend
         /// <returns></returns>
         public static void Log(LogSeverity severity, object caller, string msg)
         {
-            //if(!_isSetup)
-            //{
-            //    Trace.AutoFlush = true;
-            //    Debug.AutoFlush = true;
-            //}
-            //
-            ////extract data
-            //var loglvl = LogLevelStr[severity];
-            //var callerName = caller.GetType().FullName;
-            //string msgstr = loglvl + callerName + ": " + msg;
-            //
-            ////tracelog
-            //if(severity == LogSeverity.Informative || severity == LogSeverity.Success)
-            //    Trace.TraceInformation(msgstr);
-            //else if (severity == LogSeverity.Warning)
-            //    Trace.TraceWarning(msgstr);
-            //else if (severity == LogSeverity.Error)
-            //    Trace.TraceError(msgstr);
-            //
-            ////debuglog
-            //else if(severity == LogSeverity.Debug)
-            //    Debug.Print(msgstr);
+            if(!_isSetup)
+            {
+                Trace.AutoFlush = true;
+                Debug.AutoFlush = true;
+            }
+            
+            //extract data
+            var loglvl = LogLevelStr[severity];
+            var callerName = caller.GetType().FullName;
+            string msgstr = loglvl + callerName + ": " + msg;
+            
+            //tracelog
+            if(severity == LogSeverity.Informative || severity == LogSeverity.Success)
+                Trace.TraceInformation(msgstr);
+            else if (severity == LogSeverity.Warning)
+                Trace.TraceWarning(msgstr);
+            else if (severity == LogSeverity.Error)
+                Trace.TraceError(msgstr);
+            
+            //debuglog
+            else if(severity == LogSeverity.Debug)
+                Debug.Print(msgstr);
 
         }
     }

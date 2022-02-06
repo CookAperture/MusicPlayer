@@ -68,8 +68,6 @@ namespace MusicPlayerBackend
         /// </summary>
         public SoundEngine()
         {
-            Logger.Log(LogSeverity.Debug, this, "Initialized!");
-
             for (int i = 1; i < Bass.DeviceCount; ++i)
             {
                 var deviceInfo = Bass.GetDeviceInfo(i);
@@ -89,8 +87,6 @@ namespace MusicPlayerBackend
         ~SoundEngine()
         {
             Bass.Free();
-
-            Logger.Log(LogSeverity.Debug, this, "Destructed!");
         }
 
         /// <summary>
@@ -100,6 +96,9 @@ namespace MusicPlayerBackend
         /// <param name="device"></param>
         public void SetAudioDevice(string device)
         {
+            Debug.Assert(device != null);
+            Debug.Assert(Devices.ContainsKey(device));
+
             if(_playing)
             {
                 StopPlaying();
@@ -111,8 +110,6 @@ namespace MusicPlayerBackend
             {
                 Init(Devices[device]);
             }
-
-            Logger.Log(LogSeverity.Informative, this, device + " was set!");
         }
 
         /// <summary>
@@ -121,7 +118,8 @@ namespace MusicPlayerBackend
         /// <returns>List of device names that the <see cref="SoundEngine"/> can find.</returns>
         public List<string> GetAudioDevices()
         {
-            Logger.Log(LogSeverity.Informative, this, Devices.Keys.ToList().ToString() + " returned!");
+            Debug.Assert(Devices != null);
+            Debug.Assert(Devices.Count != 0);
 
             return Devices.Keys.ToList();
         }
@@ -135,6 +133,9 @@ namespace MusicPlayerBackend
         /// </returns>
         public string GetCurrentAudioDevice()
         {
+            Debug.Assert(Devices != null);
+            Debug.Assert(Devices.Count != 0);
+
             var currDevices = Devices.ToList().Find((keyval) =>
             {
                 if (keyval.Value == ActualDevice)
@@ -143,7 +144,8 @@ namespace MusicPlayerBackend
                     return false;
             }).Key;
 
-            Logger.Log(LogSeverity.Informative, this, currDevices + " returned!");
+            Debug.Assert(currDevices != null);
+            Debug.Assert(currDevices != "");
 
             return currDevices;
         }
@@ -156,6 +158,7 @@ namespace MusicPlayerBackend
         public void StartPlaying(AudioMetaData audioMetaData)
         {
             Debug.Assert(audioMetaData != new AudioMetaData() { });
+            Debug.Assert(_taskFactory != null);
 
             CurrentAudioMetaData = audioMetaData;
             ActualStream = Bass.CreateStream(CurrentAudioMetaData.AudioFilePath);
@@ -166,15 +169,11 @@ namespace MusicPlayerBackend
                 _token = _cancellationTokenSource.Token;
                 _timer = new Timer(new TimerCallback(OnUpdate), this, 0, 1000);
                 _ = _taskFactory.StartNew(() => Play(CurrentAudioMetaData), _token);
-
-                Logger.Log(LogSeverity.Success, this, audioMetaData.ToString() + " started!");
             }
             else
             {
                 //throw create stream failed - last error data?
                 var lasterr = Bass.LastError;
-
-                Logger.Log(LogSeverity.Error, this, audioMetaData.ToString() + " failed due to " + lasterr.ToString());
             }
         }
 
@@ -183,6 +182,10 @@ namespace MusicPlayerBackend
         /// </summary>
         public void StopPlaying()
         {
+            Debug.Assert(_cancellationTokenSource != null);
+            Debug.Assert(!_cancellationTokenSource.IsCancellationRequested);
+            Debug.Assert(_timer != null);
+
             _cancellationTokenSource.Cancel();
             _timer.Dispose();
             _cancellationTokenSource.Dispose();
@@ -190,8 +193,6 @@ namespace MusicPlayerBackend
             {
                 Bass.ChannelStop(ActualStream);
             }
-
-            Logger.Log(LogSeverity.Success, this, "Stopped!");
         }
 
         /// <summary>
@@ -201,15 +202,18 @@ namespace MusicPlayerBackend
         public void ResumePlaying()
         {
             Debug.Assert(CurrentAudioMetaData != new AudioMetaData());
-            Debug.Assert(CurrentMaxPlayDuration != 0);
+            Debug.Assert(CurrentMaxPlayDuration > 0);
             Debug.Assert(CurrentProgress >= 0);
+            Debug.Assert(_cancellationTokenSource != null);
+            Debug.Assert(_timer != null);
+
+            _cancellationTokenSource.Cancel();
+            _timer.Dispose();
 
             _timer = new Timer(new TimerCallback(OnUpdate), this, 0, 1000);
             _cancellationTokenSource = new CancellationTokenSource();
             _token = _cancellationTokenSource.Token;
             _taskFactory.StartNew(() => Play(CurrentAudioMetaData), _token);
-
-            Logger.Log(LogSeverity.Success, this, CurrentProgress.ToString() + " resumed!");
         }
 
         private void Play(AudioMetaData audioMetaData)
@@ -224,6 +228,11 @@ namespace MusicPlayerBackend
 
         private void OnUpdate(object state)
         {
+            Debug.Assert(ActualStream != 0);
+            Debug.Assert(onUpdatePlayProgress != null);
+            Debug.Assert(onAudioFileFinished != null);
+            Debug.Assert(CurrentMaxPlayDuration > 0);
+
             var pos = Bass.ChannelGetPosition(ActualStream);
             var currTimeInSecond = Bass.ChannelBytes2Seconds(ActualStream, pos);
             if (currTimeInSecond >= 0)
@@ -240,8 +249,6 @@ namespace MusicPlayerBackend
             {
                 //throw
             }
-
-            Logger.Log(LogSeverity.Success, this, "At " + pos + " as " + currTimeInSecond + " seconds!");
         }
 
         private void Init(int dev)
