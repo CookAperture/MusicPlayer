@@ -6,7 +6,7 @@ namespace MusicPlayerBackend
     /// <summary>
     /// Implements <see cref="ISoundControlBarController"/>.
     /// </summary>
-    public class SoundControlBarController : ISoundControlBarController
+    public class SoundControlBarController : ISoundControlBarController, INotifyError
     {
         ISoundControlBar SoundControlBar { get; set; }
         IAudioFileInteractor AudioFileInteractor { get; set; }
@@ -30,6 +30,8 @@ namespace MusicPlayerBackend
 
             Logger.Log(LogSeverity.Debug, this, "Initialized!");
         }
+
+        public event INotifyError.Error onError;
 
         private void OnPlay(AudioMetaData data)
         {
