@@ -37,9 +37,9 @@ namespace MusicPlayer
 
             ManagedNotificationManager = new WindowNotificationManager(this) { Position = NotificationPosition.BottomRight, MaxItems = 5 };
 
-            CustomDecoration = (ICustomDecoration)WindowHelperFunctions.FindUserControl<UserControl>(LogicalChildren, "CustomDecoration");
-            SoundControlBar = (ISoundControlBar)WindowHelperFunctions.FindUserControl<UserControl>(LogicalChildren, "SoundControlBar");
-            ContentPresenter = (IContentPresenter)WindowHelperFunctions.FindUserControl<UserControl>(LogicalChildren, "ContentPage");
+            CustomDecoration = (ICustomDecoration)this.FindControl<UserControl>("CustomDecoration");
+            SoundControlBar = (ISoundControlBar)this.FindControl<UserControl>("SoundControlBar");
+            ContentPresenter = (IContentPresenter)this.FindControl<UserControl>("ContentPage");
 
             CustomDecoration.onDrag += (i, e) => { PlatformImpl?.BeginMoveDrag((PointerPressedEventArgs)e);};
             CustomDecoration.onMinimize += delegate { WindowState = WindowState.Minimized; };
