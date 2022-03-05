@@ -27,41 +27,42 @@ namespace MusicPlayerBackend
 
             AudioFileInteractor.onUpdatePlayProgress += (TimeSpan curr) => OnUpdatePlayProgress(curr);
             AudioFileInteractor.onAudioFileFinished += () => OnAudioFileFinished();
-
-            Logger.Log(LogSeverity.Debug, this, "Initialized!");
         }
 
         public event INotifyError.Error onError;
 
         private void OnPlay(AudioMetaData data)
         {
-            Logger.Log(LogSeverity.Debug, this, "On Play " + data.ToString());
-
-            AudioFileInteractor.StartPlaying(data);
+            try
+            {
+                AudioFileInteractor.StartPlaying(data);
+            }
+            catch (Exception ex)
+            {
+                onError.Invoke(new NotificationModel() { Title = "Unknown Error",
+                    Message = ex.Source + "\n" + ex.Message,
+                Level = NotificationModel.NotificationLevel.Error});
+                throw;
+            }
+            // todo
         }
 
         private void OnPause()
         {
-            Logger.Log(LogSeverity.Debug, this, "On Pause!");
-
             AudioFileInteractor.StopPlaying();
         }
 
         private void OnResume()
         {
-            Logger.Log(LogSeverity.Debug, this, "On Resume!");
-
             AudioFileInteractor.ResumePlaying();
         }
 
         private void OnUpdatePlayProgress(TimeSpan curr)
         {
-            Logger.Log(LogSeverity.Debug, this, "On Update Play Progress to " + curr.ToString());
         }
 
         private void OnAudioFileFinished()
         {
-            Logger.Log(LogSeverity.Debug, this, "On Audio File Finished!");
         }
 
         /// <summary>
