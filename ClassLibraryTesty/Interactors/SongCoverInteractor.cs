@@ -17,8 +17,6 @@ namespace MusicPlayerBackend
         /// <param name="metaDataReader"></param>
         public SongCoverInteractor(IMetaDataReader metaDataReader)
         {
-            Logger.Log(LogSeverity.Debug, this, "Initialized!");
-
             MetaDataReader = metaDataReader;
         }
 
@@ -29,7 +27,6 @@ namespace MusicPlayerBackend
         /// <returns></returns>
         public ImageContainer GetCoverFromAudio(string path)
         {
-            Logger.Log(LogSeverity.Informative, this, "Get Cover from " + path);
             return MetaDataReader.ReadImageFromAudioFile(path);
         }
     }

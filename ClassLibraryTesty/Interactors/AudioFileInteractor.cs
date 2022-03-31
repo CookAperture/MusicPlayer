@@ -37,8 +37,6 @@ namespace MusicPlayerBackend
 
             SoundEngine.onAudioFileFinished += () => { onAudioFileFinished.Invoke(); };
             SoundEngine.onUpdatePlayProgress += (TimeSpan current) => { onUpdatePlayProgress.Invoke(current); };
-
-            Logger.Log(LogSeverity.Debug, this, "Initialized!");
         }
 
         /// <summary>
@@ -47,8 +45,6 @@ namespace MusicPlayerBackend
         public void StartPlaying(AudioMetaData data)
         {
             SoundEngine.StartPlaying(data);
-
-            Logger.Log(LogSeverity.Debug, this, "Start Playing " + data.ToString());
         }
 
         /// <summary>
@@ -75,7 +71,6 @@ namespace MusicPlayerBackend
         public void StopPlaying()
         {
             SoundEngine.StopPlaying();
-            Logger.Log(LogSeverity.Debug, this, "Stop playing!");
         }
 
         /// <summary>
@@ -84,8 +79,6 @@ namespace MusicPlayerBackend
         public void ResumePlaying()
         {
             SoundEngine.ResumePlaying();
-
-            Logger.Log(LogSeverity.Debug, this, "Resume playing!");
         }
     }
 }

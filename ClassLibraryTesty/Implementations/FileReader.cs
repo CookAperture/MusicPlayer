@@ -38,7 +38,7 @@ namespace MusicPlayerBackend
         /// <returns>Single <see cref="string"/> representing the files contents.</returns>
         public string ReadWhole(string path)
         {
-            Debug.Assert(string.IsNullOrEmpty(path));
+            Debug.Assert(!string.IsNullOrEmpty(path));
 
             return File.ReadAllText(path);
         }

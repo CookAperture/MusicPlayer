@@ -17,8 +17,6 @@ namespace MusicPlayerBackend
         public CustomDecorationController(ICustomDecoration customDecoration)
         {
             CustomDecoration = customDecoration;
-
-            Logger.Log(LogSeverity.Debug, this, "Initialized!");
         }
 
     }

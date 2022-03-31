@@ -28,20 +28,15 @@ namespace MusicPlayerBackend
             MediaList.onLoadMediaList += () => Task.Run(() => SetMediaList());
             MediaList.onLoadMediaListFromNewPath += (string path) => Task.Run( () => { SetMediaListCustomMediaPath(path); });
             MediaList.onSelection += (AudioMetaData data) => OnSelection(data); 
-
-            Logger.Log(LogSeverity.Debug, this, "Initialized!");
         }
 
         private void OnSelection(AudioMetaData data)
         {
-            Logger.Log(LogSeverity.Debug, this, "Selected " + data.ToString());
         }
 
         void InvokeAddSongToList(AudioMetaData found)
         {
             MediaList.AddSongToList(found);
-
-            Logger.Log(LogSeverity.Debug, this, "Invoke AddSongToList!");
         }
 
         /// <summary>
@@ -53,7 +48,6 @@ namespace MusicPlayerBackend
                 var rootpath = SettingsInteractor.ReadSettings().MediaPath;
                 MediaListInteractor.GetMediaListAsync(rootpath);
             });
-            Logger.Log(LogSeverity.Debug, this, "SetMediaList!");
         }
 
         /// <summary>
@@ -63,8 +57,6 @@ namespace MusicPlayerBackend
         public async void SetMediaListCustomMediaPath(string path)
         {
             await Task.Run(() => MediaListInteractor.GetMediaListAsync(path));
-
-            Logger.Log(LogSeverity.Debug, this, "SetMediaListCustomMediaPath!");
         }
     }
 }

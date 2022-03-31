@@ -29,8 +29,6 @@ namespace MusicPlayerBackend
             MetaDataReader = metaDataReader;
 
             FileSystemHandler.onMediaFound += (string path) => { onMediaFound.Invoke(MetaDataReader.ReadMetaDataFromFile(path)); };
-
-            Logger.Log(LogSeverity.Debug, this, "Initialized!");
         }
 
         /// <summary>
@@ -41,8 +39,6 @@ namespace MusicPlayerBackend
         public void GetMediaListAsync(string rootPath)
         {
             FileSystemHandler.FindAudioFilesFromRootPathAsync(rootPath, Globals.ValidAudioFileEndings);
-
-            Logger.Log(LogSeverity.Debug, this, "Get media list async from " + rootPath);
         }
     }
 }

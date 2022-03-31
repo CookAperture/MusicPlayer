@@ -58,29 +58,6 @@ namespace MusicPlayerBackend
         DEFAULTDARK = 3,
     }
 
-    public class DialogModel
-    {
-        public class Option
-        {
-            public delegate void OptionAction();
-            public Option(string text, OptionAction optionAction)
-            {
-                Text = text;
-                Action = optionAction;
-            }
-
-            public string Text { get; }
-            public OptionAction Action { get; }
-
-        }
-        public DialogModel()
-        { }
-
-        public string Title { get; set; }
-        public string Message { get; set; }
-        public IEnumerable<Option> Options { get; set; }
-    }
-
     public record struct NotificationModel : IEquatable<NotificationModel>
     {
         public enum NotificationLevel

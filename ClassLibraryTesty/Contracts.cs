@@ -240,17 +240,6 @@ namespace MusicPlayerBackend
             public ImageContainer GetCoverFromAudio(string path);
         }
 
-        public interface IExceptionInteractor
-        {
-            public delegate void OnDialog(DialogModel dialogModel);
-            public delegate void OnFatal();
-
-            public event OnDialog onDialog;
-            public event OnFatal onFatal;
-
-            public void HandleException(Exception exception);
-        }
-
         #endregion
 
         #region Logic
@@ -445,17 +434,6 @@ namespace MusicPlayerBackend
             /// <param name="path"></param>
             /// <returns>List of <see cref="string"/> each representing one single line of the file.</returns>
             public List<string> ReadAllLines(string path);
-        }
-
-        public interface IExceptionHandler
-        {
-            public delegate void OnDialog(DialogModel dialogModel);
-            public delegate void OnFatal();
-
-            public event OnDialog onDialog;
-            public event OnFatal onFatal;
-
-            public void HandleException(Exception exception);
         }
         #endregion
 

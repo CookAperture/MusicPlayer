@@ -27,15 +27,11 @@ namespace MusicPlayerBackend
             Application.SetStyle(SettingsInteractor.ReadSettings().AppStyle);
 
             MainUI.onThemeChange += (APPLICATION_STYLE aps) => OnThemeChange(aps);
-
-            Logger.Log(LogSeverity.Debug, this, "Initialized!");
         }
 
         private void OnThemeChange(APPLICATION_STYLE aps)
         {
             Application.SetStyle(aps);
-
-            Logger.Log(LogSeverity.Debug, this, "Theme changed to " + aps.ToString());
         }
     }
 }

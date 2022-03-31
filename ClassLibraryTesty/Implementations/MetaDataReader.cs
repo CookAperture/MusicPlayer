@@ -28,22 +28,15 @@ namespace MusicPlayerBackend
         {
             Debug.Assert(path != null);
 
-            try
-            {
-                AudioMetaData audioMetaData = new AudioMetaData();
+            AudioMetaData audioMetaData = new AudioMetaData();
 
-                TagLib.File tfile = TagLib.File.Create(path);
-                audioMetaData.Duration = tfile.Properties.Duration;
-                audioMetaData.Title = tfile.Tag.Title;
-                audioMetaData.AudioFilePath = path;
+            TagLib.File tfile = TagLib.File.Create(path);
+            audioMetaData.Duration = tfile.Properties.Duration;
+            audioMetaData.Title = tfile.Tag.Title;
+            audioMetaData.AudioFilePath = path;
 
-                return audioMetaData;
-            }
-            catch (Exception e)
-            {
-                AudioMetaData audioMetaData = new AudioMetaData();
-                return audioMetaData;
-            }   
+            return audioMetaData;
+
         }
 
         /// <summary>
