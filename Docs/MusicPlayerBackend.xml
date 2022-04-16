@@ -21,67 +21,6 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="T:MusicPlayerBackend.Contracts.IMainController">
-            <summary>
-            Contracts the neccessary functions to connect and handle all sub-controller with the ui.
-            </summary>
-        </member>
-        <member name="T:MusicPlayerBackend.Contracts.ICustomDecorationController">
-            <summary>
-            Contracts the neccessary functions to commmunicate to another controller and ui and connect with interactor.
-            </summary>
-        </member>
-        <member name="T:MusicPlayerBackend.Contracts.ISoundControlBarController">
-            <summary>
-            Contracts neccessary functions to communicate and connect <see cref="T:MusicPlayerBackend.Contracts.ISoundControlBar"/> with <see cref="T:MusicPlayerBackend.Contracts.IAudioFileInteractor"/>.
-            </summary>
-        </member>
-        <member name="M:MusicPlayerBackend.Contracts.ISoundControlBarController.UpdateInformation(MusicPlayerBackend.AudioMetaData)">
-            <summary>
-            Contracts to set audio meta data to the ui.
-            </summary>
-        </member>
-        <member name="T:MusicPlayerBackend.Contracts.IContentPresenterController">
-            <summary>
-            Contracts neccessary functions to communicate and connect ui with interactor.
-            </summary>
-        </member>
-        <member name="T:MusicPlayerBackend.Contracts.ISettingsController">
-            <summary>
-            Contracts neccessary functions to communicate and connect ui with interactor.
-            </summary>
-        </member>
-        <member name="M:MusicPlayerBackend.Contracts.ISettingsController.LoadSettings">
-            <summary>
-            Contracts to load the settings. To the settings ui.
-            </summary>
-        </member>
-        <member name="T:MusicPlayerBackend.Contracts.ISongCoverController">
-            <summary>
-            Contract to connect the <see cref="T:MusicPlayerBackend.Contracts.ISongCover"/> with <see cref="T:MusicPlayerBackend.Contracts.ISongCoverInteractor"/>.
-            </summary>
-        </member>
-        <member name="M:MusicPlayerBackend.Contracts.ISongCoverController.SetCover(MusicPlayerBackend.AudioMetaData)">
-            <summary>
-            Contracts to load the cover, is delegated to ui.
-            </summary>
-        </member>
-        <member name="T:MusicPlayerBackend.Contracts.IMediaListController">
-            <summary>
-            Contracts to connect <see cref="T:MusicPlayerBackend.Contracts.IMediaList"/> with <see cref="T:MusicPlayerBackend.Contracts.IMediaListInteractor"/>.
-            </summary>
-        </member>
-        <member name="M:MusicPlayerBackend.Contracts.IMediaListController.SetMediaList">
-            <summary>
-            Contracts to load media files into the ui.
-            </summary>
-        </member>
-        <member name="M:MusicPlayerBackend.Contracts.IMediaListController.SetMediaListCustomMediaPath(System.String)">
-            <summary>
-            Contracts to laod media files into ui from new path.
-            </summary>
-            <param name="path"></param>
-        </member>
         <member name="T:MusicPlayerBackend.Contracts.IAudioFileInteractor">
             <summary>
             Contracts to connect <see cref="T:MusicPlayerBackend.Contracts.ISoundEngine"/> with <see cref="T:MusicPlayerBackend.Contracts.IMetaDataReader"/> and with <see cref="T:MusicPlayerBackend.Contracts.IDataConverter"/>.
@@ -139,70 +78,125 @@
             Contracts to resume playing the actual song.
             </summary>
         </member>
-        <member name="T:MusicPlayerBackend.Contracts.ISettingsInteractor">
+        <member name="T:MusicPlayerBackend.Contracts.IContentPresenter">
             <summary>
-            Contracts to connect <see cref="T:MusicPlayerBackend.Contracts.IFileReader"/>, <see cref="T:MusicPlayerBackend.Contracts.IFileWriter"/>, 
-            <see cref="T:MusicPlayerBackend.Contracts.IJSONSerializer"/>, <see cref="T:MusicPlayerBackend.Contracts.IJSONDeserializer"/> and <see cref="T:MusicPlayerBackend.Contracts.IDataConverter"/> with each other.
+            Contracts the neccessary functions to communicate with ContentPresenter.
             </summary>
         </member>
-        <member name="M:MusicPlayerBackend.Contracts.ISettingsInteractor.WriteSettings(MusicPlayerBackend.AppSettings)">
+        <member name="P:MusicPlayerBackend.Contracts.IContentPresenter.SongCover">
             <summary>
-            Contracts to write <paramref name="appSettings"/> to the settings file.
-            </summary>
-            <param name="appSettings"></param>
-        </member>
-        <member name="M:MusicPlayerBackend.Contracts.ISettingsInteractor.ReadSettings">
-            <summary>
-            Contracts to read app settings from the settings file.
-            </summary>
-            <returns><see cref="T:MusicPlayerBackend.AppSettings"/> saved in settings file.</returns>
-        </member>
-        <member name="M:MusicPlayerBackend.Contracts.ISettingsInteractor.GetAudioDevices">
-            <summary>
-            Contracts to fetch audio devices.
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:MusicPlayerBackend.Contracts.ISettingsInteractor.SetAudioDevice(System.String)">
-            <summary>
-            Contracts to set the audio output device to the sound engine.
-            </summary>
-            <param name="audiodevice"></param>
-        </member>
-        <member name="T:MusicPlayerBackend.Contracts.IMediaListInteractor">
-            <summary>
-            Contracts to connect <see cref="T:MusicPlayerBackend.Contracts.IMetaDataReader"/> with <see cref="T:MusicPlayerBackend.Contracts.IFileSystemHandler"/>.
+            Holding the SongCover UI element.
             </summary>
         </member>
-        <member name="T:MusicPlayerBackend.Contracts.IMediaListInteractor.OnMediaFound">
+        <member name="P:MusicPlayerBackend.Contracts.IContentPresenter.Settings">
             <summary>
-            To be called with each found media. 
-            </summary>
-            <param name="audioMetaData"></param>
-        </member>
-        <member name="E:MusicPlayerBackend.Contracts.IMediaListInteractor.onMediaFound">
-            <summary>
-            <see cref="T:MusicPlayerBackend.Contracts.IMediaListInteractor.OnMediaFound"/>
+            Holding the Settings UI element.
             </summary>
         </member>
-        <member name="M:MusicPlayerBackend.Contracts.IMediaListInteractor.GetMediaListAsync(System.String)">
+        <member name="P:MusicPlayerBackend.Contracts.IContentPresenter.MediaList">
             <summary>
-            Contracts to fetch all audio files recursivly from a root dir.
-            </summary>
-            <param name="rootPath"></param>
-            <returns>List of <see cref="T:MusicPlayerBackend.AudioMetaData"/> from all found media files.</returns>
-        </member>
-        <member name="T:MusicPlayerBackend.Contracts.ISongCoverInteractor">
-            <summary>
-            Contracts to connect <see cref="T:MusicPlayerBackend.Contracts.IMetaDataReader"/>.
+            Holding the MediaList UI element.
             </summary>
         </member>
-        <member name="M:MusicPlayerBackend.Contracts.ISongCoverInteractor.GetCoverFromAudio(System.String)">
+        <member name="M:MusicPlayerBackend.Contracts.IContentPresenter.ShowCoverPage">
             <summary>
-            Contracts to read potential img file from meta data.
+            Shows the SongCover.
+            </summary>
+        </member>
+        <member name="M:MusicPlayerBackend.Contracts.IContentPresenter.ShowSettingsPage">
+            <summary>
+            Shows the Settings.
+            </summary>
+        </member>
+        <member name="M:MusicPlayerBackend.Contracts.IContentPresenter.ShowMediaListPage">
+            <summary>
+            Shows the MediaList.
+            </summary>
+        </member>
+        <member name="T:MusicPlayerBackend.Contracts.IContentPresenterController">
+            <summary>
+            Contracts neccessary functions to communicate and connect ui with interactor.
+            </summary>
+        </member>
+        <member name="T:MusicPlayerBackend.Contracts.ICustomDecoration">
+            <summary>
+            Contracts the neccessary functions to communicate with the custom decoration.
+            </summary>
+        </member>
+        <member name="T:MusicPlayerBackend.Contracts.ICustomDecoration.OnMinimize">
+            <summary>
+            Interfaces minimize event data.
+            </summary>
+            <param name="args"></param>
+        </member>
+        <member name="T:MusicPlayerBackend.Contracts.ICustomDecoration.OnMaximize">
+            <summary>
+            Interfaces maximize event data.
+            </summary>
+            <param name="args"></param>
+        </member>
+        <member name="T:MusicPlayerBackend.Contracts.ICustomDecoration.OnClose">
+            <summary>
+            Interfaces close event data.
+            </summary>
+            <param name="args"></param>
+        </member>
+        <member name="T:MusicPlayerBackend.Contracts.ICustomDecoration.OnDrag">
+            <summary>
+            Interfaces dragging event data.
+            </summary>
+            <param name="sender"></param>
+            <param name="args"></param>
+        </member>
+        <member name="E:MusicPlayerBackend.Contracts.ICustomDecoration.onMinimize">
+            <summary>
+            To be invoked when minimize is triggered.
+            </summary>
+        </member>
+        <member name="E:MusicPlayerBackend.Contracts.ICustomDecoration.onMaximize">
+            <summary>
+            To be invoked when maximize is triggered.
+            </summary>
+        </member>
+        <member name="E:MusicPlayerBackend.Contracts.ICustomDecoration.onClose">
+            <summary>
+            To be invoked when close is triggered.
+            </summary>
+        </member>
+        <member name="E:MusicPlayerBackend.Contracts.ICustomDecoration.onDrag">
+            <summary>
+            To be invoked when drag is triggered.
+            </summary>
+        </member>
+        <member name="T:MusicPlayerBackend.Contracts.ICustomDecorationController">
+            <summary>
+            Contracts the neccessary functions to commmunicate to another controller and ui and connect with interactor.
+            </summary>
+        </member>
+        <member name="T:MusicPlayerBackend.Contracts.IDataConverter">
+            <summary>
+            Contracts the neccessary functions
+            to conversio from Models to Structs and vice vers as well as convert any other complex type into another needed.
+            </summary>
+        </member>
+        <member name="T:MusicPlayerBackend.Contracts.IFileReader">
+            <summary>
+            Contracts the neccessary functions to allow reading content from an file.
+            </summary>
+        </member>
+        <member name="M:MusicPlayerBackend.Contracts.IFileReader.ReadWhole(System.String)">
+            <summary>
+            Describes the neccessary input and output to read a file as whole.
             </summary>
             <param name="path"></param>
-            <returns></returns>
+            <returns>Single <see cref="T:System.String"/> containing a file formatted as text.</returns>
+        </member>
+        <member name="M:MusicPlayerBackend.Contracts.IFileReader.ReadAllLines(System.String)">
+            <summary>
+            Describes the neccessary input and output to read a file line by line.
+            </summary>
+            <param name="path"></param>
+            <returns>List of <see cref="T:System.String"/> each representing one single line of the file.</returns>
         </member>
         <member name="T:MusicPlayerBackend.Contracts.IFileSystemHandler">
             <summary>
@@ -235,6 +229,85 @@
             <param name="rootPath">The root path.</param>
             <param name="validAudioFiles">The valid file endings.</param>
         </member>
+        <member name="T:MusicPlayerBackend.Contracts.IFileWriter">
+            <summary>
+            Contracts the neccessary functions to allow writing content to an file.
+            </summary>
+        </member>
+        <member name="M:MusicPlayerBackend.Contracts.IFileWriter.Write(System.String,System.String)">
+            <summary>
+            Describes that <paramref name="text"/> is written to file at <paramref name="path"/>.
+            </summary>
+            <param name="text"></param>
+            <param name="path"></param>
+        </member>
+        <member name="T:MusicPlayerBackend.Contracts.IJSONDeserializer">
+            <summary>
+            Contracts the neccessary functions to allow deserializing of objects.
+            </summary>
+        </member>
+        <member name="M:MusicPlayerBackend.Contracts.IJSONDeserializer.Deserialize``1(System.String)">
+            <summary>
+            Describes the neccessary input and output for deserialization.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="deserializable"></param>
+            <returns>Should be an representation of the string as <typeparamref name="T"/>.</returns>
+        </member>
+        <member name="T:MusicPlayerBackend.Contracts.IJSONSerializer">
+            <summary>
+            Contracts the neccessary functions to allow serialization of objects.
+            </summary>
+        </member>
+        <member name="M:MusicPlayerBackend.Contracts.IJSONSerializer.Serialize``1(``0)">
+            <summary>
+            Describes the neccessary input and output for serialization.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="serializable"></param>
+            <returns>Should be an representation of the object as <see cref="T:System.String"/>.</returns>
+        </member>
+        <member name="T:MusicPlayerBackend.Contracts.IMainController">
+            <summary>
+            Contracts the neccessary functions to connect and handle all sub-controller with the ui.
+            </summary>
+        </member>
+        <member name="T:MusicPlayerBackend.Contracts.IMainUI">
+            <summary>
+            Contracts the neccessary functions to communicate with the main window.
+            </summary>
+        </member>
+        <member name="T:MusicPlayerBackend.Contracts.IMainUI.OnThemeChange">
+            <summary>
+            Interfaces to change theme.
+            </summary>
+            <param name="appStyle"></param>
+        </member>
+        <member name="E:MusicPlayerBackend.Contracts.IMainUI.onThemeChange">
+            <summary>
+            To be invoked by settings.
+            </summary>
+        </member>
+        <member name="P:MusicPlayerBackend.Contracts.IMainUI.CustomDecoration">
+            <summary>
+            Represents a custom subwindow, it replaces the os decoration. 
+            </summary>
+        </member>
+        <member name="P:MusicPlayerBackend.Contracts.IMainUI.SoundControlBar">
+            <summary>
+            Represents a custom subwindow, enables controll over the playing, pausing and more adjustments. 
+            </summary>
+        </member>
+        <member name="P:MusicPlayerBackend.Contracts.IMainUI.ContentPresenter">
+            <summary>
+            Represents a custom subwindow, handles the content of settings, medialist and the song cover.
+            </summary>
+        </member>
+        <member name="M:MusicPlayerBackend.Contracts.IMainUI.Show">
+            <summary>
+            Contracts to show the window.
+            </summary>
+        </member>
         <member name="T:MusicPlayerBackend.Contracts.IMetaDataReader">
             <summary>
             Contracts the neccessary functions to read a audio meta data struct from files.
@@ -253,6 +326,302 @@
             </summary>
             <param name="path"></param>
             <returns></returns>
+        </member>
+        <member name="T:MusicPlayerBackend.Contracts.IMediaList">
+            <summary>
+            Contracts the neccessary functions to communicate with MediaList
+            </summary>
+        </member>
+        <member name="T:MusicPlayerBackend.Contracts.IMediaList.OnSelection">
+            <summary>
+            Interfaces selection event data.
+            </summary>
+            <param name="selection"></param>
+        </member>
+        <member name="T:MusicPlayerBackend.Contracts.IMediaList.OnLoadMediaList">
+            <summary>
+            Interfaces to load the medialist.
+            </summary>
+        </member>
+        <member name="T:MusicPlayerBackend.Contracts.IMediaList.OnLoadMediaListFromNewPath">
+            <summary>
+            Interfaces to fetch from a new path.
+            </summary>
+            <param name="path"></param>
+        </member>
+        <member name="E:MusicPlayerBackend.Contracts.IMediaList.onSelection">
+            <summary>
+            To be invoked upon selection and selection changes.
+            </summary>
+        </member>
+        <member name="E:MusicPlayerBackend.Contracts.IMediaList.onLoadMediaList">
+            <summary>
+            To be invoked by content presenter.
+            </summary>
+        </member>
+        <member name="E:MusicPlayerBackend.Contracts.IMediaList.onLoadMediaListFromNewPath">
+            <summary>
+            To be invoked on changed settings.
+            </summary>
+        </member>
+        <member name="M:MusicPlayerBackend.Contracts.IMediaList.AddSongToList(MusicPlayerBackend.AudioMetaData)">
+            <summary>
+            Sets the media list content.
+            </summary>
+            <param name="song"></param>
+        </member>
+        <member name="M:MusicPlayerBackend.Contracts.IMediaList.SetPlaying(MusicPlayerBackend.AudioMetaData)">
+            <summary>
+            Marks the actually playing file.
+            </summary>
+            <param name="selection"></param>
+        </member>
+        <member name="M:MusicPlayerBackend.Contracts.IMediaList.LoadMediaList">
+            <summary>
+            Contracts to load the media list data.
+            </summary>
+        </member>
+        <member name="M:MusicPlayerBackend.Contracts.IMediaList.LoadMediaListFromNewMediaPath(System.String)">
+            <summary>
+            Contracts to fetch a new media path.
+            </summary>
+            <param name="path"></param>
+        </member>
+        <member name="T:MusicPlayerBackend.Contracts.IMediaListController">
+            <summary>
+            Contracts to connect <see cref="T:MusicPlayerBackend.Contracts.IMediaList"/> with <see cref="T:MusicPlayerBackend.Contracts.IMediaListInteractor"/>.
+            </summary>
+        </member>
+        <member name="M:MusicPlayerBackend.Contracts.IMediaListController.SetMediaList">
+            <summary>
+            Contracts to load media files into the ui.
+            </summary>
+        </member>
+        <member name="M:MusicPlayerBackend.Contracts.IMediaListController.SetMediaListCustomMediaPath(System.String)">
+            <summary>
+            Contracts to laod media files into ui from new path.
+            </summary>
+            <param name="path"></param>
+        </member>
+        <member name="T:MusicPlayerBackend.Contracts.IMediaListInteractor">
+            <summary>
+            Contracts to connect <see cref="T:MusicPlayerBackend.Contracts.IMetaDataReader"/> with <see cref="T:MusicPlayerBackend.Contracts.IFileSystemHandler"/>.
+            </summary>
+        </member>
+        <member name="T:MusicPlayerBackend.Contracts.IMediaListInteractor.OnMediaFound">
+            <summary>
+            To be called with each found media. 
+            </summary>
+            <param name="audioMetaData"></param>
+        </member>
+        <member name="E:MusicPlayerBackend.Contracts.IMediaListInteractor.onMediaFound">
+            <summary>
+            <see cref="T:MusicPlayerBackend.Contracts.IMediaListInteractor.OnMediaFound"/>
+            </summary>
+        </member>
+        <member name="M:MusicPlayerBackend.Contracts.IMediaListInteractor.GetMediaListAsync(System.String)">
+            <summary>
+            Contracts to fetch all audio files recursivly from a root dir.
+            </summary>
+            <param name="rootPath"></param>
+            <returns>List of <see cref="T:MusicPlayerBackend.AudioMetaData"/> from all found media files.</returns>
+        </member>
+        <member name="T:MusicPlayerBackend.Contracts.ISettings">
+            <summary>
+            Contracts the neccessary functions to communicate with Settings.
+            </summary>
+        </member>
+        <member name="T:MusicPlayerBackend.Contracts.ISettings.OnSettingsChanged">
+            <summary>
+            Interfaces settings changed event data.
+            </summary>
+            <param name="appSettings"></param>
+        </member>
+        <member name="T:MusicPlayerBackend.Contracts.ISettings.OnLoadSettings">
+            <summary>
+            Interfaces to load settings.
+            </summary>
+        </member>
+        <member name="E:MusicPlayerBackend.Contracts.ISettings.onSettingsChanged">
+            <summary>
+            To be invoked when settings are changed.
+            </summary>
+        </member>
+        <member name="E:MusicPlayerBackend.Contracts.ISettings.onLoadSettings">
+            <summary>
+            To be invoked by content presenter.
+            </summary>
+        </member>
+        <member name="M:MusicPlayerBackend.Contracts.ISettings.LoadSettings(MusicPlayerBackend.AppSettings)">
+            <summary>
+            
+            </summary>
+            <param name="appSettings"></param>
+        </member>
+        <member name="M:MusicPlayerBackend.Contracts.ISettings.LoadSettings">
+            <summary>
+            Contracts to load settings data.
+            </summary>
+        </member>
+        <member name="T:MusicPlayerBackend.Contracts.ISettingsController">
+            <summary>
+            Contracts neccessary functions to communicate and connect ui with interactor.
+            </summary>
+        </member>
+        <member name="M:MusicPlayerBackend.Contracts.ISettingsController.LoadSettings">
+            <summary>
+            Contracts to load the settings. To the settings ui.
+            </summary>
+        </member>
+        <member name="T:MusicPlayerBackend.Contracts.ISettingsInteractor">
+            <summary>
+            Contracts to connect <see cref="T:MusicPlayerBackend.Contracts.IFileReader"/>, <see cref="T:MusicPlayerBackend.Contracts.IFileWriter"/>, 
+            <see cref="T:MusicPlayerBackend.Contracts.IJSONSerializer"/>, <see cref="T:MusicPlayerBackend.Contracts.IJSONDeserializer"/> and <see cref="T:MusicPlayerBackend.Contracts.IDataConverter"/> with each other.
+            </summary>
+        </member>
+        <member name="M:MusicPlayerBackend.Contracts.ISettingsInteractor.WriteSettings(MusicPlayerBackend.AppSettings)">
+            <summary>
+            Contracts to write <paramref name="appSettings"/> to the settings file.
+            </summary>
+            <param name="appSettings"></param>
+        </member>
+        <member name="M:MusicPlayerBackend.Contracts.ISettingsInteractor.ReadSettings">
+            <summary>
+            Contracts to read app settings from the settings file.
+            </summary>
+            <returns><see cref="T:MusicPlayerBackend.AppSettings"/> saved in settings file.</returns>
+        </member>
+        <member name="M:MusicPlayerBackend.Contracts.ISettingsInteractor.GetAudioDevices">
+            <summary>
+            Contracts to fetch audio devices.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MusicPlayerBackend.Contracts.ISettingsInteractor.SetAudioDevice(System.String)">
+            <summary>
+            Contracts to set the audio output device to the sound engine.
+            </summary>
+            <param name="audiodevice"></param>
+        </member>
+        <member name="T:MusicPlayerBackend.Contracts.ISongCover">
+            <summary>
+            Contracts the neccessary functions to communicate with SongCover.
+            </summary>
+        </member>
+        <member name="T:MusicPlayerBackend.Contracts.ISongCover.OnLoad">
+            <summary>
+            Contracts the OnLoad event interface.
+            </summary>
+            <param name="audioMetaData"></param>
+        </member>
+        <member name="E:MusicPlayerBackend.Contracts.ISongCover.onLoad">
+            <summary>
+            Contracts availability of onLoad event for ISongCover.
+            </summary>
+        </member>
+        <member name="M:MusicPlayerBackend.Contracts.ISongCover.LoadCover(MusicPlayerBackend.AudioMetaData)">
+            <summary>
+            Should pass an image of the audio file cover.
+            </summary>
+        </member>
+        <member name="M:MusicPlayerBackend.Contracts.ISongCover.LoadCover(MusicPlayerBackend.ImageContainer)">
+            <summary>
+            Contracts to load the cover image to the ui.
+            </summary>
+            <param name="imageContainer"></param>
+        </member>
+        <member name="T:MusicPlayerBackend.Contracts.ISongCoverController">
+            <summary>
+            Contract to connect the <see cref="T:MusicPlayerBackend.Contracts.ISongCover"/> with <see cref="T:MusicPlayerBackend.Contracts.ISongCoverInteractor"/>.
+            </summary>
+        </member>
+        <member name="M:MusicPlayerBackend.Contracts.ISongCoverController.SetCover(MusicPlayerBackend.AudioMetaData)">
+            <summary>
+            Contracts to load the cover, is delegated to ui.
+            </summary>
+        </member>
+        <member name="T:MusicPlayerBackend.Contracts.ISongCoverInteractor">
+            <summary>
+            Contracts to connect <see cref="T:MusicPlayerBackend.Contracts.IMetaDataReader"/>.
+            </summary>
+        </member>
+        <member name="M:MusicPlayerBackend.Contracts.ISongCoverInteractor.GetCoverFromAudio(System.String)">
+            <summary>
+            Contracts to read potential img file from meta data.
+            </summary>
+            <param name="path"></param>
+            <returns></returns>
+        </member>
+        <member name="T:MusicPlayerBackend.Contracts.ISoundControlBarController">
+            <summary>
+            Contracts neccessary functions to communicate and connect <see cref="T:MusicPlayerBackend.Contracts.ISoundControlBar"/> with <see cref="T:MusicPlayerBackend.Contracts.IAudioFileInteractor"/>.
+            </summary>
+        </member>
+        <member name="M:MusicPlayerBackend.Contracts.ISoundControlBarController.UpdateInformation(MusicPlayerBackend.AudioMetaData)">
+            <summary>
+            Contracts to set audio meta data to the ui.
+            </summary>
+        </member>
+        <member name="T:MusicPlayerBackend.Contracts.ISoundControlBar">
+            <summary>
+            Contracts the neccessary functions to communicate with the sound controll bar and affect audio directly.
+            </summary>
+        </member>
+        <member name="T:MusicPlayerBackend.Contracts.ISoundControlBar.OnPlay">
+            <summary>
+            No return on play and without parameters.
+            </summary>
+        </member>
+        <member name="T:MusicPlayerBackend.Contracts.ISoundControlBar.OnPause">
+            <summary>
+            No return on pause and without parameters.
+            </summary>
+        </member>
+        <member name="T:MusicPlayerBackend.Contracts.ISoundControlBar.OnResume">
+            <summary>
+            No return and without parameters.
+            </summary>
+        </member>
+        <member name="T:MusicPlayerBackend.Contracts.ISoundControlBar.OnNext">
+            <summary>
+            No return next from media list.
+            </summary>
+        </member>
+        <member name="E:MusicPlayerBackend.Contracts.ISoundControlBar.onPlay">
+            <summary>
+            To be invoked when user triggers play.
+            </summary>
+        </member>
+        <member name="E:MusicPlayerBackend.Contracts.ISoundControlBar.onPause">
+            <summary>
+            To be invoked when user triggers pause.
+            </summary>
+        </member>
+        <member name="E:MusicPlayerBackend.Contracts.ISoundControlBar.onResume">
+            <summary>
+            To be invoked when user triggers resume.
+            </summary>
+        </member>
+        <member name="E:MusicPlayerBackend.Contracts.ISoundControlBar.onNext">
+            <summary>
+            To be invoked when finished or manually pressed.
+            </summary>
+        </member>
+        <member name="M:MusicPlayerBackend.Contracts.ISoundControlBar.SetAudioMetaData(MusicPlayerBackend.AudioMetaData)">
+            <summary>
+            Contracts that the meta data from an audio file fills the content fields of this controll.
+            </summary>
+            <param name="audioMetaData"></param>
+        </member>
+        <member name="M:MusicPlayerBackend.Contracts.ISoundControlBar.UpdateProgress(System.TimeSpan)">
+            <summary>
+            Fetch progress.
+            </summary>
+        </member>
+        <member name="M:MusicPlayerBackend.Contracts.ISoundControlBar.IsFinished">
+            <summary>
+            Handles finished.
+            </summary>
         </member>
         <member name="T:MusicPlayerBackend.Contracts.ISoundEngine">
             <summary>
@@ -319,375 +688,6 @@
             <summary>
             Communicates to resume playing the current audio file.
             </summary>
-        </member>
-        <member name="T:MusicPlayerBackend.Contracts.IDataConverter">
-            <summary>
-            Contracts the neccessary functions
-            to conversio from Models to Structs and vice vers as well as convert any other complex type into another needed.
-            </summary>
-        </member>
-        <member name="T:MusicPlayerBackend.Contracts.IJSONSerializer">
-            <summary>
-            Contracts the neccessary functions to allow serialization of objects.
-            </summary>
-        </member>
-        <member name="M:MusicPlayerBackend.Contracts.IJSONSerializer.Serialize``1(``0)">
-            <summary>
-            Describes the neccessary input and output for serialization.
-            </summary>
-            <typeparam name="T"></typeparam>
-            <param name="serializable"></param>
-            <returns>Should be an representation of the object as <see cref="T:System.String"/>.</returns>
-        </member>
-        <member name="T:MusicPlayerBackend.Contracts.IJSONDeserializer">
-            <summary>
-            Contracts the neccessary functions to allow deserializing of objects.
-            </summary>
-        </member>
-        <member name="M:MusicPlayerBackend.Contracts.IJSONDeserializer.Deserialize``1(System.String)">
-            <summary>
-            Describes the neccessary input and output for deserialization.
-            </summary>
-            <typeparam name="T"></typeparam>
-            <param name="deserializable"></param>
-            <returns>Should be an representation of the string as <typeparamref name="T"/>.</returns>
-        </member>
-        <member name="T:MusicPlayerBackend.Contracts.IFileWriter">
-            <summary>
-            Contracts the neccessary functions to allow writing content to an file.
-            </summary>
-        </member>
-        <member name="M:MusicPlayerBackend.Contracts.IFileWriter.Write(System.String,System.String)">
-            <summary>
-            Describes that <paramref name="text"/> is written to file at <paramref name="path"/>.
-            </summary>
-            <param name="text"></param>
-            <param name="path"></param>
-        </member>
-        <member name="T:MusicPlayerBackend.Contracts.IFileReader">
-            <summary>
-            Contracts the neccessary functions to allow reading content from an file.
-            </summary>
-        </member>
-        <member name="M:MusicPlayerBackend.Contracts.IFileReader.ReadWhole(System.String)">
-            <summary>
-            Describes the neccessary input and output to read a file as whole.
-            </summary>
-            <param name="path"></param>
-            <returns>Single <see cref="T:System.String"/> containing a file formatted as text.</returns>
-        </member>
-        <member name="M:MusicPlayerBackend.Contracts.IFileReader.ReadAllLines(System.String)">
-            <summary>
-            Describes the neccessary input and output to read a file line by line.
-            </summary>
-            <param name="path"></param>
-            <returns>List of <see cref="T:System.String"/> each representing one single line of the file.</returns>
-        </member>
-        <member name="T:MusicPlayerBackend.Contracts.IMainUI">
-            <summary>
-            Contracts the neccessary functions to communicate with the main window.
-            </summary>
-        </member>
-        <member name="T:MusicPlayerBackend.Contracts.IMainUI.OnThemeChange">
-            <summary>
-            Interfaces to change theme.
-            </summary>
-            <param name="appStyle"></param>
-        </member>
-        <member name="E:MusicPlayerBackend.Contracts.IMainUI.onThemeChange">
-            <summary>
-            To be invoked by settings.
-            </summary>
-        </member>
-        <member name="P:MusicPlayerBackend.Contracts.IMainUI.CustomDecoration">
-            <summary>
-            Represents a custom subwindow, it replaces the os decoration. 
-            </summary>
-        </member>
-        <member name="P:MusicPlayerBackend.Contracts.IMainUI.SoundControlBar">
-            <summary>
-            Represents a custom subwindow, enables controll over the playing, pausing and more adjustments. 
-            </summary>
-        </member>
-        <member name="P:MusicPlayerBackend.Contracts.IMainUI.ContentPresenter">
-            <summary>
-            Represents a custom subwindow, handles the content of settings, medialist and the song cover.
-            </summary>
-        </member>
-        <member name="M:MusicPlayerBackend.Contracts.IMainUI.Show">
-            <summary>
-            Contracts to show the window.
-            </summary>
-        </member>
-        <member name="T:MusicPlayerBackend.Contracts.ISoundControlBar">
-            <summary>
-            Contracts the neccessary functions to communicate with the sound controll bar and affect audio directly.
-            </summary>
-        </member>
-        <member name="T:MusicPlayerBackend.Contracts.ISoundControlBar.OnPlay">
-            <summary>
-            No return on play and without parameters.
-            </summary>
-        </member>
-        <member name="T:MusicPlayerBackend.Contracts.ISoundControlBar.OnPause">
-            <summary>
-            No return on pause and without parameters.
-            </summary>
-        </member>
-        <member name="T:MusicPlayerBackend.Contracts.ISoundControlBar.OnResume">
-            <summary>
-            No return and without parameters.
-            </summary>
-        </member>
-        <member name="T:MusicPlayerBackend.Contracts.ISoundControlBar.OnNext">
-            <summary>
-            No return next from media list.
-            </summary>
-        </member>
-        <member name="E:MusicPlayerBackend.Contracts.ISoundControlBar.onPlay">
-            <summary>
-            To be invoked when user triggers play.
-            </summary>
-        </member>
-        <member name="E:MusicPlayerBackend.Contracts.ISoundControlBar.onPause">
-            <summary>
-            To be invoked when user triggers pause.
-            </summary>
-        </member>
-        <member name="E:MusicPlayerBackend.Contracts.ISoundControlBar.onResume">
-            <summary>
-            To be invoked when user triggers resume.
-            </summary>
-        </member>
-        <member name="E:MusicPlayerBackend.Contracts.ISoundControlBar.onNext">
-            <summary>
-            To be invoked when finished or manually pressed.
-            </summary>
-        </member>
-        <member name="M:MusicPlayerBackend.Contracts.ISoundControlBar.SetAudioMetaData(MusicPlayerBackend.AudioMetaData)">
-            <summary>
-            Contracts that the meta data from an audio file fills the content fields of this controll.
-            </summary>
-            <param name="audioMetaData"></param>
-        </member>
-        <member name="M:MusicPlayerBackend.Contracts.ISoundControlBar.UpdateProgress(System.TimeSpan)">
-            <summary>
-            Fetch progress.
-            </summary>
-        </member>
-        <member name="M:MusicPlayerBackend.Contracts.ISoundControlBar.IsFinished">
-            <summary>
-            Handles finished.
-            </summary>
-        </member>
-        <member name="T:MusicPlayerBackend.Contracts.ICustomDecoration">
-            <summary>
-            Contracts the neccessary functions to communicate with the custom decoration.
-            </summary>
-        </member>
-        <member name="T:MusicPlayerBackend.Contracts.ICustomDecoration.OnMinimize">
-            <summary>
-            Interfaces minimize event data.
-            </summary>
-            <param name="args"></param>
-        </member>
-        <member name="T:MusicPlayerBackend.Contracts.ICustomDecoration.OnMaximize">
-            <summary>
-            Interfaces maximize event data.
-            </summary>
-            <param name="args"></param>
-        </member>
-        <member name="T:MusicPlayerBackend.Contracts.ICustomDecoration.OnClose">
-            <summary>
-            Interfaces close event data.
-            </summary>
-            <param name="args"></param>
-        </member>
-        <member name="T:MusicPlayerBackend.Contracts.ICustomDecoration.OnDrag">
-            <summary>
-            Interfaces dragging event data.
-            </summary>
-            <param name="sender"></param>
-            <param name="args"></param>
-        </member>
-        <member name="E:MusicPlayerBackend.Contracts.ICustomDecoration.onMinimize">
-            <summary>
-            To be invoked when minimize is triggered.
-            </summary>
-        </member>
-        <member name="E:MusicPlayerBackend.Contracts.ICustomDecoration.onMaximize">
-            <summary>
-            To be invoked when maximize is triggered.
-            </summary>
-        </member>
-        <member name="E:MusicPlayerBackend.Contracts.ICustomDecoration.onClose">
-            <summary>
-            To be invoked when close is triggered.
-            </summary>
-        </member>
-        <member name="E:MusicPlayerBackend.Contracts.ICustomDecoration.onDrag">
-            <summary>
-            To be invoked when drag is triggered.
-            </summary>
-        </member>
-        <member name="T:MusicPlayerBackend.Contracts.ISongCover">
-            <summary>
-            Contracts the neccessary functions to communicate with SongCover.
-            </summary>
-        </member>
-        <member name="T:MusicPlayerBackend.Contracts.ISongCover.OnLoad">
-            <summary>
-            Contracts the OnLoad event interface.
-            </summary>
-            <param name="audioMetaData"></param>
-        </member>
-        <member name="E:MusicPlayerBackend.Contracts.ISongCover.onLoad">
-            <summary>
-            Contracts availability of onLoad event for ISongCover.
-            </summary>
-        </member>
-        <member name="M:MusicPlayerBackend.Contracts.ISongCover.LoadCover(MusicPlayerBackend.AudioMetaData)">
-            <summary>
-            Should pass an image of the audio file cover.
-            </summary>
-        </member>
-        <member name="M:MusicPlayerBackend.Contracts.ISongCover.LoadCover(MusicPlayerBackend.ImageContainer)">
-            <summary>
-            Contracts to load the cover image to the ui.
-            </summary>
-            <param name="imageContainer"></param>
-        </member>
-        <member name="T:MusicPlayerBackend.Contracts.ISettings">
-            <summary>
-            Contracts the neccessary functions to communicate with Settings.
-            </summary>
-        </member>
-        <member name="T:MusicPlayerBackend.Contracts.ISettings.OnSettingsChanged">
-            <summary>
-            Interfaces settings changed event data.
-            </summary>
-            <param name="appSettings"></param>
-        </member>
-        <member name="T:MusicPlayerBackend.Contracts.ISettings.OnLoadSettings">
-            <summary>
-            Interfaces to load settings.
-            </summary>
-        </member>
-        <member name="E:MusicPlayerBackend.Contracts.ISettings.onSettingsChanged">
-            <summary>
-            To be invoked when settings are changed.
-            </summary>
-        </member>
-        <member name="E:MusicPlayerBackend.Contracts.ISettings.onLoadSettings">
-            <summary>
-            To be invoked by content presenter.
-            </summary>
-        </member>
-        <member name="M:MusicPlayerBackend.Contracts.ISettings.LoadSettings(MusicPlayerBackend.AppSettings)">
-            <summary>
-            
-            </summary>
-            <param name="appSettings"></param>
-        </member>
-        <member name="M:MusicPlayerBackend.Contracts.ISettings.LoadSettings">
-            <summary>
-            Contracts to load settings data.
-            </summary>
-        </member>
-        <member name="T:MusicPlayerBackend.Contracts.IContentPresenter">
-            <summary>
-            Contracts the neccessary functions to communicate with ContentPresenter.
-            </summary>
-        </member>
-        <member name="P:MusicPlayerBackend.Contracts.IContentPresenter.SongCover">
-            <summary>
-            Holding the SongCover UI element.
-            </summary>
-        </member>
-        <member name="P:MusicPlayerBackend.Contracts.IContentPresenter.Settings">
-            <summary>
-            Holding the Settings UI element.
-            </summary>
-        </member>
-        <member name="P:MusicPlayerBackend.Contracts.IContentPresenter.MediaList">
-            <summary>
-            Holding the MediaList UI element.
-            </summary>
-        </member>
-        <member name="M:MusicPlayerBackend.Contracts.IContentPresenter.ShowCoverPage">
-            <summary>
-            Shows the SongCover.
-            </summary>
-        </member>
-        <member name="M:MusicPlayerBackend.Contracts.IContentPresenter.ShowSettingsPage">
-            <summary>
-            Shows the Settings.
-            </summary>
-        </member>
-        <member name="M:MusicPlayerBackend.Contracts.IContentPresenter.ShowMediaListPage">
-            <summary>
-            Shows the MediaList.
-            </summary>
-        </member>
-        <member name="T:MusicPlayerBackend.Contracts.IMediaList">
-            <summary>
-            Contracts the neccessary functions to communicate with MediaList
-            </summary>
-        </member>
-        <member name="T:MusicPlayerBackend.Contracts.IMediaList.OnSelection">
-            <summary>
-            Interfaces selection event data.
-            </summary>
-            <param name="selection"></param>
-        </member>
-        <member name="T:MusicPlayerBackend.Contracts.IMediaList.OnLoadMediaList">
-            <summary>
-            Interfaces to load the medialist.
-            </summary>
-        </member>
-        <member name="T:MusicPlayerBackend.Contracts.IMediaList.OnLoadMediaListFromNewPath">
-            <summary>
-            Interfaces to fetch from a new path.
-            </summary>
-            <param name="path"></param>
-        </member>
-        <member name="E:MusicPlayerBackend.Contracts.IMediaList.onSelection">
-            <summary>
-            To be invoked upon selection and selection changes.
-            </summary>
-        </member>
-        <member name="E:MusicPlayerBackend.Contracts.IMediaList.onLoadMediaList">
-            <summary>
-            To be invoked by content presenter.
-            </summary>
-        </member>
-        <member name="E:MusicPlayerBackend.Contracts.IMediaList.onLoadMediaListFromNewPath">
-            <summary>
-            To be invoked on changed settings.
-            </summary>
-        </member>
-        <member name="M:MusicPlayerBackend.Contracts.IMediaList.AddSongToList(MusicPlayerBackend.AudioMetaData)">
-            <summary>
-            Sets the media list content.
-            </summary>
-            <param name="song"></param>
-        </member>
-        <member name="M:MusicPlayerBackend.Contracts.IMediaList.SetPlaying(MusicPlayerBackend.AudioMetaData)">
-            <summary>
-            Marks the actually playing file.
-            </summary>
-            <param name="selection"></param>
-        </member>
-        <member name="M:MusicPlayerBackend.Contracts.IMediaList.LoadMediaList">
-            <summary>
-            Contracts to load the media list data.
-            </summary>
-        </member>
-        <member name="M:MusicPlayerBackend.Contracts.IMediaList.LoadMediaListFromNewMediaPath(System.String)">
-            <summary>
-            Contracts to fetch a new media path.
-            </summary>
-            <param name="path"></param>
         </member>
         <member name="T:MusicPlayerBackend.ContentPresenterController">
             <summary>
@@ -1182,6 +1182,173 @@
             <param name="path"></param>
             <returns></returns>
         </member>
+        <member name="T:MusicPlayerBackend.AppSettings">
+            <summary>
+            Holds an abstracted unified set of properties to carry the needed meta data of an audio file.
+            Implements <see cref="T:System.IEquatable`1"/> for equality checking. 
+            </summary>
+        </member>
+        <member name="P:MusicPlayerBackend.AppSettings.MediaPath">
+            <summary>
+            Represents the path of all media files. 
+            </summary>
+        </member>
+        <member name="P:MusicPlayerBackend.AppSettings.AudioDevice">
+            <summary>
+            Represents the audio devices name. 
+            </summary>
+        </member>
+        <member name="P:MusicPlayerBackend.AppSettings.AudioDevices">
+            <summary>
+            Represents all found audio devices by their name.
+            </summary>
+        </member>
+        <member name="P:MusicPlayerBackend.AppSettings.AppStyle">
+            <summary>
+            Represents the theme as enum. The choices are predefined by the enum.
+            </summary>
+        </member>
+        <member name="M:MusicPlayerBackend.AppSettings.Equals(MusicPlayerBackend.AppSettings)">
+            <summary>
+            Overrides the Equals Method of <see langword="object"/>.
+            If is <see cref="T:MusicPlayerBackend.AudioDataModel"/>, the call is delegated to <seealso cref="M:MusicPlayerBackend.AppSettings.Equals(MusicPlayerBackend.AppSettings)"/>
+            </summary>
+            <param name="other"></param>
+            <returns>
+            <see langword="true"/> if equal.
+            <see langword="false"/> if not equal.
+            </returns>
+        </member>
+        <member name="M:MusicPlayerBackend.AppSettings.GetHashCode">
+            <summary>
+            Summs hash codes of every field. Calls subsequent <see cref="M:MusicPlayerBackend.AppSettings.GetHashCode"/> of the fields.
+            </summary>
+            <returns>Summed hash code as <see langword="int"/>.</returns>
+        </member>
+        <member name="M:MusicPlayerBackend.AppSettings.ToString">
+            <summary>
+            Adds every property formatted by name and value seperated by a pipe to a string.
+            Uses subsequent <see cref="M:MusicPlayerBackend.AppSettings.ToString"/> calls.
+            </summary>
+            <returns><see cref="T:System.String"/></returns>
+        </member>
+        <member name="T:MusicPlayerBackend.AudioDataModel">
+            <summary>
+            Holds data for the <see cref="!:ISoundControlBar"/> UI of the available Themes.
+            Implements <see cref="T:System.IEquatable`1"/> for equality checking. 
+            </summary>
+        </member>
+        <member name="P:MusicPlayerBackend.AudioDataModel.Title">
+            <summary>
+            Represents the title of the audio file.
+            </summary>
+        </member>
+        <member name="P:MusicPlayerBackend.AudioDataModel.Duration">
+            <summary>
+            Represents the duration of the audio file. 
+            Has no predefined format.
+            </summary>
+        </member>
+        <member name="M:MusicPlayerBackend.AudioDataModel.Equals(MusicPlayerBackend.AudioDataModel)">
+            <summary>
+            Overrides the Equals Method of <see langword="object"/>.
+            If is <see cref="T:MusicPlayerBackend.AudioDataModel"/>, the call is delegated to <seealso cref="M:MusicPlayerBackend.AudioDataModel.Equals(MusicPlayerBackend.AudioDataModel)"/>
+            </summary>
+            <param name="other"></param>
+            <returns>
+            <see langword="true"/> if equal.
+            <see langword="false"/> if not equal.
+            </returns>
+        </member>
+        <member name="M:MusicPlayerBackend.AudioDataModel.GetHashCode">
+            <summary>
+            Summs hash codes of every field.
+            </summary>
+            <returns>Summed hash code as <see langword="int"/>.</returns>
+        </member>
+        <member name="M:MusicPlayerBackend.AudioDataModel.ToString">
+            <summary>
+            Adds every property formatted by name and value seperated by a pipe to a string.
+            Uses subsequent <see cref="M:MusicPlayerBackend.AudioDataModel.ToString"/> calls.
+            </summary>
+            <returns><see cref="T:System.String"/></returns>
+        </member>
+        <member name="T:MusicPlayerBackend.AudioDeviceModel">
+            <summary>
+            Holds data for the <see cref="!:ISettings"/> UI of the Audio Devices.
+            Implements <see cref="T:System.IEquatable`1"/> for equality checking. 
+            </summary>
+        </member>
+        <member name="P:MusicPlayerBackend.AudioDeviceModel.Text">
+            <summary>
+            Name of the Audio Device
+            </summary>
+        </member>
+        <member name="M:MusicPlayerBackend.AudioDeviceModel.Equals(MusicPlayerBackend.AudioDeviceModel)">
+            <summary>
+            Implements <see cref="T:System.IEquatable`1"/>. Equals by hold values.
+            </summary>
+            <param name="other"></param>
+            <returns><see langword="true"/> if equal. <see langword="false"/> if unequal.</returns>
+        </member>
+        <member name="M:MusicPlayerBackend.AudioDeviceModel.GetHashCode">
+            <summary>
+            Summs hash codes of every field.
+            </summary>
+            <returns>Summed hash code as <see langword="int"/>.</returns>
+        </member>
+        <member name="M:MusicPlayerBackend.AudioDeviceModel.ToString">
+            <summary>
+            Adds every property formatted by name and value seperated by a pipe to a string.
+            Uses subsequent <see cref="M:MusicPlayerBackend.AudioDeviceModel.ToString"/> calls.
+            </summary>
+            <returns><see cref="T:System.String"/></returns>
+        </member>
+        <member name="T:MusicPlayerBackend.AudioMetaData">
+            <summary>
+            Holds an abstracted unified set of properties to carry the needed meta data of an audio file.
+            Implements <see cref="T:System.IEquatable`1"/> for equality checking. 
+            </summary>
+        </member>
+        <member name="P:MusicPlayerBackend.AudioMetaData.Title">
+            <summary>
+            Represents the title of the audio file, if it was available in the files meta data.
+            </summary>
+        </member>
+        <member name="P:MusicPlayerBackend.AudioMetaData.Duration">
+            <summary>
+            Represents the duration of the audio files content.
+            </summary>
+        </member>
+        <member name="P:MusicPlayerBackend.AudioMetaData.AudioFilePath">
+            <summary>
+            Represents the path the file was read from.
+            </summary>
+        </member>
+        <member name="M:MusicPlayerBackend.AudioMetaData.Equals(MusicPlayerBackend.AudioMetaData)">
+            <summary>
+            Overrides the Equals Method of <see langword="object"/>.
+            If is <see cref="T:MusicPlayerBackend.AudioMetaData"/>, the call is delegated to <seealso cref="M:MusicPlayerBackend.AudioMetaData.Equals(MusicPlayerBackend.AudioMetaData)"/>
+            </summary>
+            <param name="other"></param>
+            <returns>
+            <see langword="true"/> if equal.
+            <see langword="false"/> if not equal.
+            </returns>
+        </member>
+        <member name="M:MusicPlayerBackend.AudioMetaData.GetHashCode">
+            <summary>
+            Summs hash codes of every field. Calls subsequent <see cref="M:MusicPlayerBackend.AudioMetaData.GetHashCode"/> of the fields.
+            </summary>
+            <returns>Summed hash code as <see langword="int"/>.</returns>
+        </member>
+        <member name="M:MusicPlayerBackend.AudioMetaData.ToString">
+            <summary>
+            Adds every property formatted by name and value seperated by a pipe to a string.
+            Uses subsequent <see cref="M:MusicPlayerBackend.AudioMetaData.ToString"/> calls.
+            </summary>
+            <returns><see cref="T:System.String"/></returns>
+        </member>
         <member name="T:MusicPlayerBackend.Globals">
             <summary>
             Holds the global variables.
@@ -1231,109 +1398,6 @@
             Represents the default dark theme.
             </summary>
         </member>
-        <member name="T:MusicPlayerBackend.AudioDeviceModel">
-            <summary>
-            Holds data for the <see cref="T:MusicPlayerBackend.Contracts.ISettings"/> UI of the Audio Devices.
-            Implements <see cref="T:System.IEquatable`1"/> for equality checking. 
-            </summary>
-        </member>
-        <member name="P:MusicPlayerBackend.AudioDeviceModel.Text">
-            <summary>
-            Name of the Audio Device
-            </summary>
-        </member>
-        <member name="M:MusicPlayerBackend.AudioDeviceModel.Equals(MusicPlayerBackend.AudioDeviceModel)">
-            <summary>
-            Implements <see cref="T:System.IEquatable`1"/>. Equals by hold values.
-            </summary>
-            <param name="other"></param>
-            <returns><see langword="true"/> if equal. <see langword="false"/> if unequal.</returns>
-        </member>
-        <member name="M:MusicPlayerBackend.AudioDeviceModel.GetHashCode">
-            <summary>
-            Summs hash codes of every field.
-            </summary>
-            <returns>Summed hash code as <see langword="int"/>.</returns>
-        </member>
-        <member name="M:MusicPlayerBackend.AudioDeviceModel.ToString">
-            <summary>
-            Adds every property formatted by name and value seperated by a pipe to a string.
-            Uses subsequent <see cref="M:MusicPlayerBackend.AudioDeviceModel.ToString"/> calls.
-            </summary>
-            <returns><see cref="T:System.String"/></returns>
-        </member>
-        <member name="T:MusicPlayerBackend.ThemesModel">
-            <summary>
-            Holds data for the <see cref="T:MusicPlayerBackend.Contracts.ISettings"/> UI of the available Themes.
-            Implements <see cref="T:System.IEquatable`1"/> for equality checking. 
-            </summary>
-        </member>
-        <member name="P:MusicPlayerBackend.ThemesModel.Text">
-            <summary>
-            Represents the name of the Theme as <see cref="T:System.String"/>.
-            </summary>
-        </member>
-        <member name="M:MusicPlayerBackend.ThemesModel.Equals(MusicPlayerBackend.ThemesModel)">
-            <summary>
-            Implements <see cref="T:System.IEquatable`1"/>. Equals by hold values.
-            </summary>
-            <param name="other"></param>
-            <returns><see langword="true"/> if equal. <see langword="false"/> if unequal.</returns>
-        </member>
-        <member name="M:MusicPlayerBackend.ThemesModel.GetHashCode">
-            <summary>
-            Summs hash codes of every field.
-            </summary>
-            <returns>Summed hash code as <see langword="int"/>.</returns>
-        </member>
-        <member name="M:MusicPlayerBackend.ThemesModel.ToString">
-            <summary>
-            Adds every property formatted by name and value seperated by a pipe to a string.
-            Uses subsequent <see cref="M:MusicPlayerBackend.ThemesModel.ToString"/> calls.
-            </summary>
-            <returns><see cref="T:System.String"/></returns>
-        </member>
-        <member name="T:MusicPlayerBackend.AudioDataModel">
-            <summary>
-            Holds data for the <see cref="T:MusicPlayerBackend.Contracts.ISoundControlBar"/> UI of the available Themes.
-            Implements <see cref="T:System.IEquatable`1"/> for equality checking. 
-            </summary>
-        </member>
-        <member name="P:MusicPlayerBackend.AudioDataModel.Title">
-            <summary>
-            Represents the title of the audio file.
-            </summary>
-        </member>
-        <member name="P:MusicPlayerBackend.AudioDataModel.Duration">
-            <summary>
-            Represents the duration of the audio file. 
-            Has no predefined format.
-            </summary>
-        </member>
-        <member name="M:MusicPlayerBackend.AudioDataModel.Equals(MusicPlayerBackend.AudioDataModel)">
-            <summary>
-            Overrides the Equals Method of <see langword="object"/>.
-            If is <see cref="T:MusicPlayerBackend.AudioDataModel"/>, the call is delegated to <seealso cref="M:MusicPlayerBackend.AudioDataModel.Equals(MusicPlayerBackend.AudioDataModel)"/>
-            </summary>
-            <param name="other"></param>
-            <returns>
-            <see langword="true"/> if equal.
-            <see langword="false"/> if not equal.
-            </returns>
-        </member>
-        <member name="M:MusicPlayerBackend.AudioDataModel.GetHashCode">
-            <summary>
-            Summs hash codes of every field.
-            </summary>
-            <returns>Summed hash code as <see langword="int"/>.</returns>
-        </member>
-        <member name="M:MusicPlayerBackend.AudioDataModel.ToString">
-            <summary>
-            Adds every property formatted by name and value seperated by a pipe to a string.
-            Uses subsequent <see cref="M:MusicPlayerBackend.AudioDataModel.ToString"/> calls.
-            </summary>
-            <returns><see cref="T:System.String"/></returns>
-        </member>
         <member name="T:MusicPlayerBackend.ImageContainer">
             <summary>
             Holds neccessary data to hold and load an Image.
@@ -1373,98 +1437,34 @@
             </summary>
             <returns><see cref="T:System.String"/></returns>
         </member>
-        <member name="T:MusicPlayerBackend.AudioMetaData">
+        <member name="T:MusicPlayerBackend.ThemesModel">
             <summary>
-            Holds an abstracted unified set of properties to carry the needed meta data of an audio file.
+            Holds data for the <see cref="!:ISettings"/> UI of the available Themes.
             Implements <see cref="T:System.IEquatable`1"/> for equality checking. 
             </summary>
         </member>
-        <member name="P:MusicPlayerBackend.AudioMetaData.Title">
+        <member name="P:MusicPlayerBackend.ThemesModel.Text">
             <summary>
-            Represents the title of the audio file, if it was available in the files meta data.
+            Represents the name of the Theme as <see cref="T:System.String"/>.
             </summary>
         </member>
-        <member name="P:MusicPlayerBackend.AudioMetaData.Duration">
+        <member name="M:MusicPlayerBackend.ThemesModel.Equals(MusicPlayerBackend.ThemesModel)">
             <summary>
-            Represents the duration of the audio files content.
-            </summary>
-        </member>
-        <member name="P:MusicPlayerBackend.AudioMetaData.AudioFilePath">
-            <summary>
-            Represents the path the file was read from.
-            </summary>
-        </member>
-        <member name="M:MusicPlayerBackend.AudioMetaData.Equals(MusicPlayerBackend.AudioMetaData)">
-            <summary>
-            Overrides the Equals Method of <see langword="object"/>.
-            If is <see cref="T:MusicPlayerBackend.AudioMetaData"/>, the call is delegated to <seealso cref="M:MusicPlayerBackend.AudioMetaData.Equals(MusicPlayerBackend.AudioMetaData)"/>
+            Implements <see cref="T:System.IEquatable`1"/>. Equals by hold values.
             </summary>
             <param name="other"></param>
-            <returns>
-            <see langword="true"/> if equal.
-            <see langword="false"/> if not equal.
-            </returns>
+            <returns><see langword="true"/> if equal. <see langword="false"/> if unequal.</returns>
         </member>
-        <member name="M:MusicPlayerBackend.AudioMetaData.GetHashCode">
+        <member name="M:MusicPlayerBackend.ThemesModel.GetHashCode">
             <summary>
-            Summs hash codes of every field. Calls subsequent <see cref="M:MusicPlayerBackend.AudioMetaData.GetHashCode"/> of the fields.
+            Summs hash codes of every field.
             </summary>
             <returns>Summed hash code as <see langword="int"/>.</returns>
         </member>
-        <member name="M:MusicPlayerBackend.AudioMetaData.ToString">
+        <member name="M:MusicPlayerBackend.ThemesModel.ToString">
             <summary>
             Adds every property formatted by name and value seperated by a pipe to a string.
-            Uses subsequent <see cref="M:MusicPlayerBackend.AudioMetaData.ToString"/> calls.
-            </summary>
-            <returns><see cref="T:System.String"/></returns>
-        </member>
-        <member name="T:MusicPlayerBackend.AppSettings">
-            <summary>
-            Holds an abstracted unified set of properties to carry the needed meta data of an audio file.
-            Implements <see cref="T:System.IEquatable`1"/> for equality checking. 
-            </summary>
-        </member>
-        <member name="P:MusicPlayerBackend.AppSettings.MediaPath">
-            <summary>
-            Represents the path of all media files. 
-            </summary>
-        </member>
-        <member name="P:MusicPlayerBackend.AppSettings.AudioDevice">
-            <summary>
-            Represents the audio devices name. 
-            </summary>
-        </member>
-        <member name="P:MusicPlayerBackend.AppSettings.AudioDevices">
-            <summary>
-            Represents all found audio devices by their name.
-            </summary>
-        </member>
-        <member name="P:MusicPlayerBackend.AppSettings.AppStyle">
-            <summary>
-            Represents the theme as enum. The choices are predefined by the enum.
-            </summary>
-        </member>
-        <member name="M:MusicPlayerBackend.AppSettings.Equals(MusicPlayerBackend.AppSettings)">
-            <summary>
-            Overrides the Equals Method of <see langword="object"/>.
-            If is <see cref="T:MusicPlayerBackend.AudioDataModel"/>, the call is delegated to <seealso cref="M:MusicPlayerBackend.AppSettings.Equals(MusicPlayerBackend.AppSettings)"/>
-            </summary>
-            <param name="other"></param>
-            <returns>
-            <see langword="true"/> if equal.
-            <see langword="false"/> if not equal.
-            </returns>
-        </member>
-        <member name="M:MusicPlayerBackend.AppSettings.GetHashCode">
-            <summary>
-            Summs hash codes of every field. Calls subsequent <see cref="M:MusicPlayerBackend.AppSettings.GetHashCode"/> of the fields.
-            </summary>
-            <returns>Summed hash code as <see langword="int"/>.</returns>
-        </member>
-        <member name="M:MusicPlayerBackend.AppSettings.ToString">
-            <summary>
-            Adds every property formatted by name and value seperated by a pipe to a string.
-            Uses subsequent <see cref="M:MusicPlayerBackend.AppSettings.ToString"/> calls.
+            Uses subsequent <see cref="M:MusicPlayerBackend.ThemesModel.ToString"/> calls.
             </summary>
             <returns><see cref="T:System.String"/></returns>
         </member>
