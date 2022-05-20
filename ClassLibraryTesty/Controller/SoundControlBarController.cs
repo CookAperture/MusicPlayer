@@ -29,7 +29,7 @@ namespace MusicPlayerBackend
             AudioFileInteractor.onAudioFileFinished += () => OnAudioFileFinished();
         }
 
-        public event INotifyError.Error onError;
+        public event Action<NotificationModel> onError;
 
         private void OnPlay(AudioMetaData data)
         {

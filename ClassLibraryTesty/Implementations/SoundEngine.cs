@@ -19,12 +19,12 @@ namespace MusicPlayerBackend
         /// Called every second while playing an audio file. 
         /// Containing the latest progress, synced with the actual replay as <see cref="TimeSpan"/>.
         /// </summary>
-        public event ISoundEngine.OnUpdatePlayProgress onUpdatePlayProgress = (TimeSpan time) => { };
+        public event Action<TimeSpan> onUpdatePlayProgress = (TimeSpan time) => { };
 
         /// <summary>
         /// Called when a replay is finished regulary, not paused or manually stopped.
         /// </summary>
-        public event ISoundEngine.OnAudioFileFinished onAudioFileFinished = () => { };
+        public event Action onAudioFileFinished = () => { };
 
         /// <summary>
         /// Represents the actual stream handle. Only usefull for the engine itself. 

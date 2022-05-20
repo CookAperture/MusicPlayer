@@ -11,17 +11,9 @@ namespace MusicPlayerBackend.Contracts
     /// </summary>
     public interface IFileSystemHandler
     {
-
         /// <summary>
-        /// To be called with each found media. 
         /// </summary>
-        /// <param name="mediafile"></param>
-        public delegate void OnMediaFound(string mediafile);
-
-        /// <summary>
-        /// <see cref="OnMediaFound"/>
-        /// </summary>
-        public event OnMediaFound onMediaFound;
+        public event Action<string> onMediaFound;
 
         /// <summary>
         /// Describes the neccessary input and output to fetch audio file paths from a root.

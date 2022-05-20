@@ -15,9 +15,6 @@ namespace MusicPlayer
 {
     public class MediaList : NotifyUserControl, IMediaList
     {
-        public event IMediaList.OnSelection onSelection = (AudioMetaData selection) => { };
-        public event IMediaList.OnLoadMediaList onLoadMediaList;
-        public event IMediaList.OnLoadMediaListFromNewPath onLoadMediaListFromNewPath;
         public ObservableCollection<AudioDataModel> Songs { get; set; } = new ObservableCollection<AudioDataModel>();
         public AudioDataModel SelectedSong 
         {
@@ -28,6 +25,10 @@ namespace MusicPlayer
         private List<AudioMetaData> AudioMetaDataState { get; set; } = new List<AudioMetaData>();
         private bool _isLoaded = false;
         private AudioDataModel _SelectedSong;
+
+        public event Action<AudioMetaData> onSelection;
+        public event Func<Task> onLoadMediaList;
+        public event Func<string, Task> onLoadMediaListFromNewPath;
 
         public MediaList()
         {

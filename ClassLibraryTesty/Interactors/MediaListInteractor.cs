@@ -14,11 +14,6 @@ namespace MusicPlayerBackend
         ISoundEngine SoundEngine { get; set; }
 
         /// <summary>
-        /// Gets called when media file gets found in the async call.
-        /// </summary>
-        public event IMediaListInteractor.OnMediaFound onMediaFound;
-
-        /// <summary>
         /// Connects <paramref name="fileSystemHandler"/> with <paramref name="metaDataReader"/>.
         /// </summary>
         /// <param name="fileSystemHandler"></param>
@@ -30,6 +25,8 @@ namespace MusicPlayerBackend
 
             FileSystemHandler.onMediaFound += (string path) => { onMediaFound.Invoke(MetaDataReader.ReadMetaDataFromFile(path)); };
         }
+
+        public event Action<AudioMetaData> onMediaFound;
 
         /// <summary>
         /// Fetches all audio filepaths and fetches the meta data from them.

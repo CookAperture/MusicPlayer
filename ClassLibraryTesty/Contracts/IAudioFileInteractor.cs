@@ -11,31 +11,17 @@ namespace MusicPlayerBackend.Contracts
     /// </summary>
     public interface IAudioFileInteractor
     {
-
         /// <summary>
-        /// Defines the delegation for an update of any replay progress.
+        /// Declares the must that an event exists in any implementation of <see cref="IAudioFileInteractor"/>.
+        /// The use of it is not guranteed, but advised.
         /// </summary>
-        /// <param name="current">
-        /// Contains the value of the passed time of the replay.
-        /// </param>
-        public delegate void OnUpdatePlayProgress(TimeSpan current);
-
-        /// <summary>
-        /// Defines the delegation for an notification that a replay has finished on it self.
-        /// </summary>
-        public delegate void OnAudioFileFinished();
+        public event Action<TimeSpan> onUpdatePlayProgress;
 
         /// <summary>
         /// Declares the must that an event exists in any implementation of <see cref="IAudioFileInteractor"/>.
         /// The use of it is not guranteed, but advised.
         /// </summary>
-        public event OnUpdatePlayProgress onUpdatePlayProgress;
-
-        /// <summary>
-        /// Declares the must that an event exists in any implementation of <see cref="IAudioFileInteractor"/>.
-        /// The use of it is not guranteed, but advised.
-        /// </summary>
-        public event OnAudioFileFinished onAudioFileFinished;
+        public event Action onAudioFileFinished;
 
         /// <summary>
         /// Contracts to play actual audio file.

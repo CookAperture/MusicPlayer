@@ -22,7 +22,7 @@ namespace MusicPlayer
             DataContext = this;
         }
 
-        public event ISongCover.OnLoad onLoad;
+        public event Action<AudioMetaData> onLoad;
 
         public async Task LoadCover(ImageContainer imageContainer)
         {

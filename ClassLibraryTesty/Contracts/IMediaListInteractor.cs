@@ -11,17 +11,9 @@ namespace MusicPlayerBackend.Contracts
     /// </summary>
     public interface IMediaListInteractor
     {
-
         /// <summary>
-        /// To be called with each found media. 
         /// </summary>
-        /// <param name="audioMetaData"></param>
-        public delegate void OnMediaFound(AudioMetaData audioMetaData);
-
-        /// <summary>
-        /// <see cref="OnMediaFound"/>
-        /// </summary>
-        public event OnMediaFound onMediaFound;
+        public event Action<AudioMetaData> onMediaFound;
 
         /// <summary>
         /// Contracts to fetch all audio files recursivly from a root dir.

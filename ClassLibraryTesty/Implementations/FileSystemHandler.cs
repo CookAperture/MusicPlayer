@@ -17,13 +17,10 @@ namespace MusicPlayerBackend
         {
         }
 
+        public event Action<string> onMediaFound;
+
         private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
         private TaskFactory _taskFactory = new TaskFactory();
-
-        /// <summary>
-        /// Gets called when <see cref="FindAudioFilesFromRootPathAsync(string, List{string})"/> is used for every found media file.
-        /// </summary>
-        public event IFileSystemHandler.OnMediaFound onMediaFound;
 
         /// <summary>
         /// Finds all audio files from the given root <paramref name="rootPath"/>.

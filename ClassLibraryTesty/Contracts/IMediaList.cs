@@ -12,36 +12,19 @@ namespace MusicPlayerBackend.Contracts
     public interface IMediaList
     {
         /// <summary>
-        /// Interfaces selection event data.
-        /// </summary>
-        /// <param name="selection"></param>
-        public delegate void OnSelection(AudioMetaData selection);
-
-        /// <summary>
-        /// Interfaces to load the medialist.
-        /// </summary>
-        public delegate Task OnLoadMediaList();
-
-        /// <summary>
-        /// Interfaces to fetch from a new path.
-        /// </summary>
-        /// <param name="path"></param>
-        public delegate Task OnLoadMediaListFromNewPath(string path);
-
-        /// <summary>
         /// To be invoked upon selection and selection changes.
         /// </summary>
-        public event OnSelection onSelection;
+        public event Action<AudioMetaData> onSelection;
 
         /// <summary>
         /// To be invoked by content presenter.
         /// </summary>
-        public event OnLoadMediaList onLoadMediaList;
+        public event Func<Task> onLoadMediaList;
 
         /// <summary>
         /// To be invoked on changed settings.
         /// </summary>
-        public event OnLoadMediaListFromNewPath onLoadMediaListFromNewPath;
+        public event Func<string, Task> onLoadMediaListFromNewPath;
 
         /// <summary>
         /// Sets the media list content.

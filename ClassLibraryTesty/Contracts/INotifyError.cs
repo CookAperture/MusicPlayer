@@ -8,8 +8,6 @@ namespace MusicPlayerBackend.Contracts
 {
     public interface INotifyError
     {
-        public delegate void Error(NotificationModel notificationModel);
-
-        public event Error onError;
+        public event Action<NotificationModel> onError;
     }
 }

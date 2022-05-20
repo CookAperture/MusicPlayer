@@ -14,16 +14,6 @@ namespace MusicPlayerBackend
         IDataConverter DataConverter { get; set; }
 
         /// <summary>
-        /// Routes from the <see cref="ISoundEngine"/>.
-        /// </summary>
-        public event IAudioFileInteractor.OnUpdatePlayProgress onUpdatePlayProgress;
-
-        /// <summary>
-        /// Routes from the <see cref="ISoundEngine"/>.
-        /// </summary>
-        public event IAudioFileInteractor.OnAudioFileFinished onAudioFileFinished;
-
-        /// <summary>
         /// Connects <paramref name="dataConverter"/> with <paramref name="metaDataReader"/> and with <paramref name="soundEngine"/>.
         /// </summary>
         /// <param name="soundEngine"></param>
@@ -38,6 +28,9 @@ namespace MusicPlayerBackend
             SoundEngine.onAudioFileFinished += () => { onAudioFileFinished.Invoke(); };
             SoundEngine.onUpdatePlayProgress += (TimeSpan current) => { onUpdatePlayProgress.Invoke(current); };
         }
+
+        public event Action<TimeSpan> onUpdatePlayProgress;
+        public event Action onAudioFileFinished;
 
         /// <summary>
         /// Starts playing actual song selected.

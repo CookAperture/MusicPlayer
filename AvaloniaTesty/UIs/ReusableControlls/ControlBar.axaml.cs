@@ -9,14 +9,15 @@ namespace MusicPlayer
 {
     public class SoundControlBar : UserControl, ISoundControlBar
     {
-        public event ISoundControlBar.OnPlay onPlay;
-        public event ISoundControlBar.OnPause onPause;
-        public event ISoundControlBar.OnNext onNext;
-        public event ISoundControlBar.OnResume onResume;
-
         private AudioMetaData ActualAudio;
         private bool Playing = false;
         private bool Paused = false;
+
+        public event Action<AudioMetaData> onPlay;
+        public event Action onPause;
+        public event Action onResume;
+        public event Action onNext;
+
         ToggleButton PlayPauseButton { get; set; }
 
         public SoundControlBar()

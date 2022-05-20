@@ -17,8 +17,6 @@ namespace MusicPlayer
 
     public class Settings : NotifyUserControl, ISettings, INotifyPropertyChanged
     {
-        public event ISettings.OnSettingsChanged onSettingsChanged = (AppSettings settings) => {};
-        public event ISettings.OnLoadSettings onLoadSettings = () => { };
         public int ThemeSelectionIndex
         {
             get => _ThemeSelectionIndex;
@@ -46,6 +44,9 @@ namespace MusicPlayer
         private int _ThemeSelectionIndex = 0;
         private int _DeviceSelectionIndex = 0;
         private string _MediaPath = "";
+
+        public event Action<AppSettings> onSettingsChanged;
+        public event Action onLoadSettings;
 
         public Settings()
         {

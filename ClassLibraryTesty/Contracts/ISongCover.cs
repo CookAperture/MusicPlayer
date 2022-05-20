@@ -11,17 +11,10 @@ namespace MusicPlayerBackend.Contracts
     /// </summary>
     public interface ISongCover
     {
-
-        /// <summary>
-        /// Contracts the OnLoad event interface.
-        /// </summary>
-        /// <param name="audioMetaData"></param>
-        public delegate void OnLoad(AudioMetaData audioMetaData);
-
         /// <summary>
         /// Contracts availability of onLoad event for ISongCover.
         /// </summary>
-        public event OnLoad onLoad;
+        public event Action<AudioMetaData> onLoad;
 
         /// <summary>
         /// Should pass an image of the audio file cover.

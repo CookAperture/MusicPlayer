@@ -16,7 +16,7 @@ namespace MusicPlayer
     public class MainUI : Window, IMainUI, INotifyPropertyChanged
     {
         new public event PropertyChangedEventHandler PropertyChanged;
-        public event IMainUI.OnThemeChange onThemeChange;
+        public event Action<APPLICATION_STYLE> onThemeChange;
 
         public ICustomDecoration CustomDecoration { get; set; }
         public ISoundControlBar SoundControlBar { get; set; }

@@ -26,19 +26,6 @@
             Contracts to connect <see cref="T:MusicPlayerBackend.Contracts.ISoundEngine"/> with <see cref="T:MusicPlayerBackend.Contracts.IMetaDataReader"/> and with <see cref="T:MusicPlayerBackend.Contracts.IDataConverter"/>.
             </summary>
         </member>
-        <member name="T:MusicPlayerBackend.Contracts.IAudioFileInteractor.OnUpdatePlayProgress">
-            <summary>
-            Defines the delegation for an update of any replay progress.
-            </summary>
-            <param name="current">
-            Contains the value of the passed time of the replay.
-            </param>
-        </member>
-        <member name="T:MusicPlayerBackend.Contracts.IAudioFileInteractor.OnAudioFileFinished">
-            <summary>
-            Defines the delegation for an notification that a replay has finished on it self.
-            </summary>
-        </member>
         <member name="E:MusicPlayerBackend.Contracts.IAudioFileInteractor.onUpdatePlayProgress">
             <summary>
             Declares the must that an event exists in any implementation of <see cref="T:MusicPlayerBackend.Contracts.IAudioFileInteractor"/>.
@@ -123,31 +110,6 @@
             Contracts the neccessary functions to communicate with the custom decoration.
             </summary>
         </member>
-        <member name="T:MusicPlayerBackend.Contracts.ICustomDecoration.OnMinimize">
-            <summary>
-            Interfaces minimize event data.
-            </summary>
-            <param name="args"></param>
-        </member>
-        <member name="T:MusicPlayerBackend.Contracts.ICustomDecoration.OnMaximize">
-            <summary>
-            Interfaces maximize event data.
-            </summary>
-            <param name="args"></param>
-        </member>
-        <member name="T:MusicPlayerBackend.Contracts.ICustomDecoration.OnClose">
-            <summary>
-            Interfaces close event data.
-            </summary>
-            <param name="args"></param>
-        </member>
-        <member name="T:MusicPlayerBackend.Contracts.ICustomDecoration.OnDrag">
-            <summary>
-            Interfaces dragging event data.
-            </summary>
-            <param name="sender"></param>
-            <param name="args"></param>
-        </member>
         <member name="E:MusicPlayerBackend.Contracts.ICustomDecoration.onMinimize">
             <summary>
             To be invoked when minimize is triggered.
@@ -203,15 +165,8 @@
             Contracts the neccessary functions to handle a file system.
             </summary>
         </member>
-        <member name="T:MusicPlayerBackend.Contracts.IFileSystemHandler.OnMediaFound">
-            <summary>
-            To be called with each found media. 
-            </summary>
-            <param name="mediafile"></param>
-        </member>
         <member name="E:MusicPlayerBackend.Contracts.IFileSystemHandler.onMediaFound">
             <summary>
-            <see cref="T:MusicPlayerBackend.Contracts.IFileSystemHandler.OnMediaFound"/>
             </summary>
         </member>
         <member name="M:MusicPlayerBackend.Contracts.IFileSystemHandler.FindAudioFilesFromRootPath(System.String,System.Collections.Generic.List{System.String})">
@@ -224,7 +179,7 @@
         </member>
         <member name="M:MusicPlayerBackend.Contracts.IFileSystemHandler.FindAudioFilesFromRootPathAsync(System.String,System.Collections.Generic.List{System.String})">
             <summary>
-            Describes the neccessary input and output to fetch audio file paths from a root. Calls <see cref="T:MusicPlayerBackend.Contracts.IFileSystemHandler.OnMediaFound"/> for every found media.
+            Describes the neccessary input and output to fetch audio file paths from a root. Calls <see cref="!:OnMediaFound"/> for every found media.
             </summary>
             <param name="rootPath">The root path.</param>
             <param name="validAudioFiles">The valid file endings.</param>
@@ -277,12 +232,6 @@
             Contracts the neccessary functions to communicate with the main window.
             </summary>
         </member>
-        <member name="T:MusicPlayerBackend.Contracts.IMainUI.OnThemeChange">
-            <summary>
-            Interfaces to change theme.
-            </summary>
-            <param name="appStyle"></param>
-        </member>
         <member name="E:MusicPlayerBackend.Contracts.IMainUI.onThemeChange">
             <summary>
             To be invoked by settings.
@@ -331,23 +280,6 @@
             <summary>
             Contracts the neccessary functions to communicate with MediaList
             </summary>
-        </member>
-        <member name="T:MusicPlayerBackend.Contracts.IMediaList.OnSelection">
-            <summary>
-            Interfaces selection event data.
-            </summary>
-            <param name="selection"></param>
-        </member>
-        <member name="T:MusicPlayerBackend.Contracts.IMediaList.OnLoadMediaList">
-            <summary>
-            Interfaces to load the medialist.
-            </summary>
-        </member>
-        <member name="T:MusicPlayerBackend.Contracts.IMediaList.OnLoadMediaListFromNewPath">
-            <summary>
-            Interfaces to fetch from a new path.
-            </summary>
-            <param name="path"></param>
         </member>
         <member name="E:MusicPlayerBackend.Contracts.IMediaList.onSelection">
             <summary>
@@ -408,15 +340,8 @@
             Contracts to connect <see cref="T:MusicPlayerBackend.Contracts.IMetaDataReader"/> with <see cref="T:MusicPlayerBackend.Contracts.IFileSystemHandler"/>.
             </summary>
         </member>
-        <member name="T:MusicPlayerBackend.Contracts.IMediaListInteractor.OnMediaFound">
-            <summary>
-            To be called with each found media. 
-            </summary>
-            <param name="audioMetaData"></param>
-        </member>
         <member name="E:MusicPlayerBackend.Contracts.IMediaListInteractor.onMediaFound">
             <summary>
-            <see cref="T:MusicPlayerBackend.Contracts.IMediaListInteractor.OnMediaFound"/>
             </summary>
         </member>
         <member name="M:MusicPlayerBackend.Contracts.IMediaListInteractor.GetMediaListAsync(System.String)">
@@ -429,17 +354,6 @@
         <member name="T:MusicPlayerBackend.Contracts.ISettings">
             <summary>
             Contracts the neccessary functions to communicate with Settings.
-            </summary>
-        </member>
-        <member name="T:MusicPlayerBackend.Contracts.ISettings.OnSettingsChanged">
-            <summary>
-            Interfaces settings changed event data.
-            </summary>
-            <param name="appSettings"></param>
-        </member>
-        <member name="T:MusicPlayerBackend.Contracts.ISettings.OnLoadSettings">
-            <summary>
-            Interfaces to load settings.
             </summary>
         </member>
         <member name="E:MusicPlayerBackend.Contracts.ISettings.onSettingsChanged">
@@ -508,12 +422,6 @@
             Contracts the neccessary functions to communicate with SongCover.
             </summary>
         </member>
-        <member name="T:MusicPlayerBackend.Contracts.ISongCover.OnLoad">
-            <summary>
-            Contracts the OnLoad event interface.
-            </summary>
-            <param name="audioMetaData"></param>
-        </member>
         <member name="E:MusicPlayerBackend.Contracts.ISongCover.onLoad">
             <summary>
             Contracts availability of onLoad event for ISongCover.
@@ -567,26 +475,6 @@
             Contracts the neccessary functions to communicate with the sound controll bar and affect audio directly.
             </summary>
         </member>
-        <member name="T:MusicPlayerBackend.Contracts.ISoundControlBar.OnPlay">
-            <summary>
-            No return on play and without parameters.
-            </summary>
-        </member>
-        <member name="T:MusicPlayerBackend.Contracts.ISoundControlBar.OnPause">
-            <summary>
-            No return on pause and without parameters.
-            </summary>
-        </member>
-        <member name="T:MusicPlayerBackend.Contracts.ISoundControlBar.OnResume">
-            <summary>
-            No return and without parameters.
-            </summary>
-        </member>
-        <member name="T:MusicPlayerBackend.Contracts.ISoundControlBar.OnNext">
-            <summary>
-            No return next from media list.
-            </summary>
-        </member>
         <member name="E:MusicPlayerBackend.Contracts.ISoundControlBar.onPlay">
             <summary>
             To be invoked when user triggers play.
@@ -628,19 +516,6 @@
             Contracts the neccessary functions and events
             to ensure communication with the specific implementation of an sound handler
             to other components that might want to work with audio file.
-            </summary>
-        </member>
-        <member name="T:MusicPlayerBackend.Contracts.ISoundEngine.OnUpdatePlayProgress">
-            <summary>
-            Defines the delegation for an update of any replay progress.
-            </summary>
-            <param name="current">
-            Contains the value of the passed time of the replay.
-            </param>
-        </member>
-        <member name="T:MusicPlayerBackend.Contracts.ISoundEngine.OnAudioFileFinished">
-            <summary>
-            Defines the delegation for an notification that a replay has finished on it self.
             </summary>
         </member>
         <member name="E:MusicPlayerBackend.Contracts.ISoundEngine.onUpdatePlayProgress">
@@ -847,11 +722,6 @@
             Acquires all neccessary resources to go through a file system.
             </summary>
         </member>
-        <member name="E:MusicPlayerBackend.FileSystemHandler.onMediaFound">
-            <summary>
-            Gets called when <see cref="M:MusicPlayerBackend.FileSystemHandler.FindAudioFilesFromRootPathAsync(System.String,System.Collections.Generic.List{System.String})"/> is used for every found media file.
-            </summary>
-        </member>
         <member name="M:MusicPlayerBackend.FileSystemHandler.FindAudioFilesFromRootPath(System.String,System.Collections.Generic.List{System.String})">
             <summary>
             Finds all audio files from the given root <paramref name="rootPath"/>.
@@ -1053,16 +923,6 @@
             Implements <see cref="T:MusicPlayerBackend.Contracts.IAudioFileInteractor"/>
             </summary>
         </member>
-        <member name="E:MusicPlayerBackend.AudioFileInteractor.onUpdatePlayProgress">
-            <summary>
-            Routes from the <see cref="T:MusicPlayerBackend.Contracts.ISoundEngine"/>.
-            </summary>
-        </member>
-        <member name="E:MusicPlayerBackend.AudioFileInteractor.onAudioFileFinished">
-            <summary>
-            Routes from the <see cref="T:MusicPlayerBackend.Contracts.ISoundEngine"/>.
-            </summary>
-        </member>
         <member name="M:MusicPlayerBackend.AudioFileInteractor.#ctor(MusicPlayerBackend.Contracts.ISoundEngine,MusicPlayerBackend.Contracts.IDataConverter,MusicPlayerBackend.Contracts.IMetaDataReader)">
             <summary>
             Connects <paramref name="dataConverter"/> with <paramref name="metaDataReader"/> and with <paramref name="soundEngine"/>.
@@ -1101,11 +961,6 @@
         <member name="T:MusicPlayerBackend.MediaListInteractor">
             <summary>
             Implements <see cref="T:MusicPlayerBackend.Contracts.IMediaListInteractor"/>
-            </summary>
-        </member>
-        <member name="E:MusicPlayerBackend.MediaListInteractor.onMediaFound">
-            <summary>
-            Gets called when media file gets found in the async call.
             </summary>
         </member>
         <member name="M:MusicPlayerBackend.MediaListInteractor.#ctor(MusicPlayerBackend.Contracts.IFileSystemHandler,MusicPlayerBackend.Contracts.IMetaDataReader)">

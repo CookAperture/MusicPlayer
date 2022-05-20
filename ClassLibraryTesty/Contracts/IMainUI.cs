@@ -12,15 +12,9 @@ namespace MusicPlayerBackend.Contracts
     public interface IMainUI
     {
         /// <summary>
-        /// Interfaces to change theme.
-        /// </summary>
-        /// <param name="appStyle"></param>
-        public delegate void OnThemeChange(APPLICATION_STYLE appStyle);
-
-        /// <summary>
         /// To be invoked by settings.
         /// </summary>
-        public event OnThemeChange onThemeChange;
+        public event Action<APPLICATION_STYLE> onThemeChange;
 
         /// <summary>
         /// Represents a custom subwindow, it replaces the os decoration. 
