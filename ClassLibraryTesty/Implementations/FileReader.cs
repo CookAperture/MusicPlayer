@@ -1,4 +1,5 @@
 ﻿using MusicPlayerBackend.Contracts;
+using MusicPlayerBackend.InternalTypes;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -28,7 +29,14 @@ namespace MusicPlayerBackend
         {
             Debug.Assert(!string.IsNullOrEmpty(path));
 
-            return File.ReadAllLines(path).ToList();
+            try
+            {
+                return File.ReadAllLines(path).ToList();
+            }
+            catch (Exception)
+            {
+                throw new FileReadFailedException(string.Format("Failed to read file at path: {0}", path));
+            }
         }
 
         /// <summary>
@@ -40,7 +48,14 @@ namespace MusicPlayerBackend
         {
             Debug.Assert(!string.IsNullOrEmpty(path));
 
-            return File.ReadAllText(path);
+            try
+            {
+                return File.ReadAllText(path);
+            }
+            catch (Exception)
+            {
+                throw new FileReadFailedException(string.Format("Failed to read file at path: {0}", path));
+            }
         }
     }
 }
