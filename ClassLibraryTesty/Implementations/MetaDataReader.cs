@@ -1,4 +1,5 @@
 ﻿using MusicPlayerBackend.Contracts;
+using MusicPlayerBackend.InternalTypes;
 using System;
 using System.Diagnostics;
 using TagLib;
@@ -30,13 +31,22 @@ namespace MusicPlayerBackend
 
             AudioMetaData audioMetaData = new AudioMetaData();
 
-            TagLib.File tfile = TagLib.File.Create(path);
-            audioMetaData.Duration = tfile.Properties.Duration;
-            audioMetaData.Title = tfile.Tag.Title;
-            audioMetaData.AudioFilePath = path;
-
-            return audioMetaData;
-
+            try
+            {
+                TagLib.File tfile = TagLib.File.Create(path);
+                audioMetaData.Duration = tfile.Properties.Duration;
+                audioMetaData.Title = tfile.Tag.Title;
+                audioMetaData.AudioFilePath = path;
+                return audioMetaData;
+            }
+            catch (CorruptFileException)
+            {
+                throw new ReadAudioMetaDataFailedException(string.Format("Failed to read meta data from file {0}", path));
+            }
+            catch (UnsupportedFormatException)
+            {
+                throw new ReadAudioMetaDataFailedException(string.Format("Failed to read meta data from file {0}", path));
+            }
         }
 
         /// <summary>
@@ -48,15 +58,25 @@ namespace MusicPlayerBackend
         {
             Debug.Assert(path != null);
 
-            TagLib.File tfile = TagLib.File.Create(path);
-            var img = tfile.Tag.Pictures;
-            ImageContainer imageContainer = new ImageContainer()
+            try
             {
-                FilePath = path,
-                ImageStream = img.Length > 0 ? new MemoryStream(img[0].Data.Data) : null,
-            };
-
-            return imageContainer;
+                TagLib.File tfile = TagLib.File.Create(path);
+                var img = tfile.Tag.Pictures;
+                ImageContainer imageContainer = new ImageContainer()
+                {
+                    FilePath = path,
+                    ImageStream = img.Length > 0 ? new MemoryStream(img[0].Data.Data) : null,
+                };
+                return imageContainer;
+            }
+            catch (CorruptFileException)
+            {
+                throw new ReadAudioMetaDataFailedException(string.Format("Failed to read meta data from file {0}", path));
+            }
+            catch (UnsupportedFormatException)
+            {
+                throw new ReadAudioMetaDataFailedException(string.Format("Failed to read meta data from file {0}", path));
+            }
         }
     }
 }
