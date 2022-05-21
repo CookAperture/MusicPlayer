@@ -1,4 +1,5 @@
 ﻿using MusicPlayerBackend.Contracts;
+using MusicPlayerBackend.InternalTypes;
 using System.Diagnostics;
 using System.IO;
 
@@ -36,8 +37,15 @@ namespace MusicPlayerBackend
 
             List<string> audioFiles = new List<string>();
 
-            foreach (string audioFile in validAudioFiles)
-                audioFiles.AddRange(Directory.EnumerateFiles(rootPath, "*." + audioFile, SearchOption.AllDirectories));
+            try
+            {
+                foreach (string audioFile in validAudioFiles)
+                    audioFiles.AddRange(Directory.EnumerateFiles(rootPath, "*." + audioFile, new EnumerationOptions() { RecurseSubdirectories = true, IgnoreInaccessible = true}));
+            }
+            catch (Exception)
+            {
+                throw new EnumerateFilesAbortedException(string.Format("Enumeration of files aborted in {0} after {1}", rootPath, audioFiles.Last()));
+            }
 
             return audioFiles;
         }
@@ -50,22 +58,27 @@ namespace MusicPlayerBackend
             Debug.Assert(_cancellationTokenSource != null);
             Debug.Assert(!_cancellationTokenSource.IsCancellationRequested);
 
-            foreach (string audioFile in validAudioFiles)
+            try
             {
-                if (!_cancellationTokenSource.Token.IsCancellationRequested)
+                foreach (string audioFile in validAudioFiles)
                 {
-                    using (var e = await Task.Run(() => Directory.EnumerateFiles(rootPath, "*." + audioFile, SearchOption.AllDirectories).GetEnumerator(), _cancellationTokenSource.Token))
+                    if (!_cancellationTokenSource.Token.IsCancellationRequested)
                     {
-                        while (await Task.Run(() => e.MoveNext(), _cancellationTokenSource.Token))
+                        using (var e = await Task.Run(() => Directory.EnumerateFiles(rootPath, "*." + audioFile, new EnumerationOptions() { RecurseSubdirectories = true, IgnoreInaccessible = true }).GetEnumerator(), _cancellationTokenSource.Token))
                         {
-                            await Task.Run(() => onMediaFound.Invoke(e.Current), _cancellationTokenSource.Token);
-
-                            Logger.Log(LogSeverity.Debug, this, "Invoked " + e.Current);
+                            while (await Task.Run(() => e.MoveNext(), _cancellationTokenSource.Token))
+                            {
+                                await Task.Run(() => onMediaFound.Invoke(e.Current), _cancellationTokenSource.Token);
+                            }
                         }
                     }
+                    else
+                        return;
                 }
-                else
-                    return;
+            }
+            catch (Exception)
+            {
+                throw new EnumerateFilesAbortedException(string.Format("Enumeration of files aborted in {0}", rootPath));
             }
         }
 

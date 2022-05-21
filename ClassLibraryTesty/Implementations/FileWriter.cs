@@ -1,4 +1,5 @@
 ﻿using MusicPlayerBackend.Contracts;
+using MusicPlayerBackend.InternalTypes;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -29,7 +30,14 @@ namespace MusicPlayerBackend
             Debug.Assert(text != null);
             Debug.Assert(path != null);
 
-            File.WriteAllText(path, text);
+            try
+            {
+                File.WriteAllText(path, text);
+            }
+            catch (Exception)
+            {
+                throw new FileWriteFailedException(string.Format("Could not write to file at path: {0}", path));
+            } 
         }
     }
 }
