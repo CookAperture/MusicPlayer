@@ -4,6 +4,8 @@ using System.Threading;
 using ManagedBass;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Text;
+using MusicPlayerBackend.InternalTypes;
 
 namespace MusicPlayerBackend
 {
@@ -172,8 +174,11 @@ namespace MusicPlayerBackend
             }
             else
             {
-                //throw create stream failed - last error data?
                 var lasterr = Bass.LastError;
+                throw new StartPlayingFailedException(string.Format(
+                    "Could not start playing the audio file.\n"
+                    + "Error: {0}\n"
+                    + "File: {1}", lasterr, CurrentAudioMetaData.AudioFilePath));
             }
         }
 
@@ -247,7 +252,9 @@ namespace MusicPlayerBackend
             }
             else
             {
-                //throw
+                throw new CurrentPlayTimeOutOfBoundsException(string.Format("Current play time is out of bounds.\n"
+                    + "Current play time: {0}\n"
+                    + "Current max play time: {1}", CurrentProgress, CurrentMaxPlayDuration));
             }
         }
 
@@ -256,7 +263,10 @@ namespace MusicPlayerBackend
             Bass.Free();
             if (!Bass.Init(dev))
             {
-                //throw
+                throw new SoundEngineInitFailedException(string.Format(
+                    "Could not initialize the sound engine.\n"
+                    + "Error: {0}\n"
+                    + "Device: {1}", Bass.LastError, dev));
             }
         }
     }
