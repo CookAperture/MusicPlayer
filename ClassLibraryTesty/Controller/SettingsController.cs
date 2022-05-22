@@ -1,4 +1,5 @@
 using MusicPlayerBackend.Contracts;
+using MusicPlayerBackend.InternalTypes;
 
 namespace MusicPlayerBackend
 {
@@ -6,13 +7,15 @@ namespace MusicPlayerBackend
     /// <summary>
     /// Implements <see cref="ISettingsController"/>.
     /// </summary>
-    public class SettingsController : ISettingsController
+    public class SettingsController : ISettingsController, INotifyError
     {
         ISettings Settings { get; set; }
         ISettingsInteractor SettingsInteractor { get; set; }
         IApplication Application { get; set; }
 
         AppSettings _appSettings = new AppSettings();
+
+        public event Action<NotificationModel> onError;
 
         /// <summary>
         /// Connects <paramref name="settings"/> with <paramref name="settingsInteractor"/>.
@@ -30,39 +33,45 @@ namespace MusicPlayerBackend
 
             Settings.onSettingsChanged += (AppSettings appSettings) => OnSettingsChanged(appSettings);
             Settings.onLoadSettings += () => LoadSettings();
+
+            onError += (NotificationModel notificationModel) => ((INotifyUI)Settings).Notify(notificationModel);
         }
 
         private void OnSettingsChanged(AppSettings appSettings)
         {
             _appSettings = appSettings;
-            SettingsInteractor.WriteSettings(appSettings);
+            try
+            {
+                SettingsInteractor.WriteSettings(appSettings);
+            }
+            catch (FileWriteFailedException ex)
+            {
+                onError.Invoke(new NotificationModel() { Message = ex.Message, Level = NotificationModel.NotificationLevel.Error, Title = "Error"});
+            }
             SettingsInteractor.SetAudioDevice(appSettings.AudioDevice);
         }
 
         private AppSettings GetLatestSettings()
         {
+            AppSettings appSettings = new AppSettings();
+
             try
             {
-                var appSettings = SettingsInteractor.ReadSettings();
-                var currStyle = Application.GetCurrentApplicationStyle();
-                var devices = SettingsInteractor.GetAudioDevices();
-
-                appSettings.AudioDevices = devices;
-                appSettings.AppStyle = currStyle;
-
-                _appSettings = appSettings;
-                return _appSettings;
+                appSettings = SettingsInteractor.ReadSettings();
             }
-            catch (FileNotFoundException f)
+            catch (FileReadFailedException ex)
             {
-                //log away the err + invoke event
-
-                var currStyle = Application.GetCurrentApplicationStyle();
-                var devices = SettingsInteractor.GetAudioDevices();
-                _appSettings.AudioDevices = devices;
-                _appSettings.AppStyle= currStyle;
-                return _appSettings;
+                onError.Invoke(new NotificationModel() { Message = ex.Message, Level = NotificationModel.NotificationLevel.Warning, Title = "Error" });
             }
+
+            var currStyle = Application.GetCurrentApplicationStyle();
+            var devices = SettingsInteractor.GetAudioDevices();
+
+            appSettings.AudioDevices = devices;
+            appSettings.AppStyle = currStyle;
+
+            _appSettings = appSettings;
+            return _appSettings;
         }
 
         /// <summary>

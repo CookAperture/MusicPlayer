@@ -15,7 +15,7 @@ using System.Runtime.CompilerServices;
 namespace MusicPlayer
 {
 
-    public class Settings : NotifyUserControl, ISettings, INotifyPropertyChanged
+    public class Settings : NotifyUserControl, ISettings, INotifyUI, INotifyError
     {
         public int ThemeSelectionIndex
         {
@@ -47,6 +47,7 @@ namespace MusicPlayer
 
         public event Action<AppSettings> onSettingsChanged;
         public event Action onLoadSettings;
+        public event Action<NotificationModel> onError;
 
         public Settings()
         {
@@ -102,6 +103,11 @@ namespace MusicPlayer
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             MediaPath = ( await saveFileDialog.ShowAsync((Window)Program.MainUI));
+        }
+
+        public void Notify(NotificationModel message)
+        {
+            onError.Invoke(message);
         }
     }
 }

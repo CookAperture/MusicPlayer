@@ -21,7 +21,6 @@ namespace MusicPlayerBackend
         public event Action<string> onMediaFound;
 
         private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
-        private TaskFactory _taskFactory = new TaskFactory();
 
         /// <summary>
         /// Finds all audio files from the given root <paramref name="rootPath"/>.
@@ -50,7 +49,7 @@ namespace MusicPlayerBackend
             return audioFiles;
         }
 
-        async void FindAudioFilesPathAsync(string rootPath, List<string> validAudioFiles)
+        void FindAudioFilesPathAsync(string rootPath, List<string> validAudioFiles)
         {
             Debug.Assert(!string.IsNullOrEmpty(rootPath));
             Debug.Assert(validAudioFiles != null);
@@ -58,27 +57,20 @@ namespace MusicPlayerBackend
             Debug.Assert(_cancellationTokenSource != null);
             Debug.Assert(!_cancellationTokenSource.IsCancellationRequested);
 
-            try
+            foreach (string audioFile in validAudioFiles)
             {
-                foreach (string audioFile in validAudioFiles)
+                if (!_cancellationTokenSource.Token.IsCancellationRequested)
                 {
-                    if (!_cancellationTokenSource.Token.IsCancellationRequested)
+                    using (var e = Directory.EnumerateFiles(rootPath, "*." + audioFile, new EnumerationOptions() { RecurseSubdirectories = true, IgnoreInaccessible = true }).GetEnumerator())
                     {
-                        using (var e = await Task.Run(() => Directory.EnumerateFiles(rootPath, "*." + audioFile, new EnumerationOptions() { RecurseSubdirectories = true, IgnoreInaccessible = true }).GetEnumerator(), _cancellationTokenSource.Token))
+                        while (e.MoveNext())
                         {
-                            while (await Task.Run(() => e.MoveNext(), _cancellationTokenSource.Token))
-                            {
-                                await Task.Run(() => onMediaFound.Invoke(e.Current), _cancellationTokenSource.Token);
-                            }
+                            onMediaFound.Invoke(e.Current);
                         }
                     }
-                    else
-                        return;
                 }
-            }
-            catch (Exception)
-            {
-                throw new EnumerateFilesAbortedException(string.Format("Enumeration of files aborted in {0}", rootPath));
+                else
+                    return;
             }
         }
 
@@ -87,7 +79,7 @@ namespace MusicPlayerBackend
         /// </summary>
         /// <param name="rootPath">The root path.</param>
         /// <param name="validAudioFiles">The valid file endings.</param>
-        public async void FindAudioFilesFromRootPathAsync(string rootPath, List<string> validAudioFiles)
+        public void FindAudioFilesFromRootPathAsync(string rootPath, List<string> validAudioFiles)
         {
             Debug.Assert(!string.IsNullOrEmpty(rootPath));
             Debug.Assert(validAudioFiles != null);
@@ -97,7 +89,8 @@ namespace MusicPlayerBackend
 
             _cancellationTokenSource.Cancel();
             _cancellationTokenSource = new CancellationTokenSource();
-            await _taskFactory.StartNew(() => FindAudioFilesPathAsync(rootPath, validAudioFiles), _cancellationTokenSource.Token);
+            
+            FindAudioFilesPathAsync(rootPath, validAudioFiles);
         }
     }
 }

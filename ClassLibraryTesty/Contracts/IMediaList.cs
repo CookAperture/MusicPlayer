@@ -24,7 +24,7 @@ namespace MusicPlayerBackend.Contracts
         /// <summary>
         /// To be invoked on changed settings.
         /// </summary>
-        public event Func<string, Task> onLoadMediaListFromNewPath;
+        public event Action<string> onLoadMediaListFromNewPath;
 
         /// <summary>
         /// Sets the media list content.

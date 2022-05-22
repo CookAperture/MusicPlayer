@@ -1,4 +1,5 @@
 ﻿using MusicPlayerBackend.Contracts;
+using MusicPlayerBackend.InternalTypes;
 
 namespace MusicPlayerBackend
 {
@@ -6,7 +7,7 @@ namespace MusicPlayerBackend
     /// <summary>
     /// Implements <see cref="IMediaListController"/>.
     /// </summary>
-    public class MediaListController : IMediaListController
+    public class MediaListController : IMediaListController, INotifyError
     {
         IMediaList MediaList { get; set; }
         IMediaListInteractor MediaListInteractor { get; set; }
@@ -26,9 +27,13 @@ namespace MusicPlayerBackend
 
             MediaListInteractor.onMediaFound += (AudioMetaData found) => InvokeAddSongToList(found);
             MediaList.onLoadMediaList += () => Task.Run(() => SetMediaList());
-            MediaList.onLoadMediaListFromNewPath += (string path) => Task.Run( () => { SetMediaListCustomMediaPath(path); });
-            MediaList.onSelection += (AudioMetaData data) => OnSelection(data); 
+            MediaList.onLoadMediaListFromNewPath += (string path) => SetMediaListCustomMediaPath(path);
+            MediaList.onSelection += (AudioMetaData data) => OnSelection(data);
+
+            onError += (NotificationModel notificationModel) => ((INotifyUI)MediaList).Notify(notificationModel);
         }
+
+        public event Action<NotificationModel> onError;
 
         private void OnSelection(AudioMetaData data)
         {
@@ -44,10 +49,25 @@ namespace MusicPlayerBackend
         /// </summary>
         public async void SetMediaList()
         {
-            await Task.Run(() => {
-                var rootpath = SettingsInteractor.ReadSettings().MediaPath;
-                MediaListInteractor.GetMediaListAsync(rootpath);
-            });
+            try
+            {
+                await Task.Run(() => {
+                    var rootpath = SettingsInteractor.ReadSettings().MediaPath;
+                    MediaListInteractor.GetMediaListAsync(rootpath);
+                });
+            }
+            catch (FileReadFailedException ex)
+            {
+                onError.Invoke(new NotificationModel() { Message = ex.Message, Level = NotificationModel.NotificationLevel.Error, Title = "Error" });
+            }
+            catch(ReadAudioMetaDataFailedException ex)
+            {
+                onError.Invoke(new NotificationModel() { Message = ex.Message, Level = NotificationModel.NotificationLevel.Error, Title = "Error" });
+            }
+            catch (EnumerateFilesAbortedException ex)
+            {
+                onError.Invoke(new NotificationModel() { Message = ex.Message, Level = NotificationModel.NotificationLevel.Error, Title = "Error" });
+            }
         }
 
         /// <summary>
@@ -56,7 +76,20 @@ namespace MusicPlayerBackend
         /// <param name="path"></param>
         public async void SetMediaListCustomMediaPath(string path)
         {
-            await Task.Run(() => MediaListInteractor.GetMediaListAsync(path));
+            try
+            {
+                await Task.Run(() => {
+                    MediaListInteractor.GetMediaListAsync(path);
+                });
+            }
+            catch (ReadAudioMetaDataFailedException ex)
+            {
+                onError.Invoke(new NotificationModel() { Message = ex.Message, Level = NotificationModel.NotificationLevel.Error, Title = "Error" });
+            }
+            catch (EnumerateFilesAbortedException ex)
+            {
+                onError.Invoke(new NotificationModel() { Message = ex.Message, Level = NotificationModel.NotificationLevel.Error, Title = "Error" });
+            }
         }
     }
 }

@@ -12,7 +12,7 @@ using System.Runtime.CompilerServices;
 
 namespace MusicPlayer
 {
-    public class SongCover : NotifyUserControl, ISongCover
+    public class SongCover : NotifyUserControl, ISongCover, INotifyUI, INotifyError
     {
         public Subject<Bitmap> Cover { get; set; } = new Subject<Bitmap>();
 
@@ -23,6 +23,7 @@ namespace MusicPlayer
         }
 
         public event Action<AudioMetaData> onLoad;
+        public event Action<NotificationModel> onError;
 
         public async Task LoadCover(ImageContainer imageContainer)
         {
@@ -35,6 +36,11 @@ namespace MusicPlayer
         public void LoadCover(AudioMetaData audioMetaData)
         {
             onLoad.Invoke(audioMetaData);
+        }
+
+        public void Notify(NotificationModel message)
+        {
+            onError.Invoke(message);
         }
     }
 }

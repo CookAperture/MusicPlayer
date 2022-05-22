@@ -1,4 +1,5 @@
 using MusicPlayerBackend.Contracts;
+using MusicPlayerBackend.InternalTypes;
 
 namespace MusicPlayerBackend
 {
@@ -27,6 +28,8 @@ namespace MusicPlayerBackend
 
             AudioFileInteractor.onUpdatePlayProgress += (TimeSpan curr) => OnUpdatePlayProgress(curr);
             AudioFileInteractor.onAudioFileFinished += () => OnAudioFileFinished();
+
+            onError += (NotificationModel notificationModel) => ((INotifyUI)SoundControlBar).Notify(notificationModel);
         }
 
         public event Action<NotificationModel> onError;
@@ -37,14 +40,12 @@ namespace MusicPlayerBackend
             {
                 AudioFileInteractor.StartPlaying(data);
             }
-            catch (Exception ex)
+            catch (StartPlayingFailedException ex)
             {
                 onError.Invoke(new NotificationModel() { Title = "Unknown Error",
                     Message = ex.Source + "\n" + ex.Message,
-                Level = NotificationModel.NotificationLevel.Error});
-                throw;
+                    Level = NotificationModel.NotificationLevel.Error});
             }
-            // todo
         }
 
         private void OnPause()

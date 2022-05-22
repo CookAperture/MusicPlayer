@@ -7,7 +7,7 @@ using MusicPlayerBackend.Contracts;
 
 namespace MusicPlayer
 {
-    public class SoundControlBar : UserControl, ISoundControlBar
+    public class SoundControlBar : UserControl, ISoundControlBar, INotifyUI, INotifyError
     {
         private AudioMetaData ActualAudio;
         private bool Playing = false;
@@ -17,6 +17,7 @@ namespace MusicPlayer
         public event Action onPause;
         public event Action onResume;
         public event Action onNext;
+        public event Action<NotificationModel> onError;
 
         ToggleButton PlayPauseButton { get; set; }
 
@@ -67,6 +68,11 @@ namespace MusicPlayer
         {
             Playing = false;
             onNext.Invoke();
+        }
+
+        public void Notify(NotificationModel message)
+        {
+            onError.Invoke(message);
         }
     }
 }

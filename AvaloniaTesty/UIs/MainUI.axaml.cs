@@ -13,7 +13,7 @@ using System.Runtime.CompilerServices;
 
 namespace MusicPlayer
 {
-    public class MainUI : Window, IMainUI, INotifyPropertyChanged
+    public class MainUI : Window, IMainUI, INotifyPropertyChanged, INotifyUI
     {
         new public event PropertyChangedEventHandler PropertyChanged;
         public event Action<APPLICATION_STYLE> onThemeChange;
@@ -49,6 +49,11 @@ namespace MusicPlayer
             ContentPresenter.MediaList.onSelection += (AudioMetaData data) => { SoundControlBar.SetAudioMetaData(data); };
             ContentPresenter.Settings.onSettingsChanged += (AppSettings data) => { onThemeChange.Invoke(data.AppStyle); };
 
+            ((INotifyError)ContentPresenter.SongCover).onError += (NotificationModel model) => Notify(model);
+            ((INotifyError)ContentPresenter.Settings).onError += (NotificationModel model) => Notify(model);
+            ((INotifyError)ContentPresenter.MediaList).onError += (NotificationModel model) => Notify(model);
+            ((INotifyError)SoundControlBar).onError += (NotificationModel model) => Notify(model);
+
             this.FindControl<Button>("PaneButton").Click += (i, e) => { if (PaneState) PaneState = false; else PaneState = true; };
             this.FindControl<Button>("CoverButton").Click += (i, e) => ContentPresenter.ShowCoverPage();
             this.FindControl<Button>("SettingsButton").Click += (i, e) => ContentPresenter.ShowSettingsPage();
@@ -79,5 +84,25 @@ namespace MusicPlayer
 
         protected void RaisePropertyChanged([CallerMemberName] string propertyName = null)
             => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+
+        public void Notify(NotificationModel message)
+        {
+            ManagedNotificationManager.Show(new Avalonia.Controls.Notifications.Notification(message.Title, message.Message, MapNotificationLevelToNotificationType(message.Level)));
+        }
+
+        private NotificationType MapNotificationLevelToNotificationType(NotificationModel.NotificationLevel notificationLevel)
+        {
+            switch (notificationLevel)
+            {
+                case NotificationModel.NotificationLevel.Information:
+                    return NotificationType.Information;
+                case NotificationModel.NotificationLevel.Warning:
+                    return NotificationType.Warning;
+                case NotificationModel.NotificationLevel.Error:
+                    return NotificationType.Error;
+                default:
+                    return NotificationType.Information;
+            }
+        }
     }
 }

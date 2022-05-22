@@ -65,7 +65,7 @@ namespace MusicPlayerBackend
                 ImageContainer imageContainer = new ImageContainer()
                 {
                     FilePath = path,
-                    ImageStream = img.Length > 0 ? new MemoryStream(img[0].Data.Data) : null,
+                    ImageStream = img.Length > 0 ? new MemoryStream(img[0].Data.Data) : throw new CorruptFileException(),
                 };
                 return imageContainer;
             }

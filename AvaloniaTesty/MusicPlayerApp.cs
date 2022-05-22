@@ -7,7 +7,7 @@ namespace MusicPlayer
     public static class MusicPlayerApp
     {
         // Avalonia configuration, don't remove; also used by visual designer.
-        public static void Init(string[] args, OnReady onReadyDelegate)
+        public static void Init(string[] args, Func<Window> onReadyDelegate)
         {
             // Initialization code. Don't use any Avalonia, third-party APIs or any
             // SynchronizationContext-reliant code before AppMain is called: things aren't initialized
@@ -32,7 +32,6 @@ namespace MusicPlayer
         public static AppBuilder AppBuilder { get; set; }
         public static Application Application { get; set; }
 
-        public delegate Window OnReady();
-        public static event OnReady onReady;
+        public static event Func<Window> onReady;
     }
 }

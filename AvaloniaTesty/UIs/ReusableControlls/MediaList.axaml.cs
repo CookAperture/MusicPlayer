@@ -13,7 +13,7 @@ using System.Reactive;
 
 namespace MusicPlayer
 {
-    public class MediaList : NotifyUserControl, IMediaList
+    public class MediaList : NotifyUserControl, IMediaList, INotifyUI, INotifyError
     {
         public ObservableCollection<AudioDataModel> Songs { get; set; } = new ObservableCollection<AudioDataModel>();
         public AudioDataModel SelectedSong 
@@ -28,7 +28,8 @@ namespace MusicPlayer
 
         public event Action<AudioMetaData> onSelection;
         public event Func<Task> onLoadMediaList;
-        public event Func<string, Task> onLoadMediaListFromNewPath;
+        public event Action<string> onLoadMediaListFromNewPath;
+        public event Action<NotificationModel> onError;
 
         public MediaList()
         {
@@ -75,14 +76,17 @@ namespace MusicPlayer
             }
         }
 
-        public async void LoadMediaListFromNewMediaPath(string path)
+        public void LoadMediaListFromNewMediaPath(string path)
         {
-            await Task.Run(async () => {
-                Songs.Clear();
-                AudioMetaDataState.Clear();
-                await onLoadMediaListFromNewPath.Invoke(path);
-            });
+            Songs.Clear();
+            AudioMetaDataState.Clear();
+            onLoadMediaListFromNewPath.Invoke(path);
             _isLoaded = true;
+        }
+
+        public void Notify(NotificationModel message)
+        {
+            onError.Invoke(message);
         }
     }
 }
