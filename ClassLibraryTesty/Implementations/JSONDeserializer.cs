@@ -34,8 +34,6 @@ namespace MusicPlayerBackend
 
             T result = JsonSerializer.Deserialize<T>(deserializable);
 
-            Logger.Log(LogSeverity.Success, this, "String deserialized: " + result.ToString());
-
             return result;
         }
     }

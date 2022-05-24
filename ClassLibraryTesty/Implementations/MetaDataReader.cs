@@ -25,7 +25,7 @@ namespace MusicPlayerBackend
         /// </summary>
         /// <param name="path"></param>
         /// <returns>Returns an <see cref="AudioMetaData"/> struct with all fileds filled if info was available.</returns>
-        public AudioMetaData ReadMetaDataFromFile(string path)
+        public void ReadMetaDataFromFile(string path, Action<AudioMetaData> onFound, Action<string> onError)
         {
             Debug.Assert(path != null);
 
@@ -37,15 +37,15 @@ namespace MusicPlayerBackend
                 audioMetaData.Duration = tfile.Properties.Duration;
                 audioMetaData.Title = tfile.Tag.Title;
                 audioMetaData.AudioFilePath = path;
-                return audioMetaData;
+                onFound.Invoke(audioMetaData);
             }
             catch (CorruptFileException)
             {
-                throw new ReadAudioMetaDataFailedException(string.Format("Failed to read meta data from file {0}", path));
+                onError.Invoke(string.Format("Failed to read meta data from file {0}", path));
             }
             catch (UnsupportedFormatException)
             {
-                throw new ReadAudioMetaDataFailedException(string.Format("Failed to read meta data from file {0}", path));
+                onError.Invoke(string.Format("Failed to read meta data from file {0}", path));
             }
         }
 

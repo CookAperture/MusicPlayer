@@ -57,10 +57,7 @@ namespace MusicPlayerBackend
         /// <returns><see cref="string"/></returns>
         public override string ToString()
         {
-            string str = "FilePath: " + FilePath +
-                " | ImageStream: " + ImageStream == null ? ImageStream.ToString() : "empty";
-
-            return str;
+            return string.Format("FilePath: {0} | ImageStream: {1}", FilePath, ImageStream != null ? ImageStream.ToString() : "empty");
         }
     }
 }

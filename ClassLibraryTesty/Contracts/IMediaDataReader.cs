@@ -17,7 +17,7 @@ namespace MusicPlayerBackend.Contracts
         /// </summary>
         /// <param name="path"></param>
         /// <returns>Should return an correctly filled <see cref="AudioMetaData"/> struct.</returns>
-        public AudioMetaData ReadMetaDataFromFile(string path);
+        public void ReadMetaDataFromFile(string path, Action<AudioMetaData> onFound, Action<string> onError);
 
         /// <summary>
         /// Contracts to read the cover image from a audi file if available.

@@ -5,6 +5,7 @@ using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media;
+using Avalonia.Threading;
 using MusicPlayerBackend;
 using MusicPlayerBackend.Contracts;
 using System.Collections.Generic;
@@ -36,7 +37,7 @@ namespace MusicPlayer
             AvaloniaXamlLoader.Load(this);
 
             ManagedNotificationManager = new WindowNotificationManager(this) { Position = NotificationPosition.BottomRight, MaxItems = 5 };
-
+                
             CustomDecoration = (ICustomDecoration)this.FindControl<UserControl>("CustomDecoration");
             SoundControlBar = (ISoundControlBar)this.FindControl<UserControl>("SoundControlBar");
             ContentPresenter = (IContentPresenter)this.FindControl<UserControl>("ContentPage");
@@ -84,10 +85,13 @@ namespace MusicPlayer
 
         protected void RaisePropertyChanged([CallerMemberName] string propertyName = null)
             => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-
-        public void Notify(NotificationModel message)
-        {
-            ManagedNotificationManager.Show(new Avalonia.Controls.Notifications.Notification(message.Title, message.Message, MapNotificationLevelToNotificationType(message.Level)));
+        
+        public async void Notify(NotificationModel message)
+        {            
+            await Dispatcher.UIThread.InvokeAsync(() =>
+            {
+                ManagedNotificationManager.Show(new Notification(message.Title, message.Message, MapNotificationLevelToNotificationType(message.Level)));
+            });
         }
 
         private NotificationType MapNotificationLevelToNotificationType(NotificationModel.NotificationLevel notificationLevel)

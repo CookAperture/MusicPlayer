@@ -262,7 +262,7 @@
             Contracts the neccessary functions to read a audio meta data struct from files.
             </summary>
         </member>
-        <member name="M:MusicPlayerBackend.Contracts.IMetaDataReader.ReadMetaDataFromFile(System.String)">
+        <member name="M:MusicPlayerBackend.Contracts.IMetaDataReader.ReadMetaDataFromFile(System.String,System.Action{MusicPlayerBackend.AudioMetaData},System.Action{System.String})">
             <summary>
             Communicates that <paramref name="path"/> is used to obtain an <see cref="T:MusicPlayerBackend.AudioMetaData"/>.
             </summary>
@@ -804,7 +804,7 @@
             Acquires neccessary resources to read meta data of files. None at the moment.
             </summary>
         </member>
-        <member name="M:MusicPlayerBackend.MetaDataReader.ReadMetaDataFromFile(System.String)">
+        <member name="M:MusicPlayerBackend.MetaDataReader.ReadMetaDataFromFile(System.String,System.Action{MusicPlayerBackend.AudioMetaData},System.Action{System.String})">
             <summary>
             Implements the reading the meta data from file, in this case specifically media files. 
             </summary>
@@ -1322,55 +1322,6 @@
             Uses subsequent <see cref="M:MusicPlayerBackend.ThemesModel.ToString"/> calls.
             </summary>
             <returns><see cref="T:System.String"/></returns>
-        </member>
-        <member name="T:MusicPlayerBackend.LogSeverity">
-            <summary>
-            Capsulates the LogLvl.
-            </summary>
-        </member>
-        <member name="F:MusicPlayerBackend.LogSeverity.Debug">
-            <summary>
-            Debugging level.
-            </summary>
-        </member>
-        <member name="F:MusicPlayerBackend.LogSeverity.Informative">
-            <summary>
-            Information level.
-            </summary>
-        </member>
-        <member name="F:MusicPlayerBackend.LogSeverity.Warning">
-            <summary>
-            Warning level.
-            </summary>
-        </member>
-        <member name="F:MusicPlayerBackend.LogSeverity.Error">
-            <summary>
-            Error level.
-            </summary>
-        </member>
-        <member name="F:MusicPlayerBackend.LogSeverity.Success">
-            <summary>
-            Success level.
-            </summary>
-        </member>
-        <member name="T:MusicPlayerBackend.Logger">
-            <summary>
-            Enables controlled logging. Using Trace/Debug with custom Listeners.
-            </summary>
-        </member>
-        <member name="P:MusicPlayerBackend.Logger.LogLevelStr">
-            <summary>
-            Translates the <see cref="T:MusicPlayerBackend.LogSeverity"/> into neat strings.
-            </summary>
-        </member>
-        <member name="M:MusicPlayerBackend.Logger.Log(MusicPlayerBackend.LogSeverity,System.Object,System.String)">
-            <summary>
-            Logs away threaded.
-            </summary>
-            <param name="severity"></param>
-            <param name="caller"></param>
-            <param name="msg"></param>
-            <returns></returns>
         </member>
     </members>
 </doc>

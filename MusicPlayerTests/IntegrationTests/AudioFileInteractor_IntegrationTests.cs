@@ -22,7 +22,7 @@ namespace MusicPlayerTests
                 Duration = TimeSpan.FromSeconds(230),
                 Title = "Song"
             };
-            mdr.ReadMetaDataFromFile(@"C:://Song.mp3").Returns(data);
+            mdr.ReadMetaDataFromFile(@"C:://Song.mp3", x => { }, x => { });
 
             audioFileInteractor.StartPlaying(data);
 
