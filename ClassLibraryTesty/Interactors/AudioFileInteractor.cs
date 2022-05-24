@@ -1,4 +1,5 @@
 ﻿using MusicPlayerBackend.Contracts;
+using MusicPlayerBackend.InternalTypes;
 using System;
 
 namespace MusicPlayerBackend
@@ -7,7 +8,7 @@ namespace MusicPlayerBackend
     /// <summary>
     /// Implements <see cref="IAudioFileInteractor"/>
     /// </summary>
-    public class AudioFileInteractor : IAudioFileInteractor
+    public class AudioFileInteractor : IAudioFileInteractor, INotifyError
     {
         ISoundEngine SoundEngine { get; set; }
         IMetaDataReader MetaDataReader { get; set; }
@@ -26,18 +27,26 @@ namespace MusicPlayerBackend
             MetaDataReader = metaDataReader;
 
             SoundEngine.onAudioFileFinished += () => { onAudioFileFinished.Invoke(); };
-            SoundEngine.onUpdatePlayProgress += (TimeSpan current) => { onUpdatePlayProgress.Invoke(current); };
+            SoundEngine.onUpdatePlayProgress += (TimeSpan current) => OnUpdatePlayProgress(current);
         }
 
         public event Action<TimeSpan> onUpdatePlayProgress;
         public event Action onAudioFileFinished;
+        public event Action<NotificationModel> onError;
 
         /// <summary>
         /// Starts playing actual song selected.
         /// </summary>
         public void StartPlaying(AudioMetaData data)
         {
-            SoundEngine.StartPlaying(data);
+            try
+            {
+                SoundEngine.StartPlaying(data);
+            }
+            catch (StartPlayingFailedException ex)
+            {
+                onError.Invoke(new NotificationModel() { Title = "Error", Message = ex.Message, Level = NotificationModel.NotificationLevel.Error });
+            }
         }
 
         /// <summary>
@@ -72,6 +81,11 @@ namespace MusicPlayerBackend
         public void ResumePlaying()
         {
             SoundEngine.ResumePlaying();
+        }
+
+        private void OnUpdatePlayProgress(TimeSpan current)
+        {
+            onUpdatePlayProgress.Invoke(current);
         }
     }
 }

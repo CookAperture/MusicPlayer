@@ -250,12 +250,6 @@ namespace MusicPlayerBackend
                     onAudioFileFinished.Invoke();
                 }
             }
-            else
-            {
-                throw new CurrentPlayTimeOutOfBoundsException(string.Format("Current play time is out of bounds.\n"
-                    + "Current play time: {0}\n"
-                    + "Current max play time: {1}", CurrentProgress, CurrentMaxPlayDuration));
-            }
         }
 
         private void Init(int dev)

@@ -7,7 +7,7 @@ namespace MusicPlayerBackend
     /// <summary>
     /// Implements <see cref="ISoundControlBarController"/>.
     /// </summary>
-    public class SoundControlBarController : ISoundControlBarController, INotifyError
+    public class SoundControlBarController : ISoundControlBarController
     {
         ISoundControlBar SoundControlBar { get; set; }
         IAudioFileInteractor AudioFileInteractor { get; set; }
@@ -28,24 +28,12 @@ namespace MusicPlayerBackend
 
             AudioFileInteractor.onUpdatePlayProgress += (TimeSpan curr) => OnUpdatePlayProgress(curr);
             AudioFileInteractor.onAudioFileFinished += () => OnAudioFileFinished();
-
-            onError += (NotificationModel notificationModel) => ((INotifyUI)SoundControlBar).Notify(notificationModel);
+            ((INotifyError)AudioFileInteractor).onError += (NotificationModel notification) => ((INotifyUI)SoundControlBar).Notify(notification);
         }
-
-        public event Action<NotificationModel> onError;
 
         private void OnPlay(AudioMetaData data)
         {
-            try
-            {
-                AudioFileInteractor.StartPlaying(data);
-            }
-            catch (StartPlayingFailedException ex)
-            {
-                onError.Invoke(new NotificationModel() { Title = "Unknown Error",
-                    Message = ex.Source + "\n" + ex.Message,
-                    Level = NotificationModel.NotificationLevel.Error});
-            }
+            AudioFileInteractor.StartPlaying(data);
         }
 
         private void OnPause()
