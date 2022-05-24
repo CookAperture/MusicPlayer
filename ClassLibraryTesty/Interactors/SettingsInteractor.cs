@@ -37,6 +37,9 @@ namespace MusicPlayerBackend
             SoundEngine = soundEngine;
         }
 
+        /// <summary>
+        /// Fires on Error.
+        /// </summary>
         public event Action<NotificationModel> onError;
 
         /// <summary>

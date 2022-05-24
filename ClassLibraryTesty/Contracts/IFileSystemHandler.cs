@@ -24,7 +24,7 @@ namespace MusicPlayerBackend.Contracts
         public List<string> FindAudioFilesFromRootPath(string rootPath, List<string> validAudioFiles);
 
         /// <summary>
-        /// Describes the neccessary input and output to fetch audio file paths from a root. Calls <see cref="OnMediaFound"/> for every found media.
+        /// Describes the neccessary input and output to fetch audio file paths from a root.
         /// </summary>
         /// <param name="rootPath">The root path.</param>
         /// <param name="validAudioFiles">The valid file endings.</param>

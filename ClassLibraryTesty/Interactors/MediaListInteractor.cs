@@ -30,7 +30,14 @@ namespace MusicPlayerBackend
             };
         }
 
+        /// <summary>
+        /// Fires when a media is found.
+        /// </summary>
         public event Action<AudioMetaData> onMediaFound;
+
+        /// <summary>
+        /// Fires when an error occurs.
+        /// </summary>
         public event Action<NotificationModel> onError;
 
         /// <summary>

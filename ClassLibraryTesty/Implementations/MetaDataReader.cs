@@ -24,6 +24,8 @@ namespace MusicPlayerBackend
         /// Implements the reading the meta data from file, in this case specifically media files. 
         /// </summary>
         /// <param name="path"></param>
+        /// <param name="onError"></param>
+        /// <param name="onFound"></param>
         /// <returns>Returns an <see cref="AudioMetaData"/> struct with all fileds filled if info was available.</returns>
         public void ReadMetaDataFromFile(string path, Action<AudioMetaData> onFound, Action<string> onError)
         {

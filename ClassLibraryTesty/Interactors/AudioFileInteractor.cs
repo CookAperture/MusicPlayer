@@ -30,8 +30,19 @@ namespace MusicPlayerBackend
             SoundEngine.onUpdatePlayProgress += (TimeSpan current) => OnUpdatePlayProgress(current);
         }
 
+        /// <summary>
+        /// Fired every second when the audio file is playing.
+        /// </summary>
         public event Action<TimeSpan> onUpdatePlayProgress;
+
+        /// <summary>
+        /// Fired when the audio file is finished playing.
+        /// </summary>
         public event Action onAudioFileFinished;
+
+        /// <summary>
+        /// Fired when an error occurs.
+        /// </summary>
         public event Action<NotificationModel> onError;
 
         /// <summary>

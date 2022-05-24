@@ -16,6 +16,8 @@ namespace MusicPlayerBackend.Contracts
         /// Communicates that <paramref name="path"/> is used to obtain an <see cref="AudioMetaData"/>.
         /// </summary>
         /// <param name="path"></param>
+        /// <param name="onFound"></param>
+        /// <param name="onError"></param>
         /// <returns>Should return an correctly filled <see cref="AudioMetaData"/> struct.</returns>
         public void ReadMetaDataFromFile(string path, Action<AudioMetaData> onFound, Action<string> onError);
 

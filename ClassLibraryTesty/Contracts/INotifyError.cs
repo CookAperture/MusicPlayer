@@ -6,8 +6,14 @@ using System.Threading.Tasks;
 
 namespace MusicPlayerBackend.Contracts
 {
+    /// <summary>
+    /// Contracts for firing ErrorNotifications.
+    /// </summary>
     public interface INotifyError
     {
+        /// <summary>
+        /// Fires an ErrorNotification.
+        /// </summary>
         public event Action<NotificationModel> onError;
     }
 }

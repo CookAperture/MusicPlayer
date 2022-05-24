@@ -18,6 +18,9 @@ namespace MusicPlayerBackend
         {
         }
 
+        /// <summary>
+        /// Fired when a file is found.
+        /// </summary>
         public event Action<string> onMediaFound;
 
         private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();

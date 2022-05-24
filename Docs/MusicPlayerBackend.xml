@@ -179,7 +179,7 @@
         </member>
         <member name="M:MusicPlayerBackend.Contracts.IFileSystemHandler.FindAudioFilesFromRootPathAsync(System.String,System.Collections.Generic.List{System.String})">
             <summary>
-            Describes the neccessary input and output to fetch audio file paths from a root. Calls <see cref="!:OnMediaFound"/> for every found media.
+            Describes the neccessary input and output to fetch audio file paths from a root.
             </summary>
             <param name="rootPath">The root path.</param>
             <param name="validAudioFiles">The valid file endings.</param>
@@ -267,6 +267,8 @@
             Communicates that <paramref name="path"/> is used to obtain an <see cref="T:MusicPlayerBackend.AudioMetaData"/>.
             </summary>
             <param name="path"></param>
+            <param name="onFound"></param>
+            <param name="onError"></param>
             <returns>Should return an correctly filled <see cref="T:MusicPlayerBackend.AudioMetaData"/> struct.</returns>
         </member>
         <member name="M:MusicPlayerBackend.Contracts.IMetaDataReader.ReadImageFromAudioFile(System.String)">
@@ -350,6 +352,26 @@
             </summary>
             <param name="rootPath"></param>
             <returns>List of <see cref="T:MusicPlayerBackend.AudioMetaData"/> from all found media files.</returns>
+        </member>
+        <member name="T:MusicPlayerBackend.Contracts.INotifyError">
+            <summary>
+            Contracts for firing ErrorNotifications.
+            </summary>
+        </member>
+        <member name="E:MusicPlayerBackend.Contracts.INotifyError.onError">
+            <summary>
+            Fires an ErrorNotification.
+            </summary>
+        </member>
+        <member name="T:MusicPlayerBackend.Contracts.INotifyUI">
+            <summary>
+            Contracts for Displaying a Notification.
+            </summary>
+        </member>
+        <member name="M:MusicPlayerBackend.Contracts.INotifyUI.Notify(MusicPlayerBackend.NotificationModel)">
+            <summary>
+            Displays a notification on the UI.
+            </summary>
         </member>
         <member name="T:MusicPlayerBackend.Contracts.ISettings">
             <summary>
@@ -722,6 +744,11 @@
             Acquires all neccessary resources to go through a file system.
             </summary>
         </member>
+        <member name="E:MusicPlayerBackend.FileSystemHandler.onMediaFound">
+            <summary>
+            Fired when a file is found.
+            </summary>
+        </member>
         <member name="M:MusicPlayerBackend.FileSystemHandler.FindAudioFilesFromRootPath(System.String,System.Collections.Generic.List{System.String})">
             <summary>
             Finds all audio files from the given root <paramref name="rootPath"/>.
@@ -809,6 +836,8 @@
             Implements the reading the meta data from file, in this case specifically media files. 
             </summary>
             <param name="path"></param>
+            <param name="onError"></param>
+            <param name="onFound"></param>
             <returns>Returns an <see cref="T:MusicPlayerBackend.AudioMetaData"/> struct with all fileds filled if info was available.</returns>
         </member>
         <member name="M:MusicPlayerBackend.MetaDataReader.ReadImageFromAudioFile(System.String)">
@@ -931,6 +960,21 @@
             <param name="dataConverter"></param>
             <param name="metaDataReader"></param>
         </member>
+        <member name="E:MusicPlayerBackend.AudioFileInteractor.onUpdatePlayProgress">
+            <summary>
+            Fired every second when the audio file is playing.
+            </summary>
+        </member>
+        <member name="E:MusicPlayerBackend.AudioFileInteractor.onAudioFileFinished">
+            <summary>
+            Fired when the audio file is finished playing.
+            </summary>
+        </member>
+        <member name="E:MusicPlayerBackend.AudioFileInteractor.onError">
+            <summary>
+            Fired when an error occurs.
+            </summary>
+        </member>
         <member name="M:MusicPlayerBackend.AudioFileInteractor.StartPlaying(MusicPlayerBackend.AudioMetaData)">
             <summary>
             Starts playing actual song selected.
@@ -970,6 +1014,16 @@
             <param name="fileSystemHandler"></param>
             <param name="metaDataReader"></param>
         </member>
+        <member name="E:MusicPlayerBackend.MediaListInteractor.onMediaFound">
+            <summary>
+            Fires when a media is found.
+            </summary>
+        </member>
+        <member name="E:MusicPlayerBackend.MediaListInteractor.onError">
+            <summary>
+            Fires when an error occurs.
+            </summary>
+        </member>
         <member name="M:MusicPlayerBackend.MediaListInteractor.GetMediaListAsync(System.String)">
             <summary>
             Fetches all audio filepaths and fetches the meta data from them.
@@ -993,6 +1047,11 @@
             <param name="fileReader"></param>
             <param name="fileWriter"></param>
             <param name="soundEngine"></param>
+        </member>
+        <member name="E:MusicPlayerBackend.SettingsInteractor.onError">
+            <summary>
+            Fires on Error.
+            </summary>
         </member>
         <member name="M:MusicPlayerBackend.SettingsInteractor.WriteSettings(MusicPlayerBackend.AppSettings)">
             <summary>
@@ -1029,6 +1088,11 @@
             Connects to <see cref="T:MusicPlayerBackend.Contracts.IMetaDataReader"/>.
             </summary>
             <param name="metaDataReader"></param>
+        </member>
+        <member name="E:MusicPlayerBackend.SongCoverInteractor.onError">
+            <summary>
+            Fires when an error occurs.
+            </summary>
         </member>
         <member name="M:MusicPlayerBackend.SongCoverInteractor.GetCoverFromAudio(System.String)">
             <summary>
@@ -1089,7 +1153,7 @@
         </member>
         <member name="T:MusicPlayerBackend.AudioDataModel">
             <summary>
-            Holds data for the <see cref="!:ISoundControlBar"/> UI of the available Themes.
+            Holds data for the <see cref="T:MusicPlayerBackend.Contracts.ISoundControlBar"/> UI of the available Themes.
             Implements <see cref="T:System.IEquatable`1"/> for equality checking. 
             </summary>
         </member>
@@ -1130,7 +1194,7 @@
         </member>
         <member name="T:MusicPlayerBackend.AudioDeviceModel">
             <summary>
-            Holds data for the <see cref="!:ISettings"/> UI of the Audio Devices.
+            Holds data for the <see cref="T:MusicPlayerBackend.Contracts.ISettings"/> UI of the Audio Devices.
             Implements <see cref="T:System.IEquatable`1"/> for equality checking. 
             </summary>
         </member>
@@ -1203,6 +1267,119 @@
             Uses subsequent <see cref="M:MusicPlayerBackend.AudioMetaData.ToString"/> calls.
             </summary>
             <returns><see cref="T:System.String"/></returns>
+        </member>
+        <member name="T:MusicPlayerBackend.InternalTypes.CurrentPlayTimeOutOfBoundsException">
+            <summary>
+            Encapuslates Exception information.
+            </summary>
+        </member>
+        <member name="M:MusicPlayerBackend.InternalTypes.CurrentPlayTimeOutOfBoundsException.#ctor(System.String)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:MusicPlayerBackend.InternalTypes.CurrentPlayTimeOutOfBoundsException.#ctor(System.String,System.Exception)">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="T:MusicPlayerBackend.InternalTypes.EnumerateFilesAbortedException">
+            <summary>
+            Encapsulates Exception Data.
+            </summary>
+        </member>
+        <member name="M:MusicPlayerBackend.InternalTypes.EnumerateFilesAbortedException.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:MusicPlayerBackend.InternalTypes.EnumerateFilesAbortedException"/> class.
+            </summary>
+        </member>
+        <member name="M:MusicPlayerBackend.InternalTypes.EnumerateFilesAbortedException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:MusicPlayerBackend.InternalTypes.EnumerateFilesAbortedException"/> class.
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:MusicPlayerBackend.InternalTypes.EnumerateFilesAbortedException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:MusicPlayerBackend.InternalTypes.EnumerateFilesAbortedException"/> class.
+            </summary>
+            <param name="message"></param>
+            <param name="inner"></param>
+        </member>
+        <member name="T:MusicPlayerBackend.InternalTypes.FileReadFailedException">
+            <summary>
+            Encapsulates Exception Data.
+            </summary>
+        </member>
+        <member name="M:MusicPlayerBackend.InternalTypes.FileReadFailedException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:MusicPlayerBackend.InternalTypes.FileReadFailedException"/> class.
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="T:MusicPlayerBackend.InternalTypes.FileWriteFailedException">
+            <summary>
+            Encapsulates Exception Data.
+            </summary>
+        </member>
+        <member name="M:MusicPlayerBackend.InternalTypes.FileWriteFailedException.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:MusicPlayerBackend.InternalTypes.FileWriteFailedException"/> class.
+            </summary>
+        </member>
+        <member name="M:MusicPlayerBackend.InternalTypes.FileWriteFailedException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:MusicPlayerBackend.InternalTypes.FileWriteFailedException"/> class.
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:MusicPlayerBackend.InternalTypes.FileWriteFailedException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:MusicPlayerBackend.InternalTypes.FileWriteFailedException"/> class.
+            </summary>
+            <param name="message"></param>
+            <param name="inner"></param>
+        </member>
+        <member name="M:MusicPlayerBackend.InternalTypes.FileWriteFailedException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:MusicPlayerBackend.InternalTypes.FileWriteFailedException"/> class.
+            </summary>
+            <param name="info"></param>
+            <param name="context"></param>
+        </member>
+        <member name="T:MusicPlayerBackend.InternalTypes.ReadAudioMetaDataFailedException">
+            <summary>
+            Encapulates Exception Data.
+            </summary>
+        </member>
+        <member name="M:MusicPlayerBackend.InternalTypes.ReadAudioMetaDataFailedException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:MusicPlayerBackend.InternalTypes.ReadAudioMetaDataFailedException"/> class.
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="T:MusicPlayerBackend.InternalTypes.SoundEngineInitFailedException">
+            <summary>
+            Encapsulates Exception Data.
+            </summary>
+        </member>
+        <member name="M:MusicPlayerBackend.InternalTypes.SoundEngineInitFailedException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:MusicPlayerBackend.InternalTypes.SoundEngineInitFailedException"/> class.
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="T:MusicPlayerBackend.InternalTypes.StartPlayingFailedException">
+            <summary>
+            Encapsulates Exception Data.
+            </summary>
+        </member>
+        <member name="M:MusicPlayerBackend.InternalTypes.StartPlayingFailedException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:MusicPlayerBackend.InternalTypes.StartPlayingFailedException"/> class.
+            </summary>
+            <param name="msg"></param>
         </member>
         <member name="T:MusicPlayerBackend.Globals">
             <summary>
@@ -1292,9 +1469,49 @@
             </summary>
             <returns><see cref="T:System.String"/></returns>
         </member>
+        <member name="T:MusicPlayerBackend.NotificationModel">
+            <summary>
+            Represents a notification.
+            </summary>
+        </member>
+        <member name="T:MusicPlayerBackend.NotificationModel.NotificationLevel">
+            <summary>
+            The level/type of notification.
+            </summary>
+        </member>
+        <member name="F:MusicPlayerBackend.NotificationModel.NotificationLevel.Information">
+            <summary>
+            Informative
+            </summary>
+        </member>
+        <member name="F:MusicPlayerBackend.NotificationModel.NotificationLevel.Warning">
+            <summary>
+            Warns
+            </summary>
+        </member>
+        <member name="F:MusicPlayerBackend.NotificationModel.NotificationLevel.Error">
+            <summary>
+            For Errors or Fatalities
+            </summary>
+        </member>
+        <member name="P:MusicPlayerBackend.NotificationModel.Title">
+            <summary>
+            Title of Notification.
+            </summary>
+        </member>
+        <member name="P:MusicPlayerBackend.NotificationModel.Message">
+            <summary>
+            Message of Notification
+            </summary>
+        </member>
+        <member name="P:MusicPlayerBackend.NotificationModel.Level">
+            <summary>
+            Represents the Type.
+            </summary>
+        </member>
         <member name="T:MusicPlayerBackend.ThemesModel">
             <summary>
-            Holds data for the <see cref="!:ISettings"/> UI of the available Themes.
+            Holds data for the <see cref="T:MusicPlayerBackend.Contracts.ISettings"/> UI of the available Themes.
             Implements <see cref="T:System.IEquatable`1"/> for equality checking. 
             </summary>
         </member>

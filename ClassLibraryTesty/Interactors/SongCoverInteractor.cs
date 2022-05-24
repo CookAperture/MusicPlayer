@@ -21,6 +21,9 @@ namespace MusicPlayerBackend
             MetaDataReader = metaDataReader;
         }
 
+        /// <summary>
+        /// Fires when an error occurs.
+        /// </summary>
         public event Action<NotificationModel> onError;
 
         /// <summary>
