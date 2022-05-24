@@ -24,6 +24,8 @@ namespace MusicPlayerBackend
 
             SongCover.onLoad += (AudioMetaData data) => SetCover(data);
 
+            ((INotifyError)SongCoverInteractor).onError += (NotificationModel notificationModel) => ((INotifyUI)SongCover).Notify(notificationModel);
+
             onError += (NotificationModel notificationModel) => ((INotifyUI)SongCover).Notify(notificationModel);
         }
 
@@ -34,15 +36,8 @@ namespace MusicPlayerBackend
         /// </summary>
         public void SetCover(AudioMetaData data)
         {
-            try
-            {
-                ImageContainer imageContainer = SongCoverInteractor.GetCoverFromAudio(data.AudioFilePath);
-                SongCover.LoadCover(imageContainer);
-            }
-            catch (ReadAudioMetaDataFailedException ex)
-            {
-                onError.Invoke(new NotificationModel() { Message = ex.Message, Level = NotificationModel.NotificationLevel.Error, Title = "Error" });
-            }
+            ImageContainer imageContainer = SongCoverInteractor.GetCoverFromAudio(data.AudioFilePath);
+            SongCover.LoadCover(imageContainer);
         }
     }
 }
