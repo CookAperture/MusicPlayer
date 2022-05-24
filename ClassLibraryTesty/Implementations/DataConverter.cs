@@ -15,7 +15,6 @@ namespace MusicPlayerBackend
         /// </summary>
         public DataConverter()
         {
-
         }
     }
 }

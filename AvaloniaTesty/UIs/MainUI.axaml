@@ -18,7 +18,8 @@
 				VerticalAlignment="Stretch">
 		<uc:SoundControlBar DockPanel.Dock="Bottom"
 							VerticalAlignment="Stretch"
-							HorizontalAlignment="Stretch"/>
+							HorizontalAlignment="Stretch"
+							Name="SoundControlBar"/>
 
 		<SplitView  IsPaneOpen="{Binding PaneState}"
 					DisplayMode="CompactInline"
@@ -84,10 +85,12 @@
 			</SplitView.Pane>
 			<DockPanel LastChildFill="True">
 				<uc:CustomDecoration DockPanel.Dock="Top"
-					 HorizontalAlignment="Stretch"
-					 VerticalAlignment="Top"/>
+									 HorizontalAlignment="Stretch"
+									 VerticalAlignment="Top"
+									 Name="CustomDecoration"/>
 				<uc:ContentPage VerticalAlignment="Stretch"
-								HorizontalAlignment="Stretch"/>
+								HorizontalAlignment="Stretch"
+								Name="ContentPage"/>
 			</DockPanel>
 		</SplitView>
 	</DockPanel>

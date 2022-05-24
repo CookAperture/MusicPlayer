@@ -1,9 +1,11 @@
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Controls.Notifications;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media;
+using Avalonia.Threading;
 using MusicPlayerBackend;
 using MusicPlayerBackend.Contracts;
 using System.Collections.Generic;
@@ -12,30 +14,33 @@ using System.Runtime.CompilerServices;
 
 namespace MusicPlayer
 {
-    public class MainUI : Window, IMainUI, INotifyPropertyChanged
+    public class MainUI : Window, IMainUI, INotifyPropertyChanged, INotifyUI
     {
         new public event PropertyChangedEventHandler PropertyChanged;
-        public event IMainUI.OnThemeChange onThemeChange;
+        public event Action<APPLICATION_STYLE> onThemeChange;
 
         public ICustomDecoration CustomDecoration { get; set; }
         public ISoundControlBar SoundControlBar { get; set; }
         public IContentPresenter ContentPresenter { get; set; }
 
-        bool paneOpen = false;
+        IManagedNotificationManager ManagedNotificationManager { get; set; }
 
+        bool _paneOpen = false;
         public bool PaneState
         {            
-            get => paneOpen;
-            set => RaiseAndSetIfChanged(ref paneOpen, value);
+            get => _paneOpen;
+            set => RaiseAndSetIfChanged(ref _paneOpen, value);
         }
 
         public MainUI()
         {
             AvaloniaXamlLoader.Load(this);
 
-            CustomDecoration = (ICustomDecoration)WindowHelperFunctions.FindUserControl<UserControl>(LogicalChildren, "CustomDecoration");
-            SoundControlBar = (ISoundControlBar)WindowHelperFunctions.FindUserControl<UserControl>(LogicalChildren, "SoundControlBar");
-            ContentPresenter = (IContentPresenter)WindowHelperFunctions.FindUserControl<UserControl>(LogicalChildren, "ContentPage");
+            ManagedNotificationManager = new WindowNotificationManager(this) { Position = NotificationPosition.BottomRight, MaxItems = 5 };
+                
+            CustomDecoration = (ICustomDecoration)this.FindControl<UserControl>("CustomDecoration");
+            SoundControlBar = (ISoundControlBar)this.FindControl<UserControl>("SoundControlBar");
+            ContentPresenter = (IContentPresenter)this.FindControl<UserControl>("ContentPage");
 
             CustomDecoration.onDrag += (i, e) => { PlatformImpl?.BeginMoveDrag((PointerPressedEventArgs)e);};
             CustomDecoration.onMinimize += delegate { WindowState = WindowState.Minimized; };
@@ -44,6 +49,11 @@ namespace MusicPlayer
 
             ContentPresenter.MediaList.onSelection += (AudioMetaData data) => { SoundControlBar.SetAudioMetaData(data); };
             ContentPresenter.Settings.onSettingsChanged += (AppSettings data) => { onThemeChange.Invoke(data.AppStyle); };
+
+            ((INotifyError)ContentPresenter.SongCover).onError += (NotificationModel model) => Notify(model);
+            ((INotifyError)ContentPresenter.Settings).onError += (NotificationModel model) => Notify(model);
+            ((INotifyError)ContentPresenter.MediaList).onError += (NotificationModel model) => Notify(model);
+            ((INotifyError)SoundControlBar).onError += (NotificationModel model) => Notify(model);
 
             this.FindControl<Button>("PaneButton").Click += (i, e) => { if (PaneState) PaneState = false; else PaneState = true; };
             this.FindControl<Button>("CoverButton").Click += (i, e) => ContentPresenter.ShowCoverPage();
@@ -75,5 +85,28 @@ namespace MusicPlayer
 
         protected void RaisePropertyChanged([CallerMemberName] string propertyName = null)
             => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        
+        public async void Notify(NotificationModel message)
+        {            
+            await Dispatcher.UIThread.InvokeAsync(() =>
+            {
+                ManagedNotificationManager.Show(new Notification(message.Title, message.Message, MapNotificationLevelToNotificationType(message.Level)));
+            });
+        }
+
+        private NotificationType MapNotificationLevelToNotificationType(NotificationModel.NotificationLevel notificationLevel)
+        {
+            switch (notificationLevel)
+            {
+                case NotificationModel.NotificationLevel.Information:
+                    return NotificationType.Information;
+                case NotificationModel.NotificationLevel.Warning:
+                    return NotificationType.Warning;
+                case NotificationModel.NotificationLevel.Error:
+                    return NotificationType.Error;
+                default:
+                    return NotificationType.Information;
+            }
+        }
     }
 }

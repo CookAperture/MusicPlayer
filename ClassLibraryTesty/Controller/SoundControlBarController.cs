@@ -1,4 +1,5 @@
 using MusicPlayerBackend.Contracts;
+using MusicPlayerBackend.InternalTypes;
 
 namespace MusicPlayerBackend
 {
@@ -21,12 +22,36 @@ namespace MusicPlayerBackend
             SoundControlBar = soundControlBar;
             AudioFileInteractor = audioFileInteractor;
 
-            SoundControlBar.onPlay += (AudioMetaData data) => AudioFileInteractor.StartPlaying(data);
-            SoundControlBar.onPause += () => AudioFileInteractor.StopPlaying();
-            SoundControlBar.onResume += () => AudioFileInteractor.ResumePlaying();
+            SoundControlBar.onPlay += (AudioMetaData data) => OnPlay(data);
+            SoundControlBar.onPause += () => OnPause();
+            SoundControlBar.onResume += () => OnResume();
 
-            AudioFileInteractor.onUpdatePlayProgress += (TimeSpan curr) => { /*TODO*/ };
-            AudioFileInteractor.onAudioFileFinished += () => { };
+            AudioFileInteractor.onUpdatePlayProgress += (TimeSpan curr) => OnUpdatePlayProgress(curr);
+            AudioFileInteractor.onAudioFileFinished += () => OnAudioFileFinished();
+            ((INotifyError)AudioFileInteractor).onError += (NotificationModel notification) => ((INotifyUI)SoundControlBar).Notify(notification);
+        }
+
+        private void OnPlay(AudioMetaData data)
+        {
+            AudioFileInteractor.StartPlaying(data);
+        }
+
+        private void OnPause()
+        {
+            AudioFileInteractor.StopPlaying();
+        }
+
+        private void OnResume()
+        {
+            AudioFileInteractor.ResumePlaying();
+        }
+
+        private void OnUpdatePlayProgress(TimeSpan curr)
+        {
+        }
+
+        private void OnAudioFileFinished()
+        {
         }
 
         /// <summary>

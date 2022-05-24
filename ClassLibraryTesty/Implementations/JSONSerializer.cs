@@ -1,5 +1,7 @@
 ﻿using MusicPlayerBackend.Contracts;
 using System;
+using System.Diagnostics;
+using System.Runtime.Serialization;
 using System.Text.Json;
 
 namespace MusicPlayerBackend
@@ -17,7 +19,6 @@ namespace MusicPlayerBackend
         /// </summary>
         public JSONSerializer()
         {
-
         }
 
         /// <summary>
@@ -26,9 +27,10 @@ namespace MusicPlayerBackend
         /// <typeparam name="T"></typeparam>
         /// <param name="serializable"></param>
         /// <returns>Serialized object of type <typeparamref name="T"/>.</returns>
-        public string Serialize<T>(T serializable)
+        public string Serialize<T>(T serializable) where T : struct
         {
             string result = JsonSerializer.Serialize(serializable);
+
             return result;
         }
     }

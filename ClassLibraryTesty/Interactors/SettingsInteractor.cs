@@ -1,4 +1,5 @@
 ﻿using MusicPlayerBackend.Contracts;
+using MusicPlayerBackend.InternalTypes;
 using System;
 
 namespace MusicPlayerBackend
@@ -7,7 +8,7 @@ namespace MusicPlayerBackend
     /// <summary>
     /// Implements <see cref="ISettingsInteractor"/>.
     /// </summary>
-    public class SettingsInteractor : ISettingsInteractor
+    public class SettingsInteractor : ISettingsInteractor, INotifyError
     {
         IDataConverter DataConverter { get; set; }
         IJSONDeserializer JSONDeserializer { get; set; }
@@ -37,13 +38,25 @@ namespace MusicPlayerBackend
         }
 
         /// <summary>
+        /// Fires on Error.
+        /// </summary>
+        public event Action<NotificationModel> onError;
+
+        /// <summary>
         /// Serializes and writes away the <paramref name="appSettings"/>.
         /// </summary>
         /// <param name="appSettings"></param>
         public void WriteSettings(AppSettings appSettings)
         {
             var serialized = JSONSerializer.Serialize(appSettings);
-            FileWriter.Write(serialized, Globals.SettingsPath);
+            try
+            {
+                FileWriter.Write(serialized, Globals.SettingsPath);
+            }
+            catch (FileWriteFailedException ex)
+            {
+                onError.Invoke(new NotificationModel() { Message = ex.Message, Level = NotificationModel.NotificationLevel.Error, Title = "Error" });
+            }
         }
 
         /// <summary>
@@ -52,8 +65,19 @@ namespace MusicPlayerBackend
         /// <returns><see cref="AppSettings"/> read from settings file.</returns>
         public AppSettings ReadSettings()
         {
-            var read = FileReader.ReadWhole(Globals.SettingsPath);
-            return JSONDeserializer.Deserialize<AppSettings>(read);
+
+            string read = "";
+            
+            try
+            {
+                read = FileReader.ReadWhole(Globals.SettingsPath);
+            }
+            catch (FileReadFailedException ex)
+            {
+                onError.Invoke(new NotificationModel() { Message = ex.Message, Level = NotificationModel.NotificationLevel.Warning, Title = "Error" });
+            }
+            var settings = JSONDeserializer.Deserialize<AppSettings>(read);
+            return settings;
         }
 
         /// <summary>

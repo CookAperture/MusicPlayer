@@ -14,13 +14,17 @@ This software is in Slow Developement, as it is just for training and fun, and d
 
 ## Basic Features
 
-- [ ] Import Song
-- [ ] Play Song
-- [ ] Pause Song
-- [ ] Switch between light and dark mode
+- [x] Import Song
+- [x] Play Song
+- [x] Pause Song
+- [x] Switch between light and dark mode
 - [ ] Scrub a Song
-- [ ] Auto Load Songs from Dir
+- [x] Auto Load Songs from Dir
 - [ ] Save Own Lists of Songs
+- [ ] Skip Song
+- [ ] Change Volume
+- [ ] Exception Handling and Proper UI Notifications
+- [ ] List Songs and Sort by Properties
 
 # Commit Icons
 

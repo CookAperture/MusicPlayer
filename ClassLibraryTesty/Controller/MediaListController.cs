@@ -1,4 +1,5 @@
 ﻿using MusicPlayerBackend.Contracts;
+using MusicPlayerBackend.InternalTypes;
 
 namespace MusicPlayerBackend
 {
@@ -24,10 +25,16 @@ namespace MusicPlayerBackend
             MediaListInteractor = mediaListInteractor;
             SettingsInteractor = settingsInteractor;
 
-            MediaListInteractor.onMediaFound += (AudioMetaData found) => { InvokeAddSongToList(found); };
-            MediaList.onLoadMediaList += () => { SetMediaList(); };
-            MediaList.onLoadMediaListFromNewPath += (string path) => { SetMediaListCustomMediaPath(path); };
-            MediaList.onSelection += (AudioMetaData data) => { }; //TODO
+            MediaListInteractor.onMediaFound += (AudioMetaData found) => InvokeAddSongToList(found);
+            ((INotifyError)MediaListInteractor).onError += (NotificationModel notificationModel) => ((INotifyUI)MediaList).Notify(notificationModel);
+            ((INotifyError)SettingsInteractor).onError += (NotificationModel notificationModel) => ((INotifyUI)MediaList).Notify(notificationModel);
+            MediaList.onLoadMediaList += () => Task.Run(() => SetMediaList());
+            MediaList.onLoadMediaListFromNewPath += (string path) => SetMediaListCustomMediaPath(path);
+            MediaList.onSelection += (AudioMetaData data) => OnSelection(data);
+        }
+
+        private void OnSelection(AudioMetaData data)
+        {
         }
 
         void InvokeAddSongToList(AudioMetaData found)
@@ -38,19 +45,23 @@ namespace MusicPlayerBackend
         /// <summary>
         /// Sets the found media files to the ui.
         /// </summary>
-        public void SetMediaList()
+        public async void SetMediaList()
         {
-            var rootpath = SettingsInteractor.ReadSettings().MediaPath;
-            MediaListInteractor.GetMediaListAsync(rootpath);
+            await Task.Run(() => {
+                var rootpath = SettingsInteractor.ReadSettings().MediaPath;
+                MediaListInteractor.GetMediaListAsync(rootpath);
+            });
         }
 
         /// <summary>
         /// Loads from path media files.
         /// </summary>
         /// <param name="path"></param>
-        public void SetMediaListCustomMediaPath(string path)
+        public async void SetMediaListCustomMediaPath(string path)
         {
-            MediaListInteractor.GetMediaListAsync(path);
+            await Task.Run(() => {
+                MediaListInteractor.GetMediaListAsync(path);
+            });
         }
     }
 }

@@ -6,11 +6,6 @@ namespace MusicPlayer
 {
     public class CustomDecoration : UserControl, ICustomDecoration
     {
-        public event ICustomDecoration.OnMinimize onMinimize = delegate { };
-        public event ICustomDecoration.OnMaximize onMaximize = delegate { };
-        public event ICustomDecoration.OnClose onClose = delegate { };
-        public event ICustomDecoration.OnDrag onDrag = delegate { };
-
         public CustomDecoration()
         {
             AvaloniaXamlLoader.Load(this);
@@ -20,5 +15,10 @@ namespace MusicPlayer
             this.FindControl<Button>("MaximizeButton").Click += (i, e) => onMaximize?.Invoke(e);
             this.FindControl<Button>("CloseButton").Click += (i, e) => onClose?.Invoke(e);
         }
+
+        public event Action<EventArgs> onMinimize = delegate { };
+        public event Action<EventArgs> onMaximize = delegate { };
+        public event Action<object> onClose = delegate { };
+        public event Action<object, EventArgs> onDrag = delegate { };
     }
 }

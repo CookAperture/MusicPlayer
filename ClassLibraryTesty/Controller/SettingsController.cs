@@ -1,4 +1,5 @@
 using MusicPlayerBackend.Contracts;
+using MusicPlayerBackend.InternalTypes;
 
 namespace MusicPlayerBackend
 {
@@ -27,40 +28,33 @@ namespace MusicPlayerBackend
             Application = application;
 
             SettingsInteractor.SetAudioDevice(SettingsInteractor.ReadSettings().AudioDevice);
+            ((INotifyError)SettingsInteractor).onError += (NotificationModel notificationModel) => ((INotifyUI)Settings).Notify(notificationModel);
 
-            Settings.onSettingsChanged += (AppSettings appSettings) => 
-            {
-                _appSettings = appSettings; 
-                SettingsInteractor.WriteSettings(appSettings); 
-                SettingsInteractor.SetAudioDevice(appSettings.AudioDevice);
-            };
-            Settings.onLoadSettings += () => { LoadSettings(); };
+            Settings.onSettingsChanged += (AppSettings appSettings) => OnSettingsChanged(appSettings);
+            Settings.onLoadSettings += () => LoadSettings();
         }
 
-        AppSettings GetLatestSettings()
+        private void OnSettingsChanged(AppSettings appSettings)
         {
-            try
-            {
-                var appSettings = SettingsInteractor.ReadSettings();
-                var currStyle = Application.GetCurrentApplicationStyle();
-                var devices = SettingsInteractor.GetAudioDevices();
+            _appSettings = appSettings;
+            SettingsInteractor.WriteSettings(appSettings);
+            SettingsInteractor.SetAudioDevice(appSettings.AudioDevice);
+        }
 
-                appSettings.AudioDevices = devices;
-                appSettings.AppStyle = currStyle;
+        private AppSettings GetLatestSettings()
+        {
+            AppSettings appSettings = new AppSettings();
 
-                _appSettings = appSettings;
-                return _appSettings;
-            }
-            catch (FileNotFoundException f)
-            {
-                //log away the err + invoke event
+            appSettings = SettingsInteractor.ReadSettings();
 
-                var currStyle = Application.GetCurrentApplicationStyle();
-                var devices = SettingsInteractor.GetAudioDevices();
-                _appSettings.AudioDevices = devices;
-                _appSettings.AppStyle= currStyle;
-                return _appSettings;
-            }
+            var currStyle = Application.GetCurrentApplicationStyle();
+            var devices = SettingsInteractor.GetAudioDevices();
+
+            appSettings.AudioDevices = devices;
+            appSettings.AppStyle = currStyle;
+
+            _appSettings = appSettings;
+            return _appSettings;
         }
 
         /// <summary>

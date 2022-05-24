@@ -1,4 +1,5 @@
 using MusicPlayerBackend.Contracts;
+using MusicPlayerBackend.InternalTypes;
 
 namespace MusicPlayerBackend
 {
@@ -22,6 +23,8 @@ namespace MusicPlayerBackend
             SongCoverInteractor = songCoverInteractor;
 
             SongCover.onLoad += (AudioMetaData data) => SetCover(data);
+
+            ((INotifyError)SongCoverInteractor).onError += (NotificationModel notificationModel) => ((INotifyUI)SongCover).Notify(notificationModel);
         }
 
         /// <summary>

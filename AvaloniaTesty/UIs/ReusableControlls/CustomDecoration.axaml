@@ -19,24 +19,18 @@
       <Button Width="30"
               Height="30"
               Name="MinimizeButton">
-		  <PathIcon Margin="0,0,0,0"
-				Data="{StaticResource minimize_icon}"/>
+		  <PathIcon Data="{StaticResource minimize_icon}"/>
       </Button>
       <ToggleButton 
         Name="MaximizeButton"
         HorizontalContentAlignment="Center"
         VerticalContentAlignment="Center">
-        <ToggleButton.Resources>
-          <CornerRadius x:Key="ControlCornerRadius">0</CornerRadius>
-        </ToggleButton.Resources>
         <ToggleButton.Styles>
           <Style Selector="ToggleButton:checked > PathIcon">
             <Setter Property="Data" Value="{StaticResource exitfullscreen_icon}"/>
-            <Setter Property="Margin" Value="0,0,0,0"/>
           </Style>
           <Style Selector="ToggleButton:unchecked > PathIcon">
             <Setter Property="Data" Value="{StaticResource fullscreen_icon}"/>
-            <Setter Property="Margin" Value="0,0,0,0"/>
           </Style>
           <Style Selector="ToggleButton:checked ContentPresenter">
             <Setter Property="Width" Value="30"/>
@@ -56,8 +50,7 @@
             <Setter Property="Background" Value="Red"/>
           </Style>
         </Button.Styles>
-		  <PathIcon Margin="0,0,0,0"
-				    Data="{StaticResource close_icon}"/>
+		  <PathIcon Data="{StaticResource close_icon}"/>
       </Button>
     </StackPanel>
   </Grid>

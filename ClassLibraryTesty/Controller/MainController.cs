@@ -26,7 +26,12 @@ namespace MusicPlayerBackend
 
             Application.SetStyle(SettingsInteractor.ReadSettings().AppStyle);
 
-            MainUI.onThemeChange += (APPLICATION_STYLE aps) => { Application.SetStyle(aps); };
+            MainUI.onThemeChange += (APPLICATION_STYLE aps) => OnThemeChange(aps);
+        }
+
+        private void OnThemeChange(APPLICATION_STYLE aps)
+        {
+            Application.SetStyle(aps);
         }
     }
 }

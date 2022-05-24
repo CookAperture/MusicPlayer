@@ -346,7 +346,7 @@ namespace MusicPlayerTests
             ImageContainer testy = new ImageContainer()
             {
                 FilePath = "C://",
-                ImageStream = new MemoryStream(new byte[] { 1, 2, 3, 4 }),
+                ImageStream = new MemoryStream(new byte[4] { 33, 22, 33, 44 }),
             };
             string expected = "FilePath: C:// | ImageStream: System.IO.MemoryStream";
 

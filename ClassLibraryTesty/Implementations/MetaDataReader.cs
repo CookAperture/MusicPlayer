@@ -1,5 +1,7 @@
 ﻿using MusicPlayerBackend.Contracts;
+using MusicPlayerBackend.InternalTypes;
 using System;
+using System.Diagnostics;
 using TagLib;
 
 namespace MusicPlayerBackend
@@ -16,33 +18,37 @@ namespace MusicPlayerBackend
         /// </summary>
         public MetaDataReader()
         {
-
         }
 
         /// <summary>
         /// Implements the reading the meta data from file, in this case specifically media files. 
         /// </summary>
         /// <param name="path"></param>
+        /// <param name="onError"></param>
+        /// <param name="onFound"></param>
         /// <returns>Returns an <see cref="AudioMetaData"/> struct with all fileds filled if info was available.</returns>
-        public AudioMetaData ReadMetaDataFromFile(string path)
+        public void ReadMetaDataFromFile(string path, Action<AudioMetaData> onFound, Action<string> onError)
         {
+            Debug.Assert(path != null);
+
+            AudioMetaData audioMetaData = new AudioMetaData();
+
             try
             {
-                AudioMetaData audioMetaData = new AudioMetaData();
-
                 TagLib.File tfile = TagLib.File.Create(path);
                 audioMetaData.Duration = tfile.Properties.Duration;
                 audioMetaData.Title = tfile.Tag.Title;
                 audioMetaData.AudioFilePath = path;
-
-                return audioMetaData;
+                onFound.Invoke(audioMetaData);
             }
-            catch (Exception)
+            catch (CorruptFileException)
             {
-                //handle bit more + log
-                AudioMetaData audioMetaData = new AudioMetaData();
-                return audioMetaData;
-            }   
+                onError.Invoke(string.Format("Failed to read meta data from file {0}", path));
+            }
+            catch (UnsupportedFormatException)
+            {
+                onError.Invoke(string.Format("Failed to read meta data from file {0}", path));
+            }
         }
 
         /// <summary>
@@ -52,14 +58,27 @@ namespace MusicPlayerBackend
         /// <returns></returns>
         public ImageContainer ReadImageFromAudioFile(string path)
         {
-            TagLib.File tfile = TagLib.File.Create(path);
-            var img = tfile.Tag.Pictures;
-            ImageContainer imageContainer = new ImageContainer()
+            Debug.Assert(path != null);
+
+            try
             {
-                FilePath = path,
-                ImageStream = new MemoryStream(img[0].Data.Data),
-            };
-            return imageContainer;
+                TagLib.File tfile = TagLib.File.Create(path);
+                var img = tfile.Tag.Pictures;
+                ImageContainer imageContainer = new ImageContainer()
+                {
+                    FilePath = path,
+                    ImageStream = img.Length > 0 ? new MemoryStream(img[0].Data.Data) : throw new CorruptFileException(),
+                };
+                return imageContainer;
+            }
+            catch (CorruptFileException)
+            {
+                throw new ReadAudioMetaDataFailedException(string.Format("Failed to read meta data from file {0}", path));
+            }
+            catch (UnsupportedFormatException)
+            {
+                throw new ReadAudioMetaDataFailedException(string.Format("Failed to read meta data from file {0}", path));
+            }
         }
     }
 }

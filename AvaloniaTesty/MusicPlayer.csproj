@@ -5,7 +5,7 @@
     <Nullable>disable</Nullable>
     <StartupObject>MusicPlayer.Program</StartupObject>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
-    <AnalysisLevel>6.0</AnalysisLevel>
+	<AnalysisLevel>6.0</AnalysisLevel>
     <ErrorReport>send</ErrorReport>
     <DebugType>embedded</DebugType>
     <MinimumPlatformVersion>7.0</MinimumPlatformVersion>
@@ -69,13 +69,6 @@
     </AvaloniaResource>
   </ItemGroup>
   <ItemGroup>
-    <AvaloniaResource Remove="Dlgs\**" />
-    <AvaloniaXaml Remove="Dlgs\**" />
-    <Compile Remove="Dlgs\**" />
-    <EmbeddedResource Remove="Dlgs\**" />
-    <None Remove="Dlgs\**" />
-  </ItemGroup>
-  <ItemGroup>
     <None Remove="config.json" />
   </ItemGroup>
   <ItemGroup>
@@ -93,7 +86,7 @@
     <PackageReference Include="Avalonia.Desktop" Version="0.10.13" />
     <PackageReference Include="Avalonia.Diagnostics" Version="0.10.13" />
     <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.13" />
-    <PackageReference Include="Avalonia.Skia" Version="0.10.11" />
+    <PackageReference Include="Avalonia.Skia" Version="0.10.13" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ClassLibraryTesty\MusicPlayerLibrary.csproj" />

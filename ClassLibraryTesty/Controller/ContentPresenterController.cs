@@ -26,7 +26,6 @@ namespace MusicPlayerBackend
             ContentPresenter = contentPresenter;
             SongCoverController = songCoverController;
             MediaListController = mediaListController;
-            SettingsController = settingsController;
         }
 
     }

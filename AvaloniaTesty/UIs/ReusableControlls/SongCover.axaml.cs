@@ -1,26 +1,20 @@
-﻿using Avalonia.Controls;
+﻿using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media.Imaging;
+using Avalonia.Platform;
 using MusicPlayerBackend;
 using MusicPlayerBackend.Contracts;
 using System.ComponentModel;
+using System.Reactive.Subjects;
 using System.Runtime.CompilerServices;
 
 namespace MusicPlayer
 {
-    public class SongCover : UserControl, ISongCover, INotifyPropertyChanged
+    public class SongCover : NotifyUserControl, ISongCover, INotifyUI, INotifyError
     {
-
-        new public event PropertyChangedEventHandler PropertyChanged;
-
-        private Bitmap _cover;
-
-        public Bitmap Cover
-        {
-            get => _cover;
-            private set => this.RaiseAndSetIfChanged(ref _cover, value);
-        }
+        public Subject<Bitmap> Cover { get; set; } = new Subject<Bitmap>();
 
         public SongCover()
         {
@@ -28,11 +22,15 @@ namespace MusicPlayer
             DataContext = this;
         }
 
-        public event ISongCover.OnLoad onLoad;
+        public event Action<AudioMetaData> onLoad;
+        public event Action<NotificationModel> onError;
 
-        public void LoadCover(ImageContainer imageContainer)
+        public async Task LoadCover(ImageContainer imageContainer)
         {
-            Cover = Bitmap.DecodeToWidth(imageContainer.ImageStream, 400);
+            if(imageContainer.ImageStream != null)
+                Cover.OnNext(await Task.Run(() => Bitmap.DecodeToWidth(imageContainer.ImageStream, 400)));
+            else
+                Cover.OnNext(null);
         }
 
         public void LoadCover(AudioMetaData audioMetaData)
@@ -40,18 +38,9 @@ namespace MusicPlayer
             onLoad.Invoke(audioMetaData);
         }
 
-        protected bool RaiseAndSetIfChanged<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
+        public void Notify(NotificationModel message)
         {
-            if (!EqualityComparer<T>.Default.Equals(field, value))
-            {
-                field = value;
-                RaisePropertyChanged(propertyName);
-                return true;
-            }
-            return false;
+            onError.Invoke(message);
         }
-
-        protected void RaisePropertyChanged([CallerMemberName] string propertyName = null)
-            => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }

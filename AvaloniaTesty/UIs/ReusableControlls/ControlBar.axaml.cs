@@ -7,16 +7,18 @@ using MusicPlayerBackend.Contracts;
 
 namespace MusicPlayer
 {
-    public class SoundControlBar : UserControl, ISoundControlBar
+    public class SoundControlBar : UserControl, ISoundControlBar, INotifyUI, INotifyError
     {
-        public event ISoundControlBar.OnPlay onPlay;
-        public event ISoundControlBar.OnPause onPause;
-        public event ISoundControlBar.OnNext onNext;
-        public event ISoundControlBar.OnResume onResume;
+        private AudioMetaData ActualAudio;
+        private bool Playing = false;
+        private bool Paused = false;
 
-        AudioMetaData ActualAudio;
-        bool Playing = false;
-        bool Paused = false;
+        public event Action<AudioMetaData> onPlay;
+        public event Action onPause;
+        public event Action onResume;
+        public event Action onNext;
+        public event Action<NotificationModel> onError;
+
         ToggleButton PlayPauseButton { get; set; }
 
         public SoundControlBar()
@@ -65,7 +67,12 @@ namespace MusicPlayer
         public void IsFinished()
         {
             Playing = false;
-            //onNext.Invoke();
+            onNext.Invoke();
+        }
+
+        public void Notify(NotificationModel message)
+        {
+            onError.Invoke(message);
         }
     }
 }
