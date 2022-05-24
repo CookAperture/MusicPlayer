@@ -30,6 +30,7 @@ namespace MusicPlayerBackend
             Application = application;
 
             SettingsInteractor.SetAudioDevice(SettingsInteractor.ReadSettings().AudioDevice);
+            ((INotifyError)SettingsInteractor).onError += (NotificationModel notificationModel) => ((INotifyUI)Settings).Notify(notificationModel);
 
             Settings.onSettingsChanged += (AppSettings appSettings) => OnSettingsChanged(appSettings);
             Settings.onLoadSettings += () => LoadSettings();
@@ -40,14 +41,7 @@ namespace MusicPlayerBackend
         private void OnSettingsChanged(AppSettings appSettings)
         {
             _appSettings = appSettings;
-            try
-            {
-                SettingsInteractor.WriteSettings(appSettings);
-            }
-            catch (FileWriteFailedException ex)
-            {
-                onError.Invoke(new NotificationModel() { Message = ex.Message, Level = NotificationModel.NotificationLevel.Error, Title = "Error"});
-            }
+            SettingsInteractor.WriteSettings(appSettings);
             SettingsInteractor.SetAudioDevice(appSettings.AudioDevice);
         }
 
@@ -55,14 +49,7 @@ namespace MusicPlayerBackend
         {
             AppSettings appSettings = new AppSettings();
 
-            try
-            {
-                appSettings = SettingsInteractor.ReadSettings();
-            }
-            catch (FileReadFailedException ex)
-            {
-                onError.Invoke(new NotificationModel() { Message = ex.Message, Level = NotificationModel.NotificationLevel.Warning, Title = "Error" });
-            }
+            appSettings = SettingsInteractor.ReadSettings();
 
             var currStyle = Application.GetCurrentApplicationStyle();
             var devices = SettingsInteractor.GetAudioDevices();
