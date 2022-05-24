@@ -1,4 +1,5 @@
 ﻿using MusicPlayerBackend.Contracts;
+using MusicPlayerBackend.InternalTypes;
 using System;
 
 namespace MusicPlayerBackend
@@ -7,7 +8,7 @@ namespace MusicPlayerBackend
     /// <summary>
     /// Implements <see cref="IMediaListInteractor"/>
     /// </summary>
-    public class MediaListInteractor : IMediaListInteractor
+    public class MediaListInteractor : IMediaListInteractor, INotifyError
     {
         IFileSystemHandler FileSystemHandler { get; set; }
         IMetaDataReader MetaDataReader { get; set; }
@@ -27,6 +28,7 @@ namespace MusicPlayerBackend
         }
 
         public event Action<AudioMetaData> onMediaFound;
+        public event Action<NotificationModel> onError;
 
         /// <summary>
         /// Fetches all audio filepaths and fetches the meta data from them.
@@ -35,7 +37,22 @@ namespace MusicPlayerBackend
         /// <returns>List of <see cref="AudioMetaData"/> of all found filepaths.</returns>
         public void GetMediaListAsync(string rootPath)
         {
-            FileSystemHandler.FindAudioFilesFromRootPathAsync(rootPath, Globals.ValidAudioFileEndings);
+            try
+            {
+                FileSystemHandler.FindAudioFilesFromRootPathAsync(rootPath, Globals.ValidAudioFileEndings);
+            }
+            catch (FileReadFailedException ex)
+            {
+                onError.Invoke(new NotificationModel() { Message = ex.Message, Level = NotificationModel.NotificationLevel.Error, Title = "Error" });
+            }
+            catch (ReadAudioMetaDataFailedException ex)
+            {
+                onError.Invoke(new NotificationModel() { Message = ex.Message, Level = NotificationModel.NotificationLevel.Error, Title = "Error" });
+            }
+            catch (EnumerateFilesAbortedException ex)
+            {
+                onError.Invoke(new NotificationModel() { Message = ex.Message, Level = NotificationModel.NotificationLevel.Error, Title = "Error" });
+            }
         }
     }
 }

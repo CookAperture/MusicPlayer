@@ -7,7 +7,7 @@ namespace MusicPlayerBackend
     /// <summary>
     /// Implements <see cref="ISongCoverController"/>.
     /// </summary>
-    public class SongCoverController : ISongCoverController, INotifyError
+    public class SongCoverController : ISongCoverController
     {
         ISongCover SongCover { get; set; }
         ISongCoverInteractor SongCoverInteractor { get; set; }
@@ -25,11 +25,7 @@ namespace MusicPlayerBackend
             SongCover.onLoad += (AudioMetaData data) => SetCover(data);
 
             ((INotifyError)SongCoverInteractor).onError += (NotificationModel notificationModel) => ((INotifyUI)SongCover).Notify(notificationModel);
-
-            onError += (NotificationModel notificationModel) => ((INotifyUI)SongCover).Notify(notificationModel);
         }
-
-        public event Action<NotificationModel> onError;
 
         /// <summary>
         /// Loads the cover image from the actual audio file.

@@ -7,15 +7,13 @@ namespace MusicPlayerBackend
     /// <summary>
     /// Implements <see cref="ISettingsController"/>.
     /// </summary>
-    public class SettingsController : ISettingsController, INotifyError
+    public class SettingsController : ISettingsController
     {
         ISettings Settings { get; set; }
         ISettingsInteractor SettingsInteractor { get; set; }
         IApplication Application { get; set; }
 
         AppSettings _appSettings = new AppSettings();
-
-        public event Action<NotificationModel> onError;
 
         /// <summary>
         /// Connects <paramref name="settings"/> with <paramref name="settingsInteractor"/>.
@@ -34,8 +32,6 @@ namespace MusicPlayerBackend
 
             Settings.onSettingsChanged += (AppSettings appSettings) => OnSettingsChanged(appSettings);
             Settings.onLoadSettings += () => LoadSettings();
-
-            onError += (NotificationModel notificationModel) => ((INotifyUI)Settings).Notify(notificationModel);
         }
 
         private void OnSettingsChanged(AppSettings appSettings)
