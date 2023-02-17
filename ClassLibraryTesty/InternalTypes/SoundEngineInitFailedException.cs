@@ -4,19 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MusicPlayerBackend.InternalTypes
+namespace MusicPlayerBackend.InternalTypes;
+/// <summary>
+/// Encapsulates Exception Data.
+/// </summary>
+public class SoundEngineInitFailedException : Exception
 {
     /// <summary>
-    /// Encapsulates Exception Data.
+    /// Initializes a new instance of the <see cref="SoundEngineInitFailedException"/> class.
     /// </summary>
-    public class SoundEngineInitFailedException : Exception
+    /// <param name="message"></param>
+    public SoundEngineInitFailedException(string message) : base(message)
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SoundEngineInitFailedException"/> class.
-        /// </summary>
-        /// <param name="message"></param>
-        public SoundEngineInitFailedException(string message) : base(message)
-        {
-        }
     }
 }

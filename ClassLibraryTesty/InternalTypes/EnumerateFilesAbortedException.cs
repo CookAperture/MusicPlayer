@@ -4,37 +4,35 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MusicPlayerBackend.InternalTypes
+namespace MusicPlayerBackend.InternalTypes;
+/// <summary>
+/// Encapsulates Exception Data.
+/// </summary>
+public class EnumerateFilesAbortedException : Exception
 {
     /// <summary>
-    /// Encapsulates Exception Data.
+    /// Initializes a new instance of the <see cref="EnumerateFilesAbortedException"/> class.
     /// </summary>
-    public class EnumerateFilesAbortedException : Exception
+    public EnumerateFilesAbortedException()
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="EnumerateFilesAbortedException"/> class.
-        /// </summary>
-        public EnumerateFilesAbortedException()
-        {
-        }
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="EnumerateFilesAbortedException"/> class.
-        /// </summary>
-        /// <param name="message"></param>
-        public EnumerateFilesAbortedException(string message)
-            : base(message)
-        {
-        }
+    /// <summary>
+    /// Initializes a new instance of the <see cref="EnumerateFilesAbortedException"/> class.
+    /// </summary>
+    /// <param name="message"></param>
+    public EnumerateFilesAbortedException(string message)
+        : base(message)
+    {
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="EnumerateFilesAbortedException"/> class.
-        /// </summary>
-        /// <param name="message"></param>
-        /// <param name="inner"></param>
-        public EnumerateFilesAbortedException(string message, Exception inner)
-            : base(message, inner)
-        {
-        }
+    /// <summary>
+    /// Initializes a new instance of the <see cref="EnumerateFilesAbortedException"/> class.
+    /// </summary>
+    /// <param name="message"></param>
+    /// <param name="inner"></param>
+    public EnumerateFilesAbortedException(string message, Exception inner)
+        : base(message, inner)
+    {
     }
 }

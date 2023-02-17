@@ -2,77 +2,75 @@
 using Avalonia.Controls.Primitives;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
-using MusicPlayerBackend;
 using MusicPlayerBackend.Contracts;
+using MusicPlayerBackend.InternalTypes;
 
-namespace MusicPlayer
+namespace MusicPlayer.UIs.ReusableControlls;
+public class SoundControlBar : UserControl, ISoundControlBar, INotifyUI, INotifyError
 {
-    public class SoundControlBar : UserControl, ISoundControlBar, INotifyUI, INotifyError
+    private AudioMetaData ActualAudio;
+    private bool Playing = false;
+    private bool Paused = false;
+
+    public event Action<AudioMetaData> onPlay;
+    public event Action onPause;
+    public event Action onResume;
+    public event Action onNext;
+    public event Action<NotificationModel> onError;
+
+    ToggleButton PlayPauseButton { get; set; }
+
+    public SoundControlBar()
     {
-        private AudioMetaData ActualAudio;
-        private bool Playing = false;
-        private bool Paused = false;
+        AvaloniaXamlLoader.Load(this);
+        DataContext = this;
 
-        public event Action<AudioMetaData> onPlay;
-        public event Action onPause;
-        public event Action onResume;
-        public event Action onNext;
-        public event Action<NotificationModel> onError;
+        PlayPauseButton = this.FindControl<ToggleButton>("PlayPauseButton");
+    }
 
-        ToggleButton PlayPauseButton { get; set; }
-
-        public SoundControlBar()
+    private void OnPlayPause(object sender, RoutedEventArgs args)
+    {
+        if (!Playing)
         {
-            AvaloniaXamlLoader.Load(this);
-            DataContext = this;
-
-            PlayPauseButton = this.FindControl<ToggleButton>("PlayPauseButton");
+            Playing = true;
+            onPlay.Invoke(ActualAudio);
         }
-
-        private void OnPlayPause(object sender, RoutedEventArgs args)
+        else if(!Paused)
         {
-            if (!Playing)
-            {
-                Playing = true;
-                onPlay.Invoke(ActualAudio);
-            }
-            else if(!Paused)
-            {
-                onPause.Invoke();
-                Paused = true;
-            }
-            else
-            {
-                onResume.Invoke();
-                Paused = false;
-            }
+            onPause.Invoke();
+            Paused = true;
         }
-
-        public void SetAudioMetaData(AudioMetaData audioMetaData)
+        else
         {
-            if(Playing)
-            {
-                Playing = false;
-                onPause.Invoke();
-                PlayPauseButton.IsChecked = false;
-            }
-            ActualAudio = audioMetaData;
+            onResume.Invoke();
+            Paused = false;
         }
+    }
 
-        public void UpdateProgress(TimeSpan curr)
-        {
-            //TODO
-        }
-
-        public void IsFinished()
+    public void SetAudioMetaData(AudioMetaData audioMetaData)
+    {
+        if(Playing)
         {
             Playing = false;
-            onNext.Invoke();
+            onPause.Invoke();
+            PlayPauseButton.IsChecked = false;
         }
+        ActualAudio = audioMetaData;
+    }
 
-        public void Notify(NotificationModel message)
-        {
-            onError.Invoke(message);
-        }
+    public void UpdateProgress(TimeSpan curr)
+    {
+        //TODO
+    }
+
+    public void IsFinished()
+    {
+        Playing = false;
+        onNext.Invoke();
+    }
+
+    public void Notify(NotificationModel message)
+    {
+        onError.Invoke(message);
     }
 }

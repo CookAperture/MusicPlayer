@@ -1,99 +1,95 @@
 ﻿using MusicPlayerBackend.Contracts;
 using MusicPlayerBackend.InternalTypes;
 using System.Diagnostics;
-using System.IO;
 
-namespace MusicPlayerBackend
+namespace MusicPlayerBackend.Implementations;
+/// <summary>
+/// Implements the interface <see cref="IFileSystemHandler"/>.
+/// </summary>
+public class FileSystemHandler : IFileSystemHandler
 {
+    /// <summary>
+    /// Acquires all neccessary resources to go through a file system.
+    /// </summary>
+    public FileSystemHandler()
+    {
+    }
 
     /// <summary>
-    /// Implements the interface <see cref="IFileSystemHandler"/>.
+    /// Fired when a file is found.
     /// </summary>
-    public class FileSystemHandler : IFileSystemHandler
+    public event Action<string> onMediaFound;
+
+    private CancellationTokenSource _cancellationTokenSource = new();
+
+    /// <summary>
+    /// Finds all audio files from the given root <paramref name="rootPath"/>.
+    /// </summary>
+    /// <param name="rootPath">The root path.</param>
+    /// <param name="validAudioFiles">The valid file endings.</param>
+    /// <returns>All valid audio files in a List of paths.</returns>
+    public List<string> FindAudioFilesFromRootPath(string rootPath, List<string> validAudioFiles)
     {
-        /// <summary>
-        /// Acquires all neccessary resources to go through a file system.
-        /// </summary>
-        public FileSystemHandler()
+        Debug.Assert(!string.IsNullOrEmpty(rootPath));
+        Debug.Assert(validAudioFiles != null);
+        Debug.Assert(validAudioFiles.Count > 0);
+
+        var audioFiles = new List<string>();
+
+        try
         {
+            foreach (var audioFile in validAudioFiles)
+                audioFiles.AddRange(Directory.EnumerateFiles(rootPath, "*." + audioFile, new EnumerationOptions { RecurseSubdirectories = true, IgnoreInaccessible = true}));
+        }
+        catch (Exception)
+        {
+            throw new EnumerateFilesAbortedException(string.Format("Enumeration of files aborted in {0} after {1}", rootPath, audioFiles.Last()));
         }
 
-        /// <summary>
-        /// Fired when a file is found.
-        /// </summary>
-        public event Action<string> onMediaFound;
+        return audioFiles;
+    }
 
-        private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
+    void FindAudioFilesPathAsync(string rootPath, List<string> validAudioFiles)
+    {
+        Debug.Assert(!string.IsNullOrEmpty(rootPath));
+        Debug.Assert(validAudioFiles != null);
+        Debug.Assert(validAudioFiles.Count > 0);
+        Debug.Assert(_cancellationTokenSource != null);
+        Debug.Assert(!_cancellationTokenSource.IsCancellationRequested);
 
-        /// <summary>
-        /// Finds all audio files from the given root <paramref name="rootPath"/>.
-        /// </summary>
-        /// <param name="rootPath">The root path.</param>
-        /// <param name="validAudioFiles">The valid file endings.</param>
-        /// <returns>All valid audio files in a List of paths.</returns>
-        public List<string> FindAudioFilesFromRootPath(string rootPath, List<string> validAudioFiles)
+        foreach (var audioFile in validAudioFiles)
         {
-            Debug.Assert(!string.IsNullOrEmpty(rootPath));
-            Debug.Assert(validAudioFiles != null);
-            Debug.Assert(validAudioFiles.Count > 0);
-
-            List<string> audioFiles = new List<string>();
-
-            try
+            if (!_cancellationTokenSource.Token.IsCancellationRequested)
             {
-                foreach (string audioFile in validAudioFiles)
-                    audioFiles.AddRange(Directory.EnumerateFiles(rootPath, "*." + audioFile, new EnumerationOptions() { RecurseSubdirectories = true, IgnoreInaccessible = true}));
-            }
-            catch (Exception)
-            {
-                throw new EnumerateFilesAbortedException(string.Format("Enumeration of files aborted in {0} after {1}", rootPath, audioFiles.Last()));
-            }
-
-            return audioFiles;
-        }
-
-        void FindAudioFilesPathAsync(string rootPath, List<string> validAudioFiles)
-        {
-            Debug.Assert(!string.IsNullOrEmpty(rootPath));
-            Debug.Assert(validAudioFiles != null);
-            Debug.Assert(validAudioFiles.Count > 0);
-            Debug.Assert(_cancellationTokenSource != null);
-            Debug.Assert(!_cancellationTokenSource.IsCancellationRequested);
-
-            foreach (string audioFile in validAudioFiles)
-            {
-                if (!_cancellationTokenSource.Token.IsCancellationRequested)
+                using (var e = Directory.EnumerateFiles(rootPath, "*." + audioFile, new EnumerationOptions { RecurseSubdirectories = true, IgnoreInaccessible = true }).GetEnumerator())
                 {
-                    using (var e = Directory.EnumerateFiles(rootPath, "*." + audioFile, new EnumerationOptions() { RecurseSubdirectories = true, IgnoreInaccessible = true }).GetEnumerator())
+                    while (e.MoveNext())
                     {
-                        while (e.MoveNext())
-                        {
-                            onMediaFound.Invoke(e.Current);
-                        }
+                        onMediaFound.Invoke(e.Current);
                     }
                 }
-                else
-                    return;
             }
+            else
+                return;
         }
+    }
 
-        /// <summary>
-        /// Finds all audio files from the given root <paramref name="rootPath"/>.
-        /// </summary>
-        /// <param name="rootPath">The root path.</param>
-        /// <param name="validAudioFiles">The valid file endings.</param>
-        public void FindAudioFilesFromRootPathAsync(string rootPath, List<string> validAudioFiles)
-        {
-            Debug.Assert(!string.IsNullOrEmpty(rootPath));
-            Debug.Assert(validAudioFiles != null);
-            Debug.Assert(validAudioFiles.Count > 0);
-            Debug.Assert(_cancellationTokenSource != null);
-            Debug.Assert(!_cancellationTokenSource.IsCancellationRequested);
+    /// <summary>
+    /// Finds all audio files from the given root <paramref name="rootPath"/>.
+    /// </summary>
+    /// <param name="rootPath">The root path.</param>
+    /// <param name="validAudioFiles">The valid file endings.</param>
+    public void FindAudioFilesFromRootPathAsync(string rootPath, List<string> validAudioFiles)
+    {
+        Debug.Assert(!string.IsNullOrEmpty(rootPath));
+        Debug.Assert(validAudioFiles != null);
+        Debug.Assert(validAudioFiles.Count > 0);
+        Debug.Assert(_cancellationTokenSource != null);
+        Debug.Assert(!_cancellationTokenSource.IsCancellationRequested);
 
-            _cancellationTokenSource.Cancel();
-            _cancellationTokenSource = new CancellationTokenSource();
+        _cancellationTokenSource.Cancel();
+        _cancellationTokenSource = new CancellationTokenSource();
             
-            FindAudioFilesPathAsync(rootPath, validAudioFiles);
-        }
+        FindAudioFilesPathAsync(rootPath, validAudioFiles);
     }
 }

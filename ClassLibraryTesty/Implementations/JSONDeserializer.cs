@@ -1,40 +1,35 @@
 ﻿using MusicPlayerBackend.Contracts;
-using System;
 using System.Diagnostics;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 
-namespace MusicPlayerBackend
+namespace MusicPlayerBackend.Implementations;
+/// <summary>
+/// Implements <see cref="IJSONDeserializer"/> to seserialize any json string for given type.
+/// </summary>
+/// /// <seealso cref="MusicPlayerBackend.Contracts.IJSONDeserializer" />
+public class JSONDeserializer : IJSONDeserializer
 {
 
     /// <summary>
-    /// Implements <see cref="IJSONDeserializer"/> to seserialize any json string for given type.
+    /// Initializes neccesary resources to deserialize a json string.
+    /// No resources are acquired within this implementation of the constructor.
     /// </summary>
-    /// /// <seealso cref="MusicPlayerBackend.Contracts.IJSONDeserializer" />
-    public class JSONDeserializer : IJSONDeserializer
+    public JSONDeserializer()
     {
+    }
 
-        /// <summary>
-        /// Initializes neccesary resources to deserialize a json string.
-        /// No resources are acquired within this implementation of the constructor.
-        /// </summary>
-        public JSONDeserializer()
-        {
-        }
+    /// <summary>
+    /// Deserializes any given type <typeparamref name="T"/> from the <paramref name="deserializable"/> json string.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="deserializable"></param>
+    /// <returns>Deserialized object of type <typeparamref name="T"/>.</returns>
+    public T Deserialize<T>(string deserializable) where T: struct
+    {
+        Debug.Assert(deserializable != null);
 
-        /// <summary>
-        /// Deserializes any given type <typeparamref name="T"/> from the <paramref name="deserializable"/> json string.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="deserializable"></param>
-        /// <returns>Deserialized object of type <typeparamref name="T"/>.</returns>
-        public T Deserialize<T>(string deserializable) where T: struct
-        {
-            Debug.Assert(deserializable != null);
+        var result = JsonSerializer.Deserialize<T>(deserializable);
 
-            T result = JsonSerializer.Deserialize<T>(deserializable);
-
-            return result;
-        }
+        return result;
     }
 }

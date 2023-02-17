@@ -1,47 +1,44 @@
 ﻿using Avalonia.Controls;
-using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
-using MusicPlayerBackend;
 using MusicPlayerBackend.Contracts;
+using MusicPlayerBackend.InternalTypes;
 
-namespace MusicPlayer
+namespace MusicPlayer.UIs.ReusableControlls;
+public class ContentPage : UserControl, IContentPresenter
 {
-    public class ContentPage : UserControl, IContentPresenter
+    public ISongCover SongCover { get; set; }
+    public ISettings Settings { get; set; }
+    public IMediaList MediaList { get; set; }
+
+    public ContentPage()
     {
-        public ISongCover SongCover { get; set; }
-        public ISettings Settings { get; set; }
-        public IMediaList MediaList { get; set; }
+        AvaloniaXamlLoader.Load(this);
 
-        public ContentPage()
-        {
-            AvaloniaXamlLoader.Load(this);
+        SongCover = new SongCover();
+        Settings = new Settings();
+        MediaList = new MediaList();
 
-            SongCover = new SongCover();
-            Settings = new Settings();
-            MediaList = new MediaList();
+        Settings.onSettingsChanged += (AppSettings aps) => { MediaList.LoadMediaListFromNewMediaPath(aps.MediaPath); };
+        MediaList.onSelection += (AudioMetaData data) => { SongCover.LoadCover(data); };
 
-            Settings.onSettingsChanged += (AppSettings aps) => { MediaList.LoadMediaListFromNewMediaPath(aps.MediaPath); };
-            MediaList.onSelection += (AudioMetaData data) => { SongCover.LoadCover(data); };
+        DataContext = this;
+        Content = SongCover;
+    }
 
-            DataContext = this;
-            Content = SongCover;
-        }
+    public void ShowCoverPage()
+    {
+        Content = SongCover;
+    }
 
-        public void ShowCoverPage()
-        {
-            Content = SongCover;
-        }
+    public void ShowSettingsPage()
+    {
+        Settings.LoadSettings();
+        Content = Settings;
+    }
 
-        public void ShowSettingsPage()
-        {
-            Settings.LoadSettings();
-            Content = Settings;
-        }
-
-        public void ShowMediaListPage()
-        {
-            MediaList.LoadMediaList();
-            Content = MediaList;
-        }
+    public void ShowMediaListPage()
+    {
+        MediaList.LoadMediaList();
+        Content = MediaList;
     }
 }

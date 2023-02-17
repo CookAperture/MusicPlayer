@@ -1,19 +1,18 @@
-﻿using System;
+﻿using MusicPlayerBackend.InternalTypes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MusicPlayerBackend.Contracts
+namespace MusicPlayerBackend.Contracts;
+/// <summary>
+/// Contracts for Displaying a Notification.
+/// </summary>
+public interface INotifyUI
 {
     /// <summary>
-    /// Contracts for Displaying a Notification.
+    /// Displays a notification on the UI.
     /// </summary>
-    public interface INotifyUI
-    {
-        /// <summary>
-        /// Displays a notification on the UI.
-        /// </summary>
-        public void Notify(NotificationModel message);
-    }
+    public void Notify(NotificationModel message);
 }

@@ -1,63 +1,55 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MusicPlayerBackend
+﻿namespace MusicPlayerBackend.InternalTypes;
+/// <summary>
+/// Holds neccessary data to hold and load an Image.
+/// </summary>
+public record struct ImageContainer : IEquatable<ImageContainer>
 {
     /// <summary>
-    /// Holds neccessary data to hold and load an Image.
+    /// Contains the Path to either lazy load or debug.
     /// </summary>
-    public record struct ImageContainer : IEquatable<ImageContainer>
+    public string FilePath { get; set; }
+
+    /// <summary>
+    /// Contains an Image Byte Stream.
+    /// </summary>
+    public Stream ImageStream { get; set; }
+
+    /// <summary>
+    /// Overrides the Equals Method of <see langword="object"/>.
+    /// If is <see cref="AudioMetaData"/>, the call is delegated to <seealso cref="Equals(ImageContainer)"/>
+    /// </summary>
+    /// <param name="other"></param>
+    /// <returns>
+    /// <see langword="true"/> if equal.
+    /// <see langword="false"/> if not equal.
+    /// </returns>
+    public bool Equals(ImageContainer other)
     {
-        /// <summary>
-        /// Contains the Path to either lazy load or debug.
-        /// </summary>
-        public string FilePath { get; set; }
+        return FilePath == other.FilePath &&
+               ImageStream == other.ImageStream;
+    }
 
-        /// <summary>
-        /// Contains an Image Byte Stream.
-        /// </summary>
-        public Stream ImageStream { get; set; }
+    /// <summary>
+    /// Summs hash codes of every field. Calls subsequent <see cref="GetHashCode"/> of the fields.
+    /// </summary>
+    /// <returns>Summed hash code as <see langword="int"/>.</returns>
+    public override int GetHashCode()
+    {
+        HashCode hashCode = new();
 
-        /// <summary>
-        /// Overrides the Equals Method of <see langword="object"/>.
-        /// If is <see cref="AudioMetaData"/>, the call is delegated to <seealso cref="Equals(ImageContainer)"/>
-        /// </summary>
-        /// <param name="other"></param>
-        /// <returns>
-        /// <see langword="true"/> if equal.
-        /// <see langword="false"/> if not equal.
-        /// </returns>
-        public bool Equals(ImageContainer other)
-        {
-            return FilePath == other.FilePath &&
-                ImageStream == other.ImageStream;
-        }
+        hashCode.Add(FilePath.GetHashCode());
+        hashCode.Add(ImageStream.GetHashCode());
 
-        /// <summary>
-        /// Summs hash codes of every field. Calls subsequent <see cref="GetHashCode"/> of the fields.
-        /// </summary>
-        /// <returns>Summed hash code as <see langword="int"/>.</returns>
-        public override int GetHashCode()
-        {
-            HashCode hashCode = new();
+        return hashCode.ToHashCode();
+    }
 
-            hashCode.Add(FilePath.GetHashCode());
-            hashCode.Add(ImageStream.GetHashCode());
-
-            return hashCode.ToHashCode();
-        }
-
-        /// <summary>
-        /// Adds every property formatted by name and value seperated by a pipe to a string.
-        /// Uses subsequent <see cref="ToString"/> calls.
-        /// </summary>
-        /// <returns><see cref="string"/></returns>
-        public override string ToString()
-        {
-            return string.Format("FilePath: {0} | ImageStream: {1}", FilePath, ImageStream != null ? ImageStream.ToString() : "empty");
-        }
+    /// <summary>
+    /// Adds every property formatted by name and value seperated by a pipe to a string.
+    /// Uses subsequent <see cref="ToString"/> calls.
+    /// </summary>
+    /// <returns><see cref="string"/></returns>
+    public override string ToString()
+    {
+        return string.Format("FilePath: {0} | ImageStream: {1}", FilePath, ImageStream != null ? ImageStream.ToString() : "empty");
     }
 }

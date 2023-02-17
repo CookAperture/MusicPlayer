@@ -1,20 +1,16 @@
 ﻿using MusicPlayerBackend.Contracts;
-using System;
 
-namespace MusicPlayerBackend
+namespace MusicPlayerBackend.Implementations;
+/// <summary>
+/// Implements the <see cref="IDataConverter"/> interface. This implementation opts for correctness of conversio.
+/// </summary>
+public class DataConverter : IDataConverter
 {
 
     /// <summary>
-    /// Implements the <see cref="IDataConverter"/> interface. This implementation opts for correctness of conversio.
+    /// Acquires neccessary resources for the conversions. None the moment.
     /// </summary>
-    public class DataConverter : IDataConverter
+    public DataConverter()
     {
-
-        /// <summary>
-        /// Acquires neccessary resources for the conversions. None the moment.
-        /// </summary>
-        public DataConverter()
-        {
-        }
     }
 }

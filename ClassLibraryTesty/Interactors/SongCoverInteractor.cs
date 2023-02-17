@@ -1,47 +1,43 @@
 ﻿using MusicPlayerBackend.Contracts;
 using MusicPlayerBackend.InternalTypes;
-using System;
 
-namespace MusicPlayerBackend
+namespace MusicPlayerBackend.Interactors;
+/// <summary>
+/// Implements <see cref="IAudioFileInteractor"/>
+/// </summary>
+public class SongCoverInteractor : ISongCoverInteractor, INotifyError
 {
+    IMetaDataReader MetaDataReader { get; set; }
 
     /// <summary>
-    /// Implements <see cref="IAudioFileInteractor"/>
+    /// Connects to <see cref="IMetaDataReader"/>.
     /// </summary>
-    public class SongCoverInteractor : ISongCoverInteractor, INotifyError
+    /// <param name="metaDataReader"></param>
+    public SongCoverInteractor(IMetaDataReader metaDataReader)
     {
-        IMetaDataReader MetaDataReader { get; set; }
+        MetaDataReader = metaDataReader;
+    }
 
-        /// <summary>
-        /// Connects to <see cref="IMetaDataReader"/>.
-        /// </summary>
-        /// <param name="metaDataReader"></param>
-        public SongCoverInteractor(IMetaDataReader metaDataReader)
+    /// <summary>
+    /// Fires when an error occurs.
+    /// </summary>
+    public event Action<NotificationModel> onError;
+
+    /// <summary>
+    /// Reads image from meta data.
+    /// </summary>
+    /// <param name="path"></param>
+    /// <returns></returns>
+    public ImageContainer GetCoverFromAudio(string path)
+    {
+        try
         {
-            MetaDataReader = metaDataReader;
+            return MetaDataReader.ReadImageFromAudioFile(path);
         }
-
-        /// <summary>
-        /// Fires when an error occurs.
-        /// </summary>
-        public event Action<NotificationModel> onError;
-
-        /// <summary>
-        /// Reads image from meta data.
-        /// </summary>
-        /// <param name="path"></param>
-        /// <returns></returns>
-        public ImageContainer GetCoverFromAudio(string path)
+        catch (ReadAudioMetaDataFailedException ex)
         {
-            try
-            {
-                return MetaDataReader.ReadImageFromAudioFile(path);
-            }
-            catch (ReadAudioMetaDataFailedException ex)
-            {
-                onError.Invoke(new NotificationModel() { Message = ex.Message, Level = NotificationModel.NotificationLevel.Error, Title = "Error" });
-                return new ImageContainer();
-            }
+            onError.Invoke(new NotificationModel { Message = ex.Message, Level = NotificationModel.NotificationLevel.Error, Title = "Error" });
+            return new ImageContainer();
         }
     }
 }

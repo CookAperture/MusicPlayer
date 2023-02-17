@@ -1,35 +1,33 @@
-using System;
-using Xunit;
-using MusicPlayerBackend;
+using MusicPlayerBackend.Implementations;
+using MusicPlayerBackend.InternalTypes;
 using System.Collections.Generic;
+using Xunit;
 
-namespace MusicPlayerTests
+namespace MusicPlayerTests.UnitTests;
+public class JSONDeserializer_UnitTests
 {
-    public class JSONDeserializer_UnitTests
+    [Fact]
+    public void Deserialize_SerializedAppSettings_CorrectAppSetingsStruct()
     {
-        [Fact]
-        public void Deserialize_SerializedAppSettings_CorrectAppSetingsStruct()
-        {
-            JSONDeserializer jSONDeserializer = new JSONDeserializer();
-            string jsonString =
-@"{
+        var jSONDeserializer = new JSONDeserializer();
+        var jsonString =
+            @"{
   ""MediaPath"": ""C://"",
   ""AudioDevice"": ""SomeAudioDevice"",
   ""AudioDevices"": [""SomeOtherDevice"",
 ""AnotherDevice""],
   ""AppStyle"": 0
 }";
-            AppSettings expected = new AppSettings()
-            {
-                MediaPath = "C://",
-                AudioDevice = "SomeAudioDevice",
-                AudioDevices = new List<string>() { "SomeOtherDevice", "AnotherDevice" },
-                AppStyle = APPLICATION_STYLE.DARK,
-            };
+        var expected = new AppSettings
+        {
+            MediaPath = "C://",
+            AudioDevice = "SomeAudioDevice",
+            AudioDevices = new List<string> { "SomeOtherDevice", "AnotherDevice" },
+            AppStyle = APPLICATION_STYLE.DARK,
+        };
 
-            AppSettings actual = jSONDeserializer.Deserialize<AppSettings>(jsonString);
+        var actual = jSONDeserializer.Deserialize<AppSettings>(jsonString);
 
-            Assert.Equal(expected, actual);
-        }
+        Assert.Equal(expected, actual);
     }
 }

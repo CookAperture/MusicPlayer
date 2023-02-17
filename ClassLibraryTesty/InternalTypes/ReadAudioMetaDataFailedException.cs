@@ -4,20 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MusicPlayerBackend.InternalTypes
+namespace MusicPlayerBackend.InternalTypes;
+/// <summary>
+/// Encapulates Exception Data.
+/// </summary>
+public class ReadAudioMetaDataFailedException : Exception
 {
-
     /// <summary>
-    /// Encapulates Exception Data.
+    /// Initializes a new instance of the <see cref="ReadAudioMetaDataFailedException"/> class.
     /// </summary>
-    public class ReadAudioMetaDataFailedException : Exception
+    /// <param name="message"></param>
+    public ReadAudioMetaDataFailedException(string message) : base(message)
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ReadAudioMetaDataFailedException"/> class.
-        /// </summary>
-        /// <param name="message"></param>
-        public ReadAudioMetaDataFailedException(string message) : base(message)
-        {
-        }
     }
 }

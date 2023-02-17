@@ -1,23 +1,20 @@
 using MusicPlayerBackend.Contracts;
 
-namespace MusicPlayerBackend
+namespace MusicPlayerBackend.Controller;
+/// <summary>
+/// Implements <see cref="ICustomDecorationController"/>
+/// </summary>
+public class CustomDecorationController : ICustomDecorationController
 {
+    ICustomDecoration CustomDecoration { get; set; }
 
     /// <summary>
-    /// Implements <see cref="ICustomDecorationController"/>
+    /// Connects <paramref name="customDecoration"/>.
     /// </summary>
-    public class CustomDecorationController : ICustomDecorationController
+    /// <param name="customDecoration"></param>
+    public CustomDecorationController(ICustomDecoration customDecoration)
     {
-        ICustomDecoration CustomDecoration { get; set; }
-
-        /// <summary>
-        /// Connects <paramref name="customDecoration"/>.
-        /// </summary>
-        /// <param name="customDecoration"></param>
-        public CustomDecorationController(ICustomDecoration customDecoration)
-        {
-            CustomDecoration = customDecoration;
-        }
-
+        CustomDecoration = customDecoration;
     }
+
 }

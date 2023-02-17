@@ -2,9 +2,10 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
+namespace MusicPlayer;
 public class NotifyUserControl : UserControl, INotifyPropertyChanged
 {
-    new public event PropertyChangedEventHandler PropertyChanged;
+    public new event PropertyChangedEventHandler PropertyChanged;
     protected bool RaiseAndSetIfChanged<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
     {
         if (!EqualityComparer<T>.Default.Equals(field, value))
@@ -16,6 +17,6 @@ public class NotifyUserControl : UserControl, INotifyPropertyChanged
         return false;
     }
 
-    protected void RaisePropertyChanged([CallerMemberName] string propertyName = null)
+    private void RaisePropertyChanged([CallerMemberName] string propertyName = null)
         => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 }
