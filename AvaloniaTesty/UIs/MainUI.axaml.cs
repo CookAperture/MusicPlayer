@@ -96,17 +96,13 @@ namespace MusicPlayer
 
         private NotificationType MapNotificationLevelToNotificationType(NotificationModel.NotificationLevel notificationLevel)
         {
-            switch (notificationLevel)
+            return notificationLevel switch
             {
-                case NotificationModel.NotificationLevel.Information:
-                    return NotificationType.Information;
-                case NotificationModel.NotificationLevel.Warning:
-                    return NotificationType.Warning;
-                case NotificationModel.NotificationLevel.Error:
-                    return NotificationType.Error;
-                default:
-                    return NotificationType.Information;
-            }
+                NotificationModel.NotificationLevel.Information => NotificationType.Information,
+                NotificationModel.NotificationLevel.Warning => NotificationType.Warning,
+                NotificationModel.NotificationLevel.Error => NotificationType.Error,
+                _ => NotificationType.Information
+            };
         }
     }
 }

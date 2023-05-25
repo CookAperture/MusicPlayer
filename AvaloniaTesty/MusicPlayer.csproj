@@ -1,17 +1,18 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
     <Nullable>disable</Nullable>
     <StartupObject>MusicPlayer.Program</StartupObject>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
-	<AnalysisLevel>6.0</AnalysisLevel>
+    <AnalysisLevel>6.0</AnalysisLevel>
     <ErrorReport>send</ErrorReport>
     <DebugType>embedded</DebugType>
     <MinimumPlatformVersion>7.0</MinimumPlatformVersion>
     <Platforms>AnyCPU;x64</Platforms>
     <SignAssembly>True</SignAssembly>
-    <AssemblyOriginatorKeyFile></AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile />
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
@@ -82,11 +83,11 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Avalonia" Version="0.10.13" />
-    <PackageReference Include="Avalonia.Desktop" Version="0.10.13" />
-    <PackageReference Include="Avalonia.Diagnostics" Version="0.10.13" />
-    <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.13" />
-    <PackageReference Include="Avalonia.Skia" Version="0.10.13" />
+    <PackageReference Include="Avalonia" Version="0.10.21" />
+    <PackageReference Include="Avalonia.Desktop" Version="0.10.21" />
+    <PackageReference Include="Avalonia.Diagnostics" Version="0.10.21" />
+    <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.21" />
+    <PackageReference Include="Avalonia.Skia" Version="0.10.21" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ClassLibraryTesty\MusicPlayerLibrary.csproj" />
@@ -118,5 +119,6 @@
     <None Update="tags.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Content Include="NotifyUserControl.cs" />
   </ItemGroup>
 </Project>

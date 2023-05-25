@@ -2,17 +2,14 @@ using Avalonia;
 using Avalonia.Markup.Xaml;
 using Avalonia.Markup.Xaml.Styling;
 using Avalonia.Styling;
-using Avalonia.Themes.Fluent;
 using MusicPlayerBackend;
 using MusicPlayerBackend.Contracts;
-using System;
 
 namespace MusicPlayer
 {
     public class App : Application, IApplication
     {
-
-        APPLICATION_STYLE _currStyle = APPLICATION_STYLE.DEFAULTDARK;
+        private APPLICATION_STYLE _currStyle = APPLICATION_STYLE.DEFAULTDARK;
 
         private static readonly StyleInclude DataGridFluent = new (new Uri("avares://MusicPlayer/Styles"))
         {
